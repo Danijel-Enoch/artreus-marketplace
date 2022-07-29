@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import {Menu as LiMenu} from '@headlessui/react'
+import { useAppContext } from '../contexts/AppContext'
+
 const DropDown=()=>{
   return(<svg
     xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +36,8 @@ const Menu=()=>{
 }
 
 export default function Nav() {
+  const app = useAppContext();
+
   const router=useRouter();
   const navsItems=['marketplace','creator',"launchPad",'networks','all']
   return (
@@ -63,7 +67,7 @@ export default function Nav() {
         <li className='ml-6 mr-3 flex justify-center items-center '>Networks <DropDown/></li>
         <li className='flex justify-center items-center '><Menu/>All</li> */}
         <li ><div className='p-3 rounded-full bg-white ml-4'></div></li>
-        <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={()=>{router.push('/connect')}}>Connect Wallet</button></li>
+        <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={app.connected ? app.logOut : app.logIn}>{app.connected ? "Disconnect Walet":"Connect Wallet"}</button></li>
       
         </ul>
   </nav>
