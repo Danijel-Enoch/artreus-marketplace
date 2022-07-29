@@ -1,6 +1,31 @@
 import React from 'react'
 
 const LeftArrowButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
+  return(<button {...props as any} >
+       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_1_2)">
+<circle cx="22.9993" cy="23" r="17" transform="rotate(178.32 22.9993 23)" fill="#422E21"/>
+<circle cx="22.9993" cy="23" r="16.85" transform="rotate(178.32 22.9993 23)" stroke="#F3BA2F" stroke-width="0.3"/>
+</g>
+<path d="M28.2237 11.8885L28.2123 11.8883C27.9234 11.8841 27.6383 11.9299 27.3817 12.0196C27.1247 12.1094 26.9116 12.2377 26.7539 12.3852L26.7529 12.3861L16.0488 22.342C16.0484 22.3423 16.0481 22.3427 16.0477 22.343C15.8189 22.5592 15.7295 22.7928 15.7355 22.998C15.7415 23.2035 15.8448 23.4319 16.0867 23.6346L16.0907 23.6379L16.0906 23.6379L26.9888 32.9626L26.9953 32.9682L27.0016 32.974C27.1365 33.0977 27.3145 33.2071 27.5293 33.2885C27.7439 33.3699 27.9852 33.4193 28.2374 33.4309C28.4896 33.4424 28.7425 33.4155 28.9789 33.3528C29.2155 33.2902 29.4253 33.1945 29.597 33.0768L29.6054 33.0711L29.6139 33.0657C29.7867 32.9574 29.9182 32.8323 30.0087 32.7035C30.0986 32.5756 30.1462 32.4472 30.1602 32.3259C30.1742 32.2055 30.1562 32.0827 30.1027 31.961C30.0485 31.8379 29.9561 31.7124 29.8195 31.5965L29.8177 31.595L29.8177 31.595L20.0701 23.2492L19.6439 22.8843L20.0553 22.5028L29.6487 13.6064C29.6489 13.6063 29.649 13.6061 29.6492 13.6059C29.781 13.4832 29.8684 13.353 29.9177 13.227L30.3834 13.4092L29.9177 13.227C29.9665 13.1022 29.9794 12.9786 29.9608 12.8595C29.9421 12.7396 29.8899 12.6146 29.796 12.4922C29.7015 12.369 29.5664 12.2511 29.3908 12.1516L28.2237 11.8885ZM28.2237 11.8885L28.235 11.8881M28.2237 11.8885L28.235 11.8881M28.235 11.8881C28.6674 11.8748 29.0765 11.9737 29.3907 12.1515L28.235 11.8881Z" fill="#F4F3FF" stroke="black"/>
+<defs>
+<filter id="filter0_d_1_2" x="0" y="-0.000183105" width="48" height="48.0003" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="2" operator="erode" in="SourceAlpha" result="effect1_dropShadow_1_2"/>
+<feOffset dx="1" dy="1"/>
+<feGaussianBlur stdDeviation="4.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.229167 0 0 0 0 0.0916667 0 0 0 0 0 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_2"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_2" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+  </button>)
+}
+const RightArrowButon=(props:React.HTMLProps<HTMLButtonElement>)=>{
     return(
         <button {...props as any}>
             <svg
@@ -9,7 +34,7 @@ const LeftArrowButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
     height="48"
     fill="none"
     viewBox="0 0 48 48"
-    className='z-10 translate-x-32 '
+    className='z-10  '
   >
     <g filter="url(#filter0_d_1_2)">
       <circle cx="23" cy="23" r="17" fill="#422E21"></circle>
@@ -66,20 +91,47 @@ const LeftArrowButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
         </button>
     )
 }
+export function LeftBluredBox(props:React.HTMLProps<HTMLButtonElement> &{showArrow?:boolean}){
+  const newProps={...props}
+  delete newProps.showArrow;
+  return ( <div className='absolute z-10 flex '>
+      
+       <svg className='w-[200px] h-full'  viewBox="0 0 150 353" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_1035_4824)">
+<rect x="149.248" y="352" width="149" height="352" rx="5" transform="rotate(179.96 149.248 352)" fill="url(#paint0_linear_1035_4824)" shapeRendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter0_d_1035_4824" x="0.00390625" y="0.00360107" width="149.24" height="352.098" filterUnits="userSpaceOnUse"  colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1035_4824"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1035_4824" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_1035_4824" x1="242.248" y1="529.337" x2="164.251" y2="528.215" gradientUnits="userSpaceOnUse">
+<stop stop-color="#BDBDBD"/>
+<stop offset="1" stopColor="#BDBDBD" stopOpacity="0"/>
+</linearGradient>
+</defs>
+</svg>
 
-export default function BluredBox(props:React.HTMLProps<HTMLButtonElement> &{showArrow?:boolean}) {
+{props.showArrow&&<LeftArrowButton {...props} className="-translate-x-44"/>}
+  </div>)
+}
+export function RightBluredBox(props:React.HTMLProps<HTMLButtonElement> &{showArrow?:boolean}) {
   const newProps={...props}
   delete newProps.showArrow;
   return (
-    <div className=' right-0   flex items-center sticky'>
-      {props.showArrow&&<LeftArrowButton {...props}/>}
+    <div className='  flex items-center absolute right-0'>
+      {props.showArrow&&<RightArrowButon className='translate-x-44' {...props}/>}
   
     <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="149"
-    height="395"
     fill="none"
     viewBox="0 0 149 395"
+    className='w-[200px] h-full'
   >
     <g filter="url(#filter0_d_670_2653)">
       <rect

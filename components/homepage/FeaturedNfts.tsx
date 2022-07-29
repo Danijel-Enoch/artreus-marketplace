@@ -1,50 +1,76 @@
 import React from 'react'
-
-export default function FeaturedNfts() {
+import { captureRejectionSymbol } from 'stream'
+export type FeaturedNft={
+  name:string,
+  description:string,
+  imageUrl:string
+}
+type props ={
+  featuredNfts:FeaturedNft[]
+}
+export default function FeaturedNfts({featuredNfts}:props) {
   
-  let nfts=Array.from(Array(4).keys()) as any
-  nfts.map(()=>(
-    {
-      name:"Bored Ape Mutant Nfts",
   
-      description:`Advised by the former Head of Twitter Gaming and Sport, we are 
-      launching the worlds first ever NFTs as Esports Teams, allowing 
-      holders to start and grow their own Esports teams, earn $USDC 
-      from them and then auction them for a multiplier of the earning 
-      potential just like a business.`,
-      linkToCollection:""
-    }
-  ))
-  const [name,setName]=React.useState(nfts[0].name)
-  const [description,setDescription]=React.useState(nfts[0].description)
-  const [linkToCollection,setLinkToCollection]=React.useState(nfts[0].linkToCollection)
-  const [current,setCurrent]=React.useState(0)
+  const [name,setName]=React.useState(featuredNfts[0].name)
+  const [description,setDescription]=React.useState(featuredNfts[0].description)
+  const [imageUrl,setImageUrl]=React.useState(featuredNfts[0].imageUrl)
+  const current=React.useRef(0)
+  const [currentIndex,setCurrentIndex]=React.useState(0)
+  
   
   React.useEffect(()=>{
 
-    setInterval(()=>{
-        setCurrent(current + 1)
+  const interval=  setInterval(function(){
       
-        // setName(nfts[current].name)
-        // setDescription(nfts[current].description)
-        // setLinkToCollection(nfts[current].linkToCollection)
-    },2000)
+    
+    
+    
+    if(current.current >= featuredNfts.length){
+     
+     current.current =0
+     setCurrentIndex(current.current)
+     
+    }
+  
+    // setImageUrl(featuredNfts[current.current].imageUrl)
+    // setName(featuredNfts[current.current].name)
+    // setDescription(featuredNfts[current.current].description) 
+    
+    current.current=current.current + 1 
+    setCurrentIndex(current.current + 1)
+
+    
+      
+     
+    
+    
+    
+       
+    },4500)
+    
+    return ()=> clearInterval(interval)
 
   },[])
   return (
-    <div className='py-6 px-10 flex space-x-6 lg:h-[400px] mb-5'>
+    <>
+  
+   {featuredNfts.map(({name,imageUrl,description},index)=>(
+      <div key={index} className={`py-6 px-10 flex space-x-6 lg:h-[400px] ${!(index === (currentIndex -2))?'hidden':'visible'} '`}>
+     
       <div className=''>
-          <h1 className="text-4xl font-extrabold text-brandbrown mb-5 w-1/2">Bored Ape Mutant Nfts</h1>
-          <p className='w-[50ch]'>Advised by the former Head of Twitter Gaming and Sport, we are 
-      launching the worlds first ever NFTs as Esports Teams, allowing 
-      holders to start and grow their own Esports teams, earn $USDC 
-      from them and then auction them for a multiplier of the earning 
-      potential just like a business.</p>
+          <h1 className="text-4xl font-extrabold text-brandbrown mb-5 w-[10ch]">{name}</h1>
+          <p className='w-[50ch]'>{description}</p>
       <button className=' font-semibold bg-brandyellow text-black py-2 px-6 rounded mt-10'>Explore Collection</button>
         </div>
         <div className='pl-20 w-full h-full'>
-          <img src="/space_ape.png" className='w-full h-full'/>
+          <img src={`${imageUrl}`} className='w-full h-full'/>
         </div>
   </div>  
+   ))}
+  <div className='mb-5 flex space-x-2 justify-center'>
+   
+    {featuredNfts.map((_,index)=>(<div key={index} className={`w-[50px] p-1 ${!(index === (currentIndex -2))?'bg-[#6F6F6F]':'bg-[#eee]'}  `}></div>))}
+  </div>
+  </>
   )
 }

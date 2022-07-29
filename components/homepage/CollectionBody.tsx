@@ -1,5 +1,5 @@
 import React,{Children, ReactNode, useRef, useState} from 'react'
-import BluredBox from './BluredBox';
+import { LeftBluredBox, RightBluredBox } from './BluredBox';
 type ScrollOptions ={
   left?: number;
   top?: number;
@@ -15,9 +15,11 @@ type props={
 
 export default function CollectionBody({children,totalItemsLength}:{children:ReactNode,totalItemsLength:number}) {
   const containerRef=useRef(null);
-  const [left,setLeft]=useState(0)
-  const [showLeftArrow,setShowLeftArrow]=useState(true);
-  const step=100;
+  const step=120;
+  const [left,setLeft]=useState(step)
+  const [showLeftArrow,setShowLeftArrow]=useState(false);
+  const [showRightArrow,setShowRightArrow]=useState(true);
+  
   const scrollLeft=()=>{
         const containerElement =containerRef?.current as unknown as HTMLDivElement
         const containerWidth=containerElement.clientWidth;
@@ -26,13 +28,23 @@ export default function CollectionBody({children,totalItemsLength}:{children:Rea
         const horizontalWidth=Math.floor((itemsPerScroll -1) * containerWidth)  + 120;
         
         if(horizontalWidth - (-left) <= 0) {
-         setShowLeftArrow(false);
+         setShowRightArrow(false);
          return;
         }
+        setShowLeftArrow(true);
         setLeft(left -step)
      
         
     
+   
+  }
+  const scrollRight=()=>{
+    if(left >= step){
+      setShowLeftArrow(false)
+      return
+    }
+    setShowRightArrow(true)
+    setLeft(left + step)
    
   }
   
@@ -40,12 +52,14 @@ export default function CollectionBody({children,totalItemsLength}:{children:Rea
   return (
     <>
     
-    
+   
     <div ref={containerRef} className='flex space-x-4 relative items-center overflow-hidden '>
-        <div  className='flex items-center space-x-2 relative transition-all ease-out duration-500' style={{left:left}}>
+        <LeftBluredBox showArrow={showLeftArrow} onClick={()=>{scrollRight()}}/>
+      
+        <div  className='flex items-center space-x-2 relative transition-all ease-out duration-500 my-8' style={{left:left}}>
         {children}
         </div>
-        <BluredBox showArrow={showLeftArrow} onClick={()=>{scrollLeft()}}/>
+        <RightBluredBox showArrow={showRightArrow} onClick={()=>{scrollLeft()}}/>
       
     </div>
     </>
