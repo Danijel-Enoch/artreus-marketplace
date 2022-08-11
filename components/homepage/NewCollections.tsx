@@ -22,7 +22,7 @@ export default function NewCollections({newCollectionNfts}:{newCollectionNfts:Ne
    
      
    
-   <CollectionBody totalItemsLength={newCollectionNfts.length}>
+   <CollectionBody  totalItemsLength={newCollectionNfts.length}>
         {newCollectionNfts.map(({name,imageUri,tokenId},i)=>{
           return(
         <NftCollectionCard key={i} name={name} imageUri={imageUri} tokenId={tokenId}/>

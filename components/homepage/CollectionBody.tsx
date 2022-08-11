@@ -1,66 +1,69 @@
-import React,{Children, ReactNode, useRef, useState} from 'react'
-import { LeftBluredBox, RightBluredBox } from './BluredBox';
-type ScrollOptions ={
-  left?: number;
-  top?: number;
-  behavior?:string
-}
-type Scroll={
-  scroll:(scrollOptions:ScrollOptions)=>void
-}
+import React,{Children, ReactNode, useEffect, useRef, useState} from 'react'
+import { LeftArrowButton, LeftBluredBox, RightArrowButon, RightBluredBox } from './BluredBox';
 type props={
-  children:(props:Scroll)=>ReactNode
+  children:ReactNode,
+  totalItemsLength:number,
+  className?:string
 }
 
+export default function CollectionBody({children,totalItemsLength,className}:props) {
+  const scrollContainerRef=useRef(null);
+  const step=100;
+  const [prevLeft,setPrevLeft]=useState(0);
+  const [nextLeft,setNextLeft]=useState(0);
+  const [left,setLeft]=useState(0);
+  const [right,setRight]=useState(0);
+  const [scrollWidth,setScrollWidth]=useState(0)
+  useEffect(()=>{
+    const scrollContainer=scrollContainerRef.current as unknown as  HTMLDivElement;
+      setScrollWidth(scrollContainer.scrollWidth)
 
-export default function CollectionBody({children,totalItemsLength}:{children:ReactNode,totalItemsLength:number}) {
-  const containerRef=useRef(null);
-  const step=120;
-  const [left,setLeft]=useState(step)
-  const [showLeftArrow,setShowLeftArrow]=useState(false);
-  const [showRightArrow,setShowRightArrow]=useState(true);
-  
+  },[])
   const scrollLeft=()=>{
-        const containerElement =containerRef?.current as unknown as HTMLDivElement
-        const containerWidth=containerElement.clientWidth;
-        const itemsPerScroll=totalItemsLength/5;
-      
-        const horizontalWidth=Math.floor((itemsPerScroll -1) * containerWidth)  + 120;
-        
-        if(horizontalWidth - (-left) <= 0) {
-         setShowRightArrow(false);
-         return;
-        }
-        setShowLeftArrow(true);
-        setLeft(left -step)
-     
-        
-    
-   
+      const scrollContainer=scrollContainerRef.current as unknown as  HTMLDivElement;
+      setPrevLeft(nextLeft)
+      scrollContainer.scrollLeft = scrollContainer.scrollLeft + step;
+      setNextLeft( scrollContainer.scrollLeft)
   }
   const scrollRight=()=>{
-    if(left >= step){
-      setShowLeftArrow(false)
-      return
-    }
-    setShowRightArrow(true)
-    setLeft(left + step)
+    const scrollContainer=scrollContainerRef.current as unknown as  HTMLDivElement;
+    setPrevLeft(nextLeft)
+    scrollContainer.scrollLeft = (scrollContainer.scrollLeft - step)
+    setNextLeft( scrollContainer.scrollLeft)
+   
    
   }
   
   // },[])
   return (
     <>
+   
+    
+    
+    <div className='flex relative items-center overflow-x-hidden'>
+        
+    
+      <LeftBluredBox className='h-full -translate-x-10 md:translate-x-0  w-[150px] absolute'/>
+  
+      <LeftArrowButton  className={`z-10  ${prevLeft&&nextLeft !=0 &&prevLeft===nextLeft&&"invisible"}`} onClick={()=>{scrollLeft()}}/>
+   
+     
+     
+    
+      <div ref={scrollContainerRef} className='space-x-2 overflow-x-scroll md:overflow-x-hidden scroll-smooth  px-2 md:px-8 whitespace-nowrap'>
+       {children}
+      </div>
+      
+
     
    
-    <div ref={containerRef} className='flex space-x-4 relative items-center overflow-hidden '>
-        <LeftBluredBox showArrow={showLeftArrow} onClick={()=>{scrollRight()}}/>
+     
+      <RightArrowButon onClick={()=>{scrollRight()}} className={`z-10 ${nextLeft===0&&"invisible"}`}/> 
+      <RightBluredBox className='h-full translate-x-10 md:translate-x-0 w-[150px] absolute right-0'/>
+      {/* <RightBluredBox className=''/>
+         {/* <div className='relative h-[200px]'>
       
-        <div  className='flex items-center space-x-2 relative transition-all ease-out duration-500 my-8' style={{left:left}}>
-        {children}
-        </div>
-        <RightBluredBox showArrow={showRightArrow} onClick={()=>{scrollLeft()}}/>
-      
+      </div>  */}
     </div>
     </>
   )

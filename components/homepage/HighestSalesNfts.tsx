@@ -1,10 +1,10 @@
 import React from 'react'
 import SectionTitle from '../SectionTitle'
-import BluredBox from './BluredBox'
+
 import CollectionBody from './CollectionBody'
 import CollectionHeader from './CollectionHeader'
 const HighestNfts=({name,price,imageUri,tokenId}:{name:string,price:number,imageUri:string,tokenId:string})=>{
-    return(<div className='w-[250px]'>
+    return(<div className='w-[250px] inline-block'>
       <div className='w-full h-[200px]'>
        <img  src={imageUri} className='w-full h-full object-cover'/>
       </div>

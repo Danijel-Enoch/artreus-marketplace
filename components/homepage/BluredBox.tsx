@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LeftArrowButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
+export const LeftArrowButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
   return(<button {...props as any} >
        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_1_2)">
@@ -25,7 +25,7 @@ const LeftArrowButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
 
   </button>)
 }
-const RightArrowButon=(props:React.HTMLProps<HTMLButtonElement>)=>{
+export const RightArrowButon=(props:React.HTMLProps<HTMLButtonElement>)=>{
     return(
         <button {...props as any}>
             <svg
@@ -91,12 +91,12 @@ const RightArrowButon=(props:React.HTMLProps<HTMLButtonElement>)=>{
         </button>
     )
 }
-export function LeftBluredBox(props:React.HTMLProps<HTMLButtonElement> &{showArrow?:boolean}){
-  const newProps={...props}
-  delete newProps.showArrow;
-  return ( <div className='absolute z-10 flex '>
+export function LeftBluredBox({className}:{className:string}){
+ 
+  
+  return ( 
       
-       <svg className='w-[200px] h-full'  viewBox="0 0 150 353" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <svg className={` ${className}`}  viewBox="0 0 150 353" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_1035_4824)">
 <rect x="149.248" y="352" width="149" height="352" rx="5" transform="rotate(179.96 149.248 352)" fill="url(#paint0_linear_1035_4824)" shapeRendering="crispEdges"/>
 </g>
@@ -117,21 +117,23 @@ export function LeftBluredBox(props:React.HTMLProps<HTMLButtonElement> &{showArr
 </defs>
 </svg>
 
-{props.showArrow&&<LeftArrowButton {...props} className="-translate-x-44"/>}
-  </div>)
+
+
+
+  )
 }
-export function RightBluredBox(props:React.HTMLProps<HTMLButtonElement> &{showArrow?:boolean}) {
-  const newProps={...props}
-  delete newProps.showArrow;
+export function RightBluredBox({className}:{className:string}) {
+  
+ 
   return (
-    <div className='  flex items-center absolute right-0'>
-      {props.showArrow&&<RightArrowButon className='translate-x-44' {...props}/>}
+   
+    
   
     <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 149 395"
-    className='w-[200px] h-full'
+    className={` ${className}`}
   >
     <g filter="url(#filter0_d_670_2653)">
       <rect
@@ -185,7 +187,7 @@ export function RightBluredBox(props:React.HTMLProps<HTMLButtonElement> &{showAr
     </defs>
   </svg>
     
-    </div>
+    
 
   )
 }

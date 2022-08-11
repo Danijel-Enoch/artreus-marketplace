@@ -1,10 +1,9 @@
 import React from 'react'
 import SectionTitle from '../SectionTitle'
-import BluredBox from './BluredBox'
 import CollectionBody from './CollectionBody'
 import CollectionHeader from './CollectionHeader'
 const RecentNfts=({name,price,imageUri,linktoDetails}:{name:string,price:number,imageUri:string,linktoDetails:string})=>{
-    return(<div className='w-[250px] '><img  src={imageUri} className='w-full h-[200px]'/>
+    return(<div className='w-[250px] inline-block '><img  src={imageUri} className='w-full h-[200px]'/>
     <div className='bg-[#0C0602] p-2 text-white '>
         <p className='text-center font-semibold'>{name}</p>
         <div className='flex justify-between items-center mt-4'>

@@ -1,5 +1,5 @@
 const NftCollectionCard=({name,imageUri,tokenId}:{name:string,imageUri:string,tokenId:string})=>{
-    return(<div className='w-[250px] corsor-pointer -z-10'>
+    return(<div className='inline-block w-[220px] md:[300px] corsor-pointer -z-10 '>
         <div className="w-full ">
           <img  src={imageUri} className='w-full h-[200px] object-cover'/>
         </div>
