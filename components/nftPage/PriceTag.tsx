@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function PriceTag({highestBid,currentPrice,coinName}:{highestBid:string,currentPrice:string,coinName:string}) {
   return (
-    <div className='p-4 bg-[#e4e2e2] w-[400px]  rounded-lg mt-4'>
+    <div className='p-4 bg-[#e4e2e2] md:w-[400px]  rounded-lg mt-4'>
         <div className='flex justify-between text-brandbrown'>
           <div><h4 className=''>Current Price </h4><span className='block font-bold'><svg
       xmlns="http://www.w3.org/2000/svg"

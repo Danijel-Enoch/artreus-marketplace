@@ -4,7 +4,7 @@ import SeeAllButton from './SeeAllButton'
 import {Tab} from '@headlessui/react'
 
 const TabHeader=({tabTitles}:{tabTitles:string[]})=>{
-    return(<nav className='flex items-center'>
+    return(<nav className='self-center  flex items-center'>
       <Tab.List className='flex bg-brandbrown space-x-2 text-white    rounded-full'>
       {tabTitles.map((title,i)=>(
       <Tab as={Fragment} key={i} >
@@ -38,7 +38,7 @@ const Collection=({name,index,floorPrice,currentPrice}:{name:string,index:number
   <div className='flex items-center p-4'>
       <div className='w-10 h-10  flex items-center space-x-1'><h3 className='font-bold'>{index}</h3><img src="https://picsum.photos/200" className='rounded-full w-full h-full'/></div>
       <div className='ml-8 '><h3 className='font-bold text-brandbrown'>{name}</h3><h4 className='flex items-center space-x-2 text-[#747474]'><p>Floor :</p><CollectionPrice price={floorPrice}/></h4></div>
-      <div className='ml-10'><p className={`${percentage>0?'text-green-800':'text-red-900'} font-bold  `}>{percentage>0&&'+'}{percentage} %</p> <CollectionPrice price={currentPrice}/></div>
+      <div className='ml-16 md:ml-10'><p className={`${percentage>0?'text-green-800':'text-red-900'} font-bold  `}>{percentage>0&&'+'}{percentage} %</p> <CollectionPrice price={currentPrice}/></div>
   </div>)
 }
 export default function PopularCollections() {
@@ -46,12 +46,12 @@ export default function PopularCollections() {
     const tabTitles=['1 hour','24 hours','7days','24 hours']
   return (
     <Tab.Group>
-      <section >
-        <div className='flex  justify-between items-center '> <div className='md:flex md:space-x-10'><SectionTitle title="Popular Collections"/ ><TabHeader tabTitles={tabTitles}/> <div></div></div> <SeeAllButton/></div>
+      <section className='px-4 md:px-0' >
+        <div className='md:flex  md:justify-between md:items-center'> <div className='space-y-4 md:space-y-0 flex flex-col  md:flex-row md:space-x-10 '><SectionTitle title="Popular Collections"/ ><TabHeader tabTitles={tabTitles}/> <div></div></div> <SeeAllButton/></div>
      
         <Tab.Panels>
          {tabTitles.map((title,index)=>(
-            <Tab.Panel key={index} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <Tab.Panel key={index} className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {collections.map((collection,index)=>(<Collection name={`${title}`} index={index + 1} key={index} currentPrice={2} floorPrice={5}/>))}
            </Tab.Panel>
          ))}

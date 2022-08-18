@@ -14,7 +14,7 @@ export default function New({newCollection}:props) {
   return (
     <div>
       <SectionTitle title="New Collections"/>
-      <div className='grid grid-cols-5 gap-y-6'>
+      <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6'>
           {newCollection.map(({name,imageUri,description},index)=>(
             <NewCollectionCard key={index} name={name} description={description} imageUri={imageUri}/>
           ))}

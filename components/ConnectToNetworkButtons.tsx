@@ -1,4 +1,5 @@
-export const TelosButton =()=> {
+import React from 'react';
+export const TelosButton =(props:React.HTMLProps<HTMLButtonElement>)=> {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,6 +7,10 @@ export const TelosButton =()=> {
       className="w-32"
       fill="none"
       viewBox="0 0 167 167"
+      tabIndex={0}
+      role="button"
+      
+      {...props as any}
     >
       <circle cx="83.5" cy="83.5" r="83.5" fill="url(#pattern0)"></circle>
       <defs>
@@ -29,7 +34,7 @@ export const TelosButton =()=> {
 }
 
 
-export const ReefButton=()=> {
+export const ReefButton=(props:React.HTMLProps<HTMLButtonElement>)=> {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +42,10 @@ export const ReefButton=()=> {
       className="w-32"
       fill="none"
       viewBox="0 0 167 167"
+      role="button"
+      tabIndex={0}
+      aria-labelledby='connect to Reef network'
+      {...props as any}
     >
       <circle cx="83.5" cy="83.5" r="83.5" fill="url(#pattern0)"></circle>
       <defs>
@@ -61,7 +70,7 @@ export const ReefButton=()=> {
 
 
 
-export const EthereumButton=()=>{
+export const EthereumButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -69,6 +78,11 @@ export const EthereumButton=()=>{
       className="w-32"
       fill="none"
       viewBox="0 0 167 167"
+      role="button"
+      tabIndex={0}
+      aria-labelledby='connect to the ethereum network'
+      {...props as any}
+
     >
       <circle cx="83.5" cy="83.5" r="83.5" fill="url(#pattern0)"></circle>
       <defs>
@@ -92,13 +106,17 @@ export const EthereumButton=()=>{
 }
 
 
-export const BinanceButton=()=>{
-  return (<button>
+export const BinanceButton=(props:React.HTMLProps<HTMLButtonElement>)=>{
+  return (
       <svg xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       className="w-32"
       fill="none"
       viewBox="0 0 167 167"
+      role="button"
+      tabIndex={0}
+      aria-labelledby='connect to binance network'
+      {...props as any}
     >
       <circle cx="83.5" cy="83.5" r="83.5" fill="url(#pattern0)"></circle>
       <defs>
@@ -118,6 +136,6 @@ export const BinanceButton=()=>{
         ></image>
       </defs>
     </svg>
-  </button>)
+  )
 }
 

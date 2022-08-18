@@ -3,9 +3,9 @@ import DropDown from './DropDown'
 
 export default function PriceHistoryDropDown() {
   return (
-    <div className='mt-4'>
+    <div className='mt-2 md:mt-4'>
         <DropDown label="Price History">
-          <ul className='flex bg-[#c7c7c7] w-8/12 p-2 justify-between rounded-full font-semibold'>
+          <ul className='flex bg-[#c7c7c7] md:w-8/12 p-2 justify-between rounded-full font-semibold'>
               <li>1h</li>
               <li>24h</li>
               <li>1w</li>

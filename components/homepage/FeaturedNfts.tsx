@@ -1,5 +1,5 @@
 import React from 'react'
-import { captureRejectionSymbol } from 'stream'
+import { useRouter } from 'next/router'
 export type FeaturedNft={
   name:string,
   description:string,
@@ -11,9 +11,7 @@ type props ={
 export default function FeaturedNfts({featuredNfts}:props) {
   
   
-  const [name,setName]=React.useState(featuredNfts[0].name)
-  const [description,setDescription]=React.useState(featuredNfts[0].description)
-  const [imageUrl,setImageUrl]=React.useState(featuredNfts[0].imageUrl)
+  const router=useRouter();
   const current=React.useRef(0)
   const [currentIndex,setCurrentIndex]=React.useState(0)
   
@@ -32,17 +30,11 @@ export default function FeaturedNfts({featuredNfts}:props) {
      
     }
   
-    // setImageUrl(featuredNfts[current.current].imageUrl)
-    // setName(featuredNfts[current.current].name)
-    // setDescription(featuredNfts[current.current].description) 
+    
     
     current.current=current.current + 1 
     setCurrentIndex(current.current + 1)
 
-    
-      
-     
-    
     
     
        
@@ -55,19 +47,21 @@ export default function FeaturedNfts({featuredNfts}:props) {
     <>
   
    {featuredNfts.map(({name,imageUrl,description},index)=>(
-      <div key={index} className={`py-6 px-10 flex space-x-6 lg:h-[400px] ${!(index === (currentIndex -2))?'hidden':'visible'} '`}>
+      <div key={index} className={`flex flex-col md:flex-row md:space-x-6  ${!(index === (currentIndex -2))?'hidden':'visible'} '`}>
      
-      <div className=''>
-          <h1 className="text-4xl font-extrabold text-brandbrown mb-5 w-[10ch]">{name}</h1>
-          <p className='w-[50ch]'>{description}</p>
-      <button className=' font-semibold bg-brandyellow text-black py-2 px-6 rounded mt-10'>Explore Collection</button>
+      
+        <div className='py-6 md:py-0  md:block  w-full h-[400px] md:order-2 md:ml-12 md:mt-2 md:pl-16 '>
+          <img src={`${imageUrl}`} className='w-full h-full rounded-t-2xl object-cover '/>
+        
         </div>
-        <div className='pl-20 w-full h-full'>
-          <img src={`${imageUrl}`} className='w-full h-full'/>
+        <div className='px-6 md:px-0  md:order-1 md:mt-8'>
+          <h1 className="text-2xl md:text-4xl font-extrabold text-brandbrown mb-5 md:w-[10ch]">{name}</h1>
+          <p className='md:w-[50ch]'>{description}</p>
+      <button className=' font-semibold bg-brandyellow text-black py-2 px-6 rounded mt-10' onClick={()=>{router.push(`/collection/${name.replace(/\s/g,'').toLowerCase()}`)}}>Explore Collection</button>
         </div>
   </div>  
    ))}
-  <div className='mb-5 flex space-x-2 justify-center'>
+  <div className='invisible md:visible my-5 flex space-x-2 justify-center'>
    
     {featuredNfts.map((_,index)=>(<div key={index} className={`w-[50px] p-1 ${!(index === (currentIndex -2))?'bg-[#6F6F6F]':'bg-[#eee]'}  `}></div>))}
   </div>

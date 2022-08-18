@@ -10,6 +10,9 @@ import PropertiesDropDown, { Feature } from '../../components/nftPage/Properties
 import DetailsDropDown from '../../components/nftPage/DetailsDropDown';
 import PriceHistoryDropDown from '../../components/nftPage/PriceHistoryDropDown';
 import MoreCollections from '../../components/nftPage/MoreCollections';
+import useWindowSize from '../../hooks/useWindowSize';
+import LikeButton from '../../components/nftPage/LikeButton';
+import MobileLikeAndShare from '../../components/nftPage/MobileLikeAndShare';
 
 type props={
   imageUri:string,
@@ -27,16 +30,19 @@ type props={
   categories:string[]
 }
 export default function nft({categories,imageUri,name,id,creator,details,features,mintAddress,tokenAddress,ownerAddress,royaltyPercentage,transactionFeePercentage,marketplaceFee}:props) {
+ const size=useWindowSize()
   return (
     <>
-    <div className='flex'>
-      <div className='w-5/12'>
-           <img src={imageUri} className="w-full  object-fit rounded-lg"/>
-           <PriceHistoryDropDown/>
+    <div className='flex flex-col md:flex-row px-4 md:px-0'>
+      <div className='md:w-5/12'>
+           <img src={imageUri} className="mt-4 md:mt-0 w-full  object-fit rounded-lg"/>
+        {size.width&&size.width >=765&&(<PriceHistoryDropDown/>)}   
           
            
       </div>
-      <div className='pl-16'>
+      <div className='md:pl-16'>
+      {size.width&&size.width <765&&(<MobileLikeAndShare/>)}
+     
       <SimpleInfo name={name} id={id} creator={creator} details={details}/>
       <PriceTag currentPrice='5.00' highestBid='8.00' coinName='BNB'/>
       <SocialLinks discord="" twitter='' website='' watchCount=''/>
@@ -44,17 +50,18 @@ export default function nft({categories,imageUri,name,id,creator,details,feature
       <div className='mt-16'>
         <PropertiesDropDown features={features}/>
         <DetailsDropDown mintAddress={mintAddress} tokenAddress={tokenAddress} ownerAddress={ownerAddress} royaltyPercentage={royaltyPercentage} transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee}/>
-        
+        {size.width&&size.width < 765&&(<PriceHistoryDropDown/>)}   
       </div>
       <CategoryCard categories={categories}/>
       
      
       </div>
+      {size.width&&size.width >= 765&&(<LikeButton/>)}   
      
 
      
     </div>
-    <MoreCollections/>
+     <MoreCollections />
     </>
   )
 }
