@@ -12,10 +12,10 @@ export default function useContract() {
   const [contract, setContract] = useState<ArtreusMarketplace | undefined>();
 
   useEffect(() => {
-    if (app.provider && app.connected) {
+    if (app.provider) {
       const instance = ArtreusMarketplace__factory.connect(
         CAD_TEST_ADDRESS,
-        app.signer
+        app.provider
       );
 
       setContract(instance);
