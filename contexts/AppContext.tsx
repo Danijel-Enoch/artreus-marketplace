@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {ethers} from "ethers"
+import { ethers } from "ethers"
 import Web3Modal from "web3modal"
 
 type VALUES = {
     provider: any | null,
+    signer: any | null,
     account: string,
     connected: boolean,
     logOut: () => void,
@@ -12,10 +13,11 @@ type VALUES = {
 
 const defaultValues: VALUES = {
     provider: null,
+    signer: null,
     account: "",
     connected: false,
-    logOut: ()=>{},
-    logIn: ()=>{},
+    logOut: () => { },
+    logIn: () => { },
 }
 
 const AppContext = React.createContext(defaultValues);
@@ -23,6 +25,7 @@ const AppContext = React.createContext(defaultValues);
 export const AppContextProvider = ({ children }) => {
     const [account, setAccount] = useState(defaultValues.account);
     const [provider, setProvider] = useState(defaultValues.provider);
+    const [signer, setSigner] = useState(defaultValues.signer);
     const [connected, setConnected] = useState(defaultValues.connected);
     const [web3Modal, setWeb3Modal] = useState<any>(null);
 
@@ -38,24 +41,24 @@ export const AppContextProvider = ({ children }) => {
         // Subscribe to accounts change
         instance.on("accountsChanged", (accounts: string[]) => {
             console.log(accounts);
-            if(accounts.length > 0){
+            if (accounts.length > 0) {
                 setAccount(accounts[0]);
                 return;
             }
             logOut();
         });
-    
+
         // Subscribe to chainId change
         instance.on("chainChanged", (chainId: number) => {
             console.log(chainId);
         });
-        
+
         // Subscribe to instance connection
         instance.on("connect", (info: { chainId: number }) => {
             console.log(info);
             setConnected(true);
         });
-        
+
         // Subscribe to instance disconnection
         instance.on("disconnect", (error: { code: number; message: string }) => {
             console.log(error);
@@ -63,14 +66,16 @@ export const AppContextProvider = ({ children }) => {
         });
 
         const provid = new ethers.providers.Web3Provider(instance)
-        
+        const _signer = provid.getSigner();
+
         const accs = await provid.listAccounts();
         setAccount(accs[0]);
         setConnected(true);
         setProvider(provid);
+        setSigner(_signer);
     }, [logOut, web3Modal]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const _web3Modal = new Web3Modal({
             cacheProvider: true, // optional
             providerOptions: {},
@@ -80,12 +85,13 @@ export const AppContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <AppContext.Provider 
+        <AppContext.Provider
             value={{
                 ...defaultValues,
                 account,
                 connected,
                 provider,
+                signer,
                 logOut,
                 logIn
             }}
