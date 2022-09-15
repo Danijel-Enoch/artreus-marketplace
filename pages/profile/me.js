@@ -2,6 +2,7 @@ import React,{Fragment} from 'react'
 import { Tab } from "@headlessui/react";
 import Image from "next/image"
 import ProfileCollectionCard from "../../components/profile/ProfileCollectionCard";
+import Link from 'next/link';
 
 function Profile({profileCollection}) {
     return (
@@ -39,13 +40,17 @@ function Profile({profileCollection}) {
                             <Tab.Panel>
                                 <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                 {profileCollection.map(({name,imageUri,description},index)=>(
-                                <ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/>
+                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1">
+                                    <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/></a>
+                                </Link>
                                 ))}
                          </div>
                             </Tab.Panel>
                             <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                 {profileCollection.map(({name,imageUri,description},index)=>(
-                                <ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/>
+                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1">
+                                    <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/></a>
+                                </Link>
                                 ))}
                             </div>
                             <Tab.Panel>
