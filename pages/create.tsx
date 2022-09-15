@@ -58,7 +58,7 @@ export default function Create() {
   }
 
   const handleSubmit = async () => {
-
+      console.log(fileObject)
     if (!contract) return;
     // Upload to Pinata or IPFS or our server, 
     // const uri = uploadToSERVER(fileObject, name, desc, ethers.utils.formatEther(royalty))
