@@ -89,19 +89,20 @@ export default function Create() {
         <div>
           <div className='flex flex-col'>
             <UploadButton handleChange={handleImageUrlChange} />
-            <ConnectionBar />
+            {/* <ConnectionBar /> */}
           </div>
 
           <div>
-            <Title>Sell on Marketplace</Title>
-            <p className='text-[#00000080]'>Enter price to allow users easily purchase your NFT</p>
+            {/* <Title>Sell on Marketplace</Title>
+            <p className='text-[#00000080]'>Enter price to allow users easily purchase your NFT</p> */}
+            
             {/* <div className='flex space-x-2 md:space-x-4 mt-4 mb-4'>
               <PriceTypeButton title='Fixed Price' onClick={() => setActivePriceButton('Fixed Price')} active={activePriceButton === 'Fixed Price' ? true : false} />
               <PriceTypeButton title='Open Bid' onClick={() => setActivePriceButton('Open Bid')} active={activePriceButton === 'Open Bid' ? true : false} />
               <PriceTypeButton title='Timed Auction' onClick={() => setActivePriceButton('Timed Auction')} logo='time' active={activePriceButton === 'Timed Auction' ? true : false} />
 
             </div> */}
-            <PriceForApeice handleChange={handleChange} />
+            {/* <PriceForApeice handleChange={handleChange} /> */}
             <div className='mt-4 mb-4 md:mt-8 space-x-4'>
               <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
                 Service fee {fee}%
@@ -120,7 +121,8 @@ export default function Create() {
 
             </div> */}
             <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} />
-            <Input placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange} />
+            {/* <Input placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange} /> */}
+            <textarea className='placeholder-black/50 block bg-[#AEACAB] w-full p-2 mt-2 rounded-md' rows="4" placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange}></textarea>
             <Input placeholder='10' label="Royalties %" type='number' onChange={handleRoyaltyChange} />
 
             <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
