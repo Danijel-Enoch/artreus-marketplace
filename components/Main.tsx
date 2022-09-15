@@ -7,6 +7,7 @@ import DesktopNav from './nav/DesktopNav';
 import MobileNav from './nav/MobileNav';
 import MobileMenuNav from './nav/MobileMenuNav';
 import MobileSearchBar from './nav/MobileSearchBar';
+import Image from 'next/image';
 export default function Main({children}:{children:React.ReactNode}) {
   const router=useRouter()
   const size=useWindowSize();
@@ -18,7 +19,10 @@ export default function Main({children}:{children:React.ReactNode}) {
     <>
     {!showMobileSearch&&(  <header className='flex  justify-between py-4 px-6 bg-brandbrown  '>
        <button className='b lock' onClick={()=>{router.push('/')}} >
-       <Logo className='h-7 '/>
+       {/* <Logo className='h-7 '/> */}
+       <div className='w-32 h-5 relative'>
+        <Image src={`/ArtLogo.png`}  layout='fill'/>
+       </div>
         
       </button>
       <div>
