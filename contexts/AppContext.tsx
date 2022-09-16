@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ethers } from "ethers"
 import Web3Modal from "web3modal"
+import { toast } from 'react-toastify'
 
 type VALUES = {
     provider: any | null,
@@ -22,6 +23,8 @@ const defaultValues: VALUES = {
 
 const AppContext = React.createContext(defaultValues);
 
+const snackbar = () => toast.success("Wallet Connected")
+
 export const AppContextProvider = ({ children }) => {
     const [account, setAccount] = useState(defaultValues.account);
     const [provider, setProvider] = useState(defaultValues.provider);
@@ -37,6 +40,7 @@ export const AppContextProvider = ({ children }) => {
 
     const logIn = useCallback(async () => {
         const instance = await web3Modal.connect();
+        snackbar()
 
         // Subscribe to accounts change
         instance.on("accountsChanged", (accounts: string[]) => {
