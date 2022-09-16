@@ -7,29 +7,30 @@ import { toast } from 'react-toastify'
 import {useAppContext} from "../../contexts/AppContext"
 import axios from 'axios';
 
-function Profile({profileCollection}) {
+
+function Profile({data}) {
         const app=useAppContext()
         //but user wallet must  connected
-        const walletAddress=app.signer.getAddress();
+        // const walletAddress=app.signer.getAddress();
 
     // const notify = () => (
     //     toast.success("Success Notification !", {
     //         position: toast.POSITION.TOP_CENTER
     //       })
     // );
-    var config = {
-        method: 'get',
-        url: 'https://artreuss.herokuapp.com/v1/nft/',
-        headers: { }
-      };
+    // var config = {
+    //     method: 'get',
+    //     url: 'https://artreuss.herokuapp.com/v1/nft/',
+    //     headers: { }
+    //   };
       
-      axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });      
+    //   axios(config)
+    //   .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });   
 
     return (
         <section className='w-full'>
@@ -65,20 +66,20 @@ function Profile({profileCollection}) {
                         <Tab.Panels>
                             <Tab.Panel>
                                 <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                                {profileCollection.map(({name,imageUri,description},index)=>(
-                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
-                                    <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/></a>
+                                {data.result.map((nfts)=>(
+                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={nfts.id}>
+                                    <a><ProfileCollectionCard key={nfts.id} name={nfts.name} description={nfts.description} imageUri={`ipfs.tech://bafybeic4pzf356brbf2ygfybxduekgo5ph3zig7erqy6ndast5tan7akdu/4.jpg`}/></a>
                                 </Link>
                                 ))}
                          </div>
                             </Tab.Panel>
-                            <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
+                            {/* <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                 {profileCollection.map(({name,imageUri,description},index)=>(
                                 <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
                                     <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/></a>
                                 </Link>
                                 ))}
-                            </div>
+                            </div> */}
                             <Tab.Panel>
                                 
                             </Tab.Panel>
@@ -96,14 +97,32 @@ function Profile({profileCollection}) {
 export default Profile;
 
 export async function getServerSideProps(){
-    let profileCollection = Array.from(Array(20).keys())
-    profileCollection= profileCollection.map(()=>({
-        name:"Okay Bears",
-        description:"The Okay bears is a collection  of Nft mutants and heroes.... ",
-        imageUri:"https://lh3.googleusercontent.com/P-g6dOO3CBlXwgh7ZGVmt6gjkw09E6XcanRxSHeVO9jX7MFN5_aSRoMrG3dsbYqpYjb9cPQaWEnbw3eF40T1y1gO-GRbaaG9ZyHfGw=w302"
-    }))
-  return{props:{
-      profileCollection
+//     let profileCollection = Array.from(Array(20).keys())
+//     profileCollection= profileCollection.map(()=>({
+//         name:"Okay Bears",
+//         description:"The Okay bears is a collection  of Nft mutants and heroes.... ",
+//         imageUri:"https://lh3.googleusercontent.com/P-g6dOO3CBlXwgh7ZGVmt6gjkw09E6XcanRxSHeVO9jX7MFN5_aSRoMrG3dsbYqpYjb9cPQaWEnbw3eF40T1y1gO-GRbaaG9ZyHfGw=w302"
+//     }))
+//   return{props:{
+//       profileCollection
+//     }
+//   }
+
+// var config = {
+//     method: 'get',
+//     url: 'https://artreuss.herokuapp.com/v1/nft/',
+//     headers: { }
+//   };
+
+ const response = await fetch(`https://artreuss.herokuapp.com/v1/nft/`)   
+ const data = await response.json()
+
+ console.log(data)
+
+ return {
+    props: {
+        data,
     }
-  }
+ }
+
 }
