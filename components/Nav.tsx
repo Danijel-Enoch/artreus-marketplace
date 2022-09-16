@@ -67,7 +67,7 @@ export default function Nav() {
         <li className='ml-6 mr-3 flex justify-center items-center '>Networks <DropDown/></li>
         <li className='flex justify-center items-center '><Menu/>All</li> */}
         <li ><div className='p-3 rounded-full bg-white ml-4'></div></li>
-        <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={app.connected ? app.logOut : app.logIn}>{app.connected ? "Disconnect Walet" : "Connect Wallet"}</button></li>
+        <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={app.connected ? app.logOut : app.logIn}>{app.connected ? "Disconnect Wallet" : "Connect Wallet"}</button></li>
 
       </ul>
     </nav>

@@ -115,7 +115,8 @@ axios(config)
     const myRenamedFile = new File([image[0]], 'my-file-final-1-really.png');
    console.log(image)
       cid = await storeFiles(image);
-     console.log(cid)
+     console.log(cid) //add snack bar here
+     
      //makeFileObjects(cid, image[0].name);
      console.log("Image Cid: "+cid)
      const obj = {
@@ -184,9 +185,12 @@ axios(config)
       console.log("receipt", receipt);
         UploadToDb(name,desc,data[2],data[1],owner,"Nft")
         alert("NFT minted successful")
+           //add snack bar here
+
         return receipt
         }catch(mint_error:any){
           alert("minting error");
+            //Add snack bar here
             console.log(mint_error)
         }
         

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ethers } from "ethers"
 import Web3Modal from "web3modal"
+import Authereum from "authereum";
 
 type VALUES = {
     provider: any | null,
@@ -78,7 +79,11 @@ export const AppContextProvider = ({ children }) => {
     useEffect(() => {
         const _web3Modal = new Web3Modal({
             cacheProvider: true, // optional
-            providerOptions: {},
+            providerOptions: { authereum: {
+                package: Authereum // required
+              }, clvwallet: {
+                package: true
+              }},
         });
 
         setWeb3Modal(_web3Modal);
