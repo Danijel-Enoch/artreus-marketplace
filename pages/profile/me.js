@@ -4,15 +4,32 @@ import Image from "next/image"
 import ProfileCollectionCard from "../../components/profile/ProfileCollectionCard";
 import Link from 'next/link';
 import { toast } from 'react-toastify'
+import {useAppContext} from "../../contexts/AppContext"
+import axios from 'axios';
 
 function Profile({profileCollection}) {
+        const app=useAppContext()
+        //but user wallet must  connected
+        const walletAddress=app.signer.getAddress();
 
     // const notify = () => (
     //     toast.success("Success Notification !", {
     //         position: toast.POSITION.TOP_CENTER
     //       })
     // );
-
+    var config = {
+        method: 'get',
+        url: 'https://artreuss.herokuapp.com/v1/nft/',
+        headers: { }
+      };
+      
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });      
 
     return (
         <section className='w-full'>
