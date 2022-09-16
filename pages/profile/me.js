@@ -12,7 +12,8 @@ function Profile({profileCollection}) {
     //         position: toast.POSITION.TOP_CENTER
     //       })
     // );
-    
+
+
     return (
         <section className='w-full'>
             <div className='w-full'>

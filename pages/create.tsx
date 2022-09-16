@@ -14,6 +14,7 @@ import useContract from '../hooks/useContract';
 import { useAppContext } from '../contexts/AppContext';
 import { ethers } from 'ethers';
 import { Web3Storage } from 'web3.storage'
+import { toast } from 'react-toastify';
 
 
 const provider=new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
@@ -167,6 +168,15 @@ axios(config)
     setRoyalty(val)
   }
 
+  //snackbar notification for successful mint
+  const success = () => toast.success("NFT minted successfully")
+
+  //snackbar notification for unsuccessful mint
+  const error = () => toast.error("minting error")
+
+  //snackbar notification for wallet not connected
+  const walletNotConnected = () => toast.error("Wallet Not Connected")
+
   const handleSubmit = async () => {
      // console.log(fileObject.name);
      const data:any = await UploadImages(fileObject,name,desc,"image",fileObject.size)
@@ -184,13 +194,14 @@ axios(config)
       const receipt = await tx.wait();
       console.log("receipt", receipt);
         UploadToDb(name,desc,data[2],data[1],owner,"Nft")
-        alert("NFT minted successful")
-           //add snack bar here
+        // alert("NFT minted successful")
+           success()
+
 
         return receipt
         }catch(mint_error:any){
-          alert("minting error");
-            //Add snack bar here
+        // alert("minting error")
+          error()
             console.log(mint_error)
         }
         
