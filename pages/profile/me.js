@@ -68,18 +68,18 @@ function Profile({data}) {
                                 <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                 {data.result.map((nfts)=>(
                                 <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={nfts.id}>
-                                    <a><ProfileCollectionCard key={nfts.id} name={nfts.name} description={nfts.description} imageUri={`ipfs.tech://bafybeic4pzf356brbf2ygfybxduekgo5ph3zig7erqy6ndast5tan7akdu/4.jpg`}/></a>
+                                    <a><ProfileCollectionCard key={nfts.id} name={nfts.name} description={nfts.description} imageUri={`https://ipfs.io/ipfs/bafybeic4pzf356brbf2ygfybxduekgo5ph3zig7erqy6ndast5tan7akdu/4.jpg`}/></a>
                                 </Link>
                                 ))}
                          </div>
                             </Tab.Panel>
-                            {/* <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
+                            <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                 {profileCollection.map(({name,imageUri,description},index)=>(
                                 <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
                                     <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/></a>
                                 </Link>
                                 ))}
-                            </div> */}
+                            </div>
                             <Tab.Panel>
                                 
                             </Tab.Panel>
