@@ -3,8 +3,16 @@ import { Tab } from "@headlessui/react";
 import Image from "next/image"
 import ProfileCollectionCard from "../../components/profile/ProfileCollectionCard";
 import Link from 'next/link';
+import { toast } from 'react-toastify'
 
 function Profile({profileCollection}) {
+
+    // const notify = () => (
+    //     toast.success("Success Notification !", {
+    //         position: toast.POSITION.TOP_CENTER
+    //       })
+    // );
+    
     return (
         <section className='w-full'>
             <div className='w-full'>
@@ -40,7 +48,7 @@ function Profile({profileCollection}) {
                             <Tab.Panel>
                                 <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                 {profileCollection.map(({name,imageUri,description},index)=>(
-                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1">
+                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
                                     <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/></a>
                                 </Link>
                                 ))}
@@ -48,7 +56,7 @@ function Profile({profileCollection}) {
                             </Tab.Panel>
                             <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                 {profileCollection.map(({name,imageUri,description},index)=>(
-                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1">
+                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
                                     <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri}/></a>
                                 </Link>
                                 ))}
