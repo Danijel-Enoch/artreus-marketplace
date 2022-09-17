@@ -6,10 +6,15 @@ import Link from 'next/link';
 import { toast } from 'react-toastify'
 import {useAppContext} from "../../contexts/AppContext"
 import axios from 'axios';
-
+let globalWallet;
 
 function Profile({data}) {
         const app=useAppContext()
+        const profileCollection=[]
+let  walletAddress=app.connected ? app.account: "Connect Wallet"
+        console.log(typeof walletAddress)
+        globalWallet=walletAddress;
+
         //but user wallet must  connected
         // const walletAddress=app.signer.getAddress();
 
@@ -41,7 +46,7 @@ function Profile({data}) {
                     </div>
                     
                     <div className="pt-4">
-                        <h2 className="text-3xl font-medium">0x57ab...734c</h2>
+                        <h2 className="text-3xl font-medium">{walletAddress}</h2>
                     </div>
 
                 <Tab.Group>
@@ -66,11 +71,11 @@ function Profile({data}) {
                         <Tab.Panels>
                             <Tab.Panel>
                                 <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                                {data.result.map((nfts)=>(
-                                <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={nfts.id}>
-                                    <a><ProfileCollectionCard key={nfts.id} name={nfts.name} description={nfts.description} imageUri={`https://ipfs.io/ipfs/bafybeic4pzf356brbf2ygfybxduekgo5ph3zig7erqy6ndast5tan7akdu/4.jpg`}/></a>
+                                {data.result.map((nfts)=>
+                                <Link href={"/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f99/840/"+nfts.id} key={nfts.id}>
+                                    <a><ProfileCollectionCard key={nfts.id} name={nfts.name} description={nfts.description} imageUri={`https://ipfs.io/ipfs/`+nfts.imageUrl}/></a>
                                 </Link>
-                                ))}
+)}
                          </div>
                             </Tab.Panel>
                             <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
@@ -116,8 +121,10 @@ export async function getServerSideProps(){
 
  const response = await fetch(`https://artreuss.herokuapp.com/v1/nft/`)   
  const data = await response.json()
+ console.log(typeof data)
+const datan=data.result.filter((a)=>{if(a.collectionAddress=='0xd68C501158529eadA7D623974008F90758F2693D'){return a}});
+  console.log(typeof datan)
 
- console.log(data)
 
  return {
     props: {

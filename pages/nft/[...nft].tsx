@@ -13,7 +13,7 @@ import MoreCollections from '../../components/nftPage/MoreCollections';
 import useWindowSize from '../../hooks/useWindowSize';
 import LikeButton from '../../components/nftPage/LikeButton';
 import MobileLikeAndShare from '../../components/nftPage/MobileLikeAndShare';
-
+import axios from "axios"
 type props={
   imageUri:string,
   name:string,
@@ -28,6 +28,20 @@ type props={
   transactionFeePercentage:number,
   marketplaceFee:string,
   categories:string[]
+}
+const getNftFromApi=async(id:any)=>{
+  var requestOptions:any = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  
+  await fetch("https://artreuss.herokuapp.com/v1/nft/"+id, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      return result
+    })
+    .catch(error => console.log('error', error));
+
 }
 export default function nft({categories,imageUri,name,id,creator,details,features,mintAddress,tokenAddress,ownerAddress,royaltyPercentage,transactionFeePercentage,marketplaceFee}:props) {
  const size=useWindowSize()
@@ -48,11 +62,11 @@ export default function nft({categories,imageUri,name,id,creator,details,feature
       <SocialLinks discord="" twitter='' website='' watchCount=''/>
       <PurchaseButtons price='5.00' coinName='BNB'/>
       <div className='mt-16'>
-        <PropertiesDropDown features={features}/>
+        {/* <PropertiesDropDown features={features}/> */}
         <DetailsDropDown mintAddress={mintAddress} tokenAddress={tokenAddress} ownerAddress={ownerAddress} royaltyPercentage={royaltyPercentage} transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee}/>
-        {size.width&&size.width < 765&&(<PriceHistoryDropDown/>)}   
+        {/* {size.width&&size.width < 765&&(<PriceHistoryDropDown/>)}    */}
       </div>
-      <CategoryCard categories={categories}/>
+      {/* <CategoryCard categories={categories}/> */}
       
      
       </div>
@@ -68,66 +82,39 @@ export default function nft({categories,imageUri,name,id,creator,details,feature
 
 export async  function getServerSideProps(context:GetServerSidePropsContext){
   const params=context.params;
-  const path=params?.nft;
-  if(path){
+  const path:any=params?.nft;
+  //if(path){
     const network=path[0]
     const address=path[1]
     const tokenId=path[2]
-    if(supportedNetworts.includes(network)){
-      const imageUri="https://img.seadn.io/files/48b4bd2c10413cabb29bdb046de296bc.png?fit=max&w=600"
-      const name="CyberKong"
-      const id='840'
-      const categories=['games','music','pfp']
-     const mintAddress="0x63ddd..85858"
-    const tokenAddress="0x63ddd..85858"
-    const ownerAddress="0x63ddd..85858"
-    const royaltyPercentage=7;
-    const transactionFeePercentage=2;
-    const marketplaceFee="free"
-      const features:Feature[] =[{
-       featureType:"Background",
-       value:'blue'
-      },
-      {
-        featureType:"Base",
-        value:"red"
-      },{
-        featureType:"Body",
-        value:"Red"
-      },
-      {
-        featureType:"Eyes",
-        value:"high"
-      },
-      {
-        featureType:"Head",
-        value:"Plank"
-      },{
-        featureType:"Mouth",
-        value:"Percing"
-      }
-    ]
-      const creator="maybe_pennybags_vault"
-      const details="Welcome to an alternate reality, where evolution took a different route and weird apes roam the earth. Some appear normal. Some look weird. And some are just damn cool! Every CyberKong is unique and owns randomized items with different rarities. A few are super rare and even animated! Maybe some of them look familiar! "
+    const idnew=path[3]
+    let mine:any;
+    var requestOptions:any = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    const response=await fetch("https://artreuss.herokuapp.com/v1/nft/"+idnew, requestOptions)
+      const data=await response.json();
+      //console.log(await data.result.imageUrl)
+      
+
+  
       return{
         props:{
-         imageUri,
-         name,
-         id,
-         creator,
-         details,
-         features,
-         mintAddress,
-         tokenAddress,
-         ownerAddress,
-         royaltyPercentage,
-        transactionFeePercentage,
-         marketplaceFee,
-         categories
-         
+          imageUri:`https://ipfs.io/ipfs/`+data.result.imageUrl,
+          creator:data.result.owner,
+          details:data.result.description,
+          id:data.result.id,
+          mintAddress:data.result.collectionAddress,
+          tokenAddress:data.result.owner,
+          ownerAddress:data.result.owner,
+          royaltyPercentage:10,
+          transactionFeePercentage:10,
+          marketplaceFee:10
         }
       }
-  }
+  //}
   return{
     redirect: {
       permanent: false,
@@ -143,6 +130,6 @@ export async  function getServerSideProps(context:GetServerSidePropsContext){
   // }
   // ret
   
-  }
+//  }
 }
 
