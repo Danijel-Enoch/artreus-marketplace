@@ -6,6 +6,7 @@ import SocialLinks from '../../components/SocialLinks';
 import PurchaseButtons from '../../components/nftPage/PurchaseButtons';
 import CategoryCard from '../../components/nftPage/CategoryCard';
 import SimpleInfo from '../../components/nftPage/SimpleInfo';
+import ListNft from '../../components/nftPage/ListNft';
 import PropertiesDropDown, { Feature } from '../../components/nftPage/PropertiesDropDown';
 import DetailsDropDown from '../../components/nftPage/DetailsDropDown';
 import PriceHistoryDropDown from '../../components/nftPage/PriceHistoryDropDown';
@@ -27,7 +28,8 @@ type props={
   royaltyPercentage:number,
   transactionFeePercentage:number,
   marketplaceFee:string,
-  categories:string[]
+  categories:string[],
+  listed:boolean,
 }
 const getNftFromApi=async(id:any)=>{
   var requestOptions:any = {
@@ -38,17 +40,25 @@ const getNftFromApi=async(id:any)=>{
   await fetch("https://artreuss.herokuapp.com/v1/nft/"+id, requestOptions)
     .then(response => response.json())
     .then(result => {
+      console.log(result)
       return result
+
     })
     .catch(error => console.log('error', error));
 
+
 }
-export default function nft({categories,imageUri,name,id,creator,details,features,mintAddress,tokenAddress,ownerAddress,royaltyPercentage,transactionFeePercentage,marketplaceFee}:props) {
+export default function nft({categories,imageUri,name,id,creator,details,features,mintAddress,tokenAddress,ownerAddress,royaltyPercentage,transactionFeePercentage,marketplaceFee, listed}:props) {
  const size=useWindowSize()
   return (
     <>
     <div className='flex flex-col md:flex-row px-4 md:px-0'>
-      <div className='md:w-5/12'>
+      <div className='md:w-5/12 relative'>
+        <div className='absolute top-4 right-4 text-white bg-[rgba(0,0,0,0.6)] px-2 py-1 rounded-md'>
+          { 
+            listed ? "Listed" : "Not Listed"
+          }
+        </div>
            <img src={imageUri} className="mt-4 md:mt-0 w-full  object-fit rounded-lg"/>
         {size.width&&size.width >=765&&(<PriceHistoryDropDown/>)}   
           
@@ -58,7 +68,8 @@ export default function nft({categories,imageUri,name,id,creator,details,feature
       {size.width&&size.width <765&&(<MobileLikeAndShare/>)}
      
       <SimpleInfo name={name} id={id} creator={creator} details={details}/>
-      <PriceTag currentPrice='5.00' highestBid='8.00' coinName='BNB'/>
+      {/* <PriceTag currentPrice='5.00' highestBid='8.00' coinName='BNB'/> */}
+      <ListNft floorPrice='5.00' listingPrice='8.00' coinName='BNB' listed={listed}/>
       <SocialLinks discord="" twitter='' website='' watchCount=''/>
       <PurchaseButtons price='5.00' coinName='BNB'/>
       <div className='mt-16'>
@@ -96,6 +107,8 @@ export async  function getServerSideProps(context:GetServerSidePropsContext){
     
     const response=await fetch("https://artreuss.herokuapp.com/v1/nft/"+idnew, requestOptions)
       const data=await response.json();
+      let listed = (data.result.listed === 'true')
+      // console.log(data)
       //console.log(await data.result.imageUrl)
       
 
@@ -111,7 +124,8 @@ export async  function getServerSideProps(context:GetServerSidePropsContext){
           ownerAddress:data.result.owner,
           royaltyPercentage:10,
           transactionFeePercentage:10,
-          marketplaceFee:10
+          marketplaceFee:10,
+          listed
         }
       }
   //}
