@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-const NftCard=({name,tokenId,price,blockChain,contractAddress,imgUrl}:{blockChain:string,contractAddress:string,imgUrl:string,name:string,tokenId:string,price:string})=>{
+const NftCard=({name,tokenId,dbId,price,blockChain,contractAddress,imgUrl}:{blockChain:string,contractAddress:string,imgUrl:string,name:string,tokenId:string,price:string,dbId:any})=>{
   const router=useRouter() 
   return(
       <div className=''>
@@ -23,7 +23,7 @@ const NftCard=({name,tokenId,price,blockChain,contractAddress,imgUrl}:{blockChai
         ></path>
       </svg>
               <span className='ml-1 md:ml-2'>{price}</span></div>
-           <button onClick={()=>{router.push(`/nft/${blockChain}/${contractAddress}/${tokenId}`)}} className='border border-brandbrown py-1 px-4 md:px-6 rounded-md text-brandbrown font-semibold'>Details</button>
+           <button onClick={()=>{router.push(`/nft/${blockChain}/${contractAddress}/${dbId}`)}} className='border border-brandbrown py-1 px-4 md:px-6 rounded-md text-brandbrown font-semibold'>Details</button>
           </div>
         </div>
         

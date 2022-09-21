@@ -15,7 +15,7 @@ import { useAppContext } from '../contexts/AppContext';
 import { ethers } from 'ethers';
 import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
-
+import { MINTER_CONTRACT } from '../config/constants';
 
 const provider=new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
@@ -67,7 +67,7 @@ var data ={
   "auctioned": "false",
   "owner": owner,
   "categories": categories,
-  "collectionAddress": "0xd68C501158529eadA7D623974008F90758F2693D"
+  "collectionAddress": MINTER_CONTRACT
 };
 
 var config = {
@@ -184,7 +184,7 @@ axios(config)
      const owner:any =await _signer.getAddress();
      console.log( owner)
      try{
-      const address = "0x9Ba2fc37D6E22634852695993175Cdf5bfD105D5";
+      const address = MINTER_CONTRACT;
       const abi = [
       "function mint(string uri) payable returns (uint256)"
       ];
@@ -257,9 +257,9 @@ axios(config)
               <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
                 Service fee {fee}%
               </button>
-              <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
+              {/* <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
                 You will get {amount - (amount * (fee / 100))}
-              </button>
+              </button> */}
 
             </div>
             {/* <div className='flex justify-between my-6 md:mt-6'>

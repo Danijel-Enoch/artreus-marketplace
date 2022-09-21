@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {GetServerSidePropsContext} from 'next'
 import supportedNetworts from '../../supportedNetworks.json';
 import PriceTag from '../../components/nftPage/PriceTag';
@@ -15,7 +15,14 @@ import useWindowSize from '../../hooks/useWindowSize';
 import LikeButton from '../../components/nftPage/LikeButton';
 import MobileLikeAndShare from '../../components/nftPage/MobileLikeAndShare';
 import axios from "axios"
-type props={
+import { useAppContext } from '../../contexts/AppContext';
+import {ethers} from  "ethers"
+import {MINTER_CONTRACT}  from "../../config/constants"
+
+const provider=new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
+const _signer = provider.getSigner();
+
+  type props={
   imageUri:string,
   name:string,
   id:string,
@@ -29,8 +36,9 @@ type props={
   transactionFeePercentage:number,
   marketplaceFee:string,
   categories:string[],
-  listed:boolean,
+  jsonUri:string,
 }
+
 const getNftFromApi=async(id:any)=>{
   var requestOptions:any = {
     method: 'GET',
@@ -46,9 +54,80 @@ const getNftFromApi=async(id:any)=>{
     })
     .catch(error => console.log('error', error));
 
-
 }
-export default function nft({categories,imageUri,name,id,creator,details,features,mintAddress,tokenAddress,ownerAddress,royaltyPercentage,transactionFeePercentage,marketplaceFee, listed}:props) {
+export default function nft({categories,jsonUri,imageUri,name,id,creator,details,features,mintAddress,tokenAddress,ownerAddress,royaltyPercentage,transactionFeePercentage,marketplaceFee}:props) {
+  const app=useAppContext()
+  const [price,setprice]=useState()
+  const [listed,setListed]=useState(false)
+  const [data, setdata] = useState("");
+  const [creators, setCreator] = useState("")
+
+
+
+    async function main() {
+
+
+      if (app.connected) {
+          try {
+              const l = await getUserNft()
+              // const nftsId = 
+              setCreator(l[0][1])
+                  // console.log()
+                  var requestOptions:any = {
+                      method: 'GET',
+                      redirect: 'follow'
+                  };
+                  //  console.log(l)
+                  const newerData:any = 
+                    fetch("https://ipfs.io/ipfs/" + l[0][2], requestOptions)
+                      .then(response =>response.json())
+                      .catch(error => console.log('error', error))
+                      
+
+                   setdata(await newerData)
+              //setdata(await Promise.all(newerData))
+             //console.log(data)
+          } catch (e) {
+              console.log(e)
+          }
+
+      }
+  }
+  main()
+
+
+
+  async function getUserNft() {
+      const address = MINTER_CONTRACT;
+      const abi = [
+          "function getUserNft(address user_address) view returns (tuple(uint256 id, address creator, string uri)[])"
+      ];
+      try{
+      const contract = new ethers.Contract(address, abi, app.signer);
+      const data = await contract.functions.getUserNft(app.account);
+
+      console.log(data);
+      const nft = data[0].filter((e) => {
+       // console.log(id)
+        if(e[0].toString()===(id).toString()) return ({
+              "id": e[0].toString(),
+              "metadata": e[2]
+          })
+      })
+      // console.log(nft)
+      return nft
+    }catch(e){
+      console.log(e)
+    }
+
+
+  }
+
+ 
+  // app.account;
+
+//console.log(id)
+
  const size=useWindowSize()
   return (
     <>
@@ -59,7 +138,7 @@ export default function nft({categories,imageUri,name,id,creator,details,feature
             listed ? "Listed" : "Not Listed"
           }
         </div>
-           <img src={imageUri} className="mt-4 md:mt-0 w-full  object-fit rounded-lg"/>
+           <img src={"https://ipfs.io/ipfs/" + data.image_url} className="mt-4 md:mt-0 w-full  object-fit rounded-lg"/>
         {size.width&&size.width >=765&&(<PriceHistoryDropDown/>)}   
           
            
@@ -67,14 +146,14 @@ export default function nft({categories,imageUri,name,id,creator,details,feature
       <div className='md:pl-16'>
       {size.width&&size.width <765&&(<MobileLikeAndShare/>)}
      
-      <SimpleInfo name={name} id={id} creator={creator} details={details}/>
-      {/* <PriceTag currentPrice='5.00' highestBid='8.00' coinName='BNB'/> */}
-      <ListNft floorPrice='5.00' listingPrice='8.00' coinName='BNB' listed={listed}/>
+      <SimpleInfo name={name} id={id} creator={creator} details={data.description}/>
+      <PriceTag currentPrice='5.00' highestBid='8.00' coinName='BNB'/>
+      <ListNft floorPrice='5' dbId={id} jsonUri={jsonUri} mintAddress={mintAddress} listingPrice='0.02' coinName='CAD' listed={setListed}/>
       <SocialLinks discord="" twitter='' website='' watchCount=''/>
-      <PurchaseButtons price='5.00' coinName='BNB'/>
+      <PurchaseButtons price='5.00' coinName='CAD'/>
       <div className='mt-16'>
         {/* <PropertiesDropDown features={features}/> */}
-        <DetailsDropDown mintAddress={mintAddress} tokenAddress={tokenAddress} ownerAddress={ownerAddress} royaltyPercentage={royaltyPercentage} transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee}/>
+        <DetailsDropDown mintAddress={creators} tokenAddress={tokenAddress} ownerAddress={app.account} royaltyPercentage={royaltyPercentage} transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee}/>
         {/* {size.width&&size.width < 765&&(<PriceHistoryDropDown/>)}    */}
       </div>
       {/* <CategoryCard categories={categories}/> */}
@@ -100,14 +179,7 @@ export async  function getServerSideProps(context:GetServerSidePropsContext){
     const tokenId=path[2]
     const idnew=path[3]
     let mine:any;
-    var requestOptions:any = {
-      method: 'GET',
-      redirect: 'follow'
-    };
-    
-    const response=await fetch("https://artreuss.herokuapp.com/v1/nft/"+idnew, requestOptions)
-      const data=await response.json();
-      let listed = (data.result.listed === 'true')
+   
       // console.log(data)
       //console.log(await data.result.imageUrl)
       
@@ -115,17 +187,17 @@ export async  function getServerSideProps(context:GetServerSidePropsContext){
   
       return{
         props:{
-          imageUri:`https://ipfs.io/ipfs/`+data.result.imageUrl,
-          creator:data.result.owner,
-          details:data.result.description,
-          id:data.result.id,
-          mintAddress:data.result.collectionAddress,
-          tokenAddress:data.result.owner,
-          ownerAddress:data.result.owner,
+          imageUri:"",
+          creator:"",
+          details:"",
+          jsonUri:"",
+          id:idnew,
+          mintAddress:"",
+          tokenAddress:"",
+          ownerAddress:"",
           royaltyPercentage:10,
           transactionFeePercentage:10,
           marketplaceFee:10,
-          listed
         }
       }
   //}

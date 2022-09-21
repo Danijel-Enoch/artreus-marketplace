@@ -42,22 +42,20 @@ export default function collection({name,details,imgUrl,attributes,nfts}:props) 
 }
 export async function getServerSideProps(){
     const name='Bored Ape Yatch Club'
-    let nfts:Nft[]=Array.from(Array(12).keys())as unknown as Nft[]
-    nfts= nfts.map(()=>({
-        name:"Bored Ape",
-        tokenId:"1",
-        price:"2.00",
-        imgUrl:"https://img.seadn.io/files/e2ad61c67d6bfcc3460e42466cc9b5de.png?auto=format&fit=max&w=384"
-    }))
-
-    const attributes=['background','eyes','fur','Mouth','clothes','hat','cot','ground','heroes']
-    const imgUrl="https://lh3.googleusercontent.com/i5dYZRkVCUK97bfprQ3WXyrT9BnLSZtVKGJlKQ919uaUB0sxbngVCioaiyu9r6snqfi2aaTyIvv6DHm4m2R3y7hMajbsv14pSZK8mhs=h600"
-    const details="Advised by the former Head of Twitter Gaming and Sport, we are  launching the worlds first ever NFTs as Esports Teams, allowing holders to start and grow their own Esports teams, earn $USDC from them and then auction them for a multiplier of the earning potential just like a business."
+    var requestOptions:any = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    const response=await fetch("https://artreuss.herokuapp.com/v1/nft/", requestOptions)
+    const data=await response.json();
+    let listed = data.result.filter((e:any)=>e.listed==="true")
+    console.log(listed)
     return {props :{
-        name,
-        details,
-        imgUrl,
-        attributes,
-        nfts
+        name:"DAniel",
+        details:"dabeuksdfkj",
+        imgUrl:"welocm",
+        attributes:["jksjdg","jskdjfshk","jskdjfk"],
+        nfts:listed
     }}
 }
