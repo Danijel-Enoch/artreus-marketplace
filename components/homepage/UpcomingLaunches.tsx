@@ -1,6 +1,5 @@
 import React from 'react'
 import SectionTitle from '../SectionTitle'
-import BluredBox from './BluredBox'
 import CollectionBody from './CollectionBody'
 import CollectionHeader from './CollectionHeader'
 import NftCollectionCard from './NftCollectionCard'
