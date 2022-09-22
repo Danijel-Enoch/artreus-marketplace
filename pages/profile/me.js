@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { useAppContext } from "../../contexts/AppContext"
 import axios from 'axios';
 import { ethers } from "ethers"
-import { retrieve, deconstructCid } from "./utils"
+import { retrieve, deconstructCid } from "../../utils/utils"
 import { MINTER_CONTRACT } from "../../config/constants"
 let globalWallet;
 
