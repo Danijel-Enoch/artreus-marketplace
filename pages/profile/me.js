@@ -39,7 +39,7 @@ function Profile() {
 
                 })
                 setdata(await Promise.all(newerData))
-                console.log(data[0])
+                // console.log(data[0])
             } catch (e) {
                 console.log(e)
             }

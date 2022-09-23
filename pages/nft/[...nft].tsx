@@ -58,7 +58,7 @@ const getNftFromApi=async(id:any)=>{
 export default function nft({categories,jsonUri,imageUri,name,id,creator,details,features,mintAddress,tokenAddress,ownerAddress,royaltyPercentage,transactionFeePercentage,marketplaceFee}:props) {
   const app=useAppContext()
   const [price,setprice]=useState()
-  const [listed,setListed]=useState(false)
+  const [listed,setListed]=useState(true)
   const [data, setdata] = useState("");
   const [creators, setCreator] = useState("")
 
@@ -106,7 +106,7 @@ export default function nft({categories,jsonUri,imageUri,name,id,creator,details
       const contract = new ethers.Contract(address, abi, app.signer);
       const data = await contract.functions.getUserNft(app.account);
 
-      console.log(data);
+    //  console.log(data);
       const nft = data[0].filter((e) => {
        // console.log(id)
         if(e[0].toString()===(id).toString()) return ({
@@ -150,7 +150,7 @@ export default function nft({categories,jsonUri,imageUri,name,id,creator,details
       <PriceTag currentPrice='5.00' highestBid='8.00' coinName='BNB'/>
       <ListNft floorPrice='5' dbId={id} jsonUri={jsonUri} mintAddress={mintAddress} listingPrice='0.02' coinName='CAD' listed={setListed}/>
       <SocialLinks discord="" twitter='' website='' watchCount=''/>
-      <PurchaseButtons price='5.00' coinName='CAD'/>
+      <PurchaseButtons price='5.00' nftId={id} contractId={MINTER_CONTRACT} coinName='CMP'/>
       <div className='mt-16'>
         {/* <PropertiesDropDown features={features}/> */}
         <DetailsDropDown mintAddress={creators} tokenAddress={tokenAddress} ownerAddress={app.account} royaltyPercentage={royaltyPercentage} transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee}/>
