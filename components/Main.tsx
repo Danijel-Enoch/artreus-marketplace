@@ -17,7 +17,7 @@ export default function Main({children}:{children:React.ReactNode}) {
  
   return (
     <>
-    {!showMobileSearch&&(  <header className='flex  justify-between py-4 px-6 bg-brandbrown  '>
+    {!showMobileSearch&&(  <header className='flex  justify-between py-4 px-6 bg-brandpurple  '>
        <button className='b lock' onClick={()=>{router.push('/')}} >
        {/* <Logo className='h-7 '/> */}
        <div className='w-32 h-5 relative'>

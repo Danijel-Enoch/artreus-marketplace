@@ -4,7 +4,7 @@ export default function DropDown({label,children}:{label:string,children?:React.
   return (
     <Menu >
       <Menu.Button className=' bg-[#e4e2e2] p-4 flex items-center justify-between w-full rounded-lg'>
-        <span  className='flex items-center text-brandbrown font-bold '> <svg
+        <span  className='flex items-center text-brandpurple font-bold '> <svg
       xmlns="http://www.w3.org/2000/svg"
      className='mr-1'
       width="19"

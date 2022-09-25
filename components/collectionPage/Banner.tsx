@@ -6,14 +6,14 @@ type props={
     imgUrl:string
 }
 const Stat=({label,stat}:{label:string,stat:string})=>{
-    return(<li className='pl-3 whitespace-nowrap  text-brandbrown'><span className='block text-sm md:text-lg font-bold'>{stat}</span> <span className='block text-xs md:text-sm'>{label}</span></li>)
+    return(<li className='pl-3 whitespace-nowrap  text-brandpurple'><span className='block text-sm md:text-lg font-bold'>{stat}</span> <span className='block text-xs md:text-sm'>{label}</span></li>)
 
 }
 
 export default function Banner({name,details,imgUrl}:props) {
   return (
       <>
-    <div className='mt-5 md:mt-0 px-5  w-full md:px-32 md:py-16 border-2 border-brandbrown md:rounded-xl' style={{background:'#333',backgroundImage:`url(${imgUrl})`,backgroundSize:'cover'}}>
+    <div className='mt-5 md:mt-0 px-5  w-full md:px-32 md:py-16 border-2 border-brandpurple md:rounded-xl' style={{background:'#333',backgroundImage:`url(${imgUrl})`,backgroundSize:'cover'}}>
       <div className='md:px-6 text-[#D9D9D9]'>
           <h2 className='mt-4 md:mt-0 text-2xl md:text-4xl font-bold w-[10ch]'>{name}</h2>
             <p className=' my-6  md:my-16 w-[30ch] md:w-[50ch] '>{details}</p>

@@ -11,7 +11,7 @@ export default function Footer() {
             <h2 className='font-bold text-xl mb-4'>Get the latest Artreus updates</h2>
          <div className='inline-flex md:block'>
          <input type="text" placeholder="your email" className='inline-block md:inline text-[#666] bg-[#f8f8f8] py-2 px-4 rounded  '/>
-            <button className='whitespace-nowrap md:whitespace-normal bg-brandbrown py-1 px-4 text-white rounded  -translate-x-20'>I'm in</button>
+            <button className='whitespace-nowrap md:whitespace-normal bg-brandpurple py-1 px-4 text-white rounded  -translate-x-20'>I'm in</button>
          </div>
            
              
