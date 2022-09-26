@@ -4,13 +4,13 @@ export default function MobileSearchBar({ onBackButtonPresssed, onSearch }: { on
   const recentSearches = ['bored ape', 'crypto kitties', 'crypto punks', 'godzilla'] //fetch from local storage
   return (
     <>
-      <div className='flex items-center w-full bg-brandbrown px-4 py-4' >
+      <div className='flex items-center w-full bg-brandpurple px-4 py-4' >
         <button name="left-arrow-button" onClick={() => { onBackButtonPresssed() }}>
           <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 1.6665L1.66667 6.99984L7 12.3332" stroke="#F4F3FF" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7 1.6665L1.66667 6.99984L7 12.3332" stroke="#F4F3FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
-        <input type="text" className='w-full text-[#ccc] p-1 mx-3 bg-brandbrown focus:outline-none focus:border-b' placeholder="Search" />
+        <input type="text" className='w-full text-[#ccc] p-1 mx-3 bg-brandpurple focus:outline-none focus:border-b' placeholder="Search" />
 
         <button name="search-button" onClick={() => { onSearch() }}>
           <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,16 +24,16 @@ export default function MobileSearchBar({ onBackButtonPresssed, onSearch }: { on
       <div className='relative'>
         <div className='bg-[#ccc] px-4 pt-4 pb-48 absolute w-full z-10'>
           <div className='flex justify-between'>
-            <h3 className='text-brandbrown font-semibold'>Recent</h3>
-            <h3 className='text-brandbrown '>Clear</h3>
+            <h3 className='text-brandpurple font-semibold'>Recent</h3>
+            <h3 className='text-brandpurple '>Clear</h3>
 
           </div>
 
           <div className='space-y-4 mt-4  flex flex-col justify-center '>
             {recentSearches.map((search, index) => (
               <p className=' capitalize ' key={index}><svg className="inline-block mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.6663 8.00016C14.6663 11.6802 11.6797 14.6668 7.99967 14.6668C4.31967 14.6668 1.33301 11.6802 1.33301 8.00016C1.33301 4.32016 4.31967 1.3335 7.99967 1.3335C11.6797 1.3335 14.6663 4.32016 14.6663 8.00016Z" stroke="#422E21" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M10.4729 10.1202L8.40626 8.88684C8.04626 8.6735 7.75293 8.16017 7.75293 7.74017V5.00684" stroke="#422E21" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M14.6663 8.00016C14.6663 11.6802 11.6797 14.6668 7.99967 14.6668C4.31967 14.6668 1.33301 11.6802 1.33301 8.00016C1.33301 4.32016 4.31967 1.3335 7.99967 1.3335C11.6797 1.3335 14.6663 4.32016 14.6663 8.00016Z" stroke="#5D50C6" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M10.4729 10.1202L8.40626 8.88684C8.04626 8.6735 7.75293 8.16017 7.75293 7.74017V5.00684" stroke="#5D50C6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
 
                 {search}</p>

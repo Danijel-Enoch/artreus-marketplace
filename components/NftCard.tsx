@@ -3,10 +3,10 @@ const NftCard=({name,tokenId,dbId,price,blockChain,contractAddress,imgUrl}:{bloc
   const router=useRouter() 
   return(
       <div className=''>
-          <div className="border border-brandbrown rounded-lg ">
+          <div className="border border-brandpurple rounded-lg ">
         <div className=' bg-[#e4e2e2] p-20 md:p-24 rounded-t-md w-full h-full' style={{backgroundImage:`url(${imgUrl})`,backgroundSize:'cover'}}></div> </div>
-        <div className='border border-brandbrown p-2 md:p-4 rounded-b-md'>
-          <h3 className='text-brandbrown text-lg font-bold capitalize'>{name} #{tokenId}</h3>
+        <div className='border border-brandpurple p-2 md:p-4 rounded-b-md'>
+          <h3 className='text-brandpurple text-lg font-bold capitalize'>{name} #{tokenId}</h3>
           <h4 className='text-brandyellow font-bold ' >{name}</h4>
           <div className='flex justify-between items-center mt-4'>
             <div className='flex'>
@@ -23,7 +23,7 @@ const NftCard=({name,tokenId,dbId,price,blockChain,contractAddress,imgUrl}:{bloc
         ></path>
       </svg>
               <span className='ml-1 md:ml-2'>{price}</span></div>
-           <button onClick={()=>{router.push(`/nft/${blockChain}/${contractAddress}/${dbId}`)}} className='border border-brandbrown py-1 px-4 md:px-6 rounded-md text-brandbrown font-semibold'>Details</button>
+           <button onClick={()=>{router.push(`/nft/${blockChain}/${contractAddress}/${dbId}`)}} className='border border-brandpurple py-1 px-4 md:px-6 rounded-md text-brandpurple font-semibold'>Details</button>
           </div>
         </div>
         

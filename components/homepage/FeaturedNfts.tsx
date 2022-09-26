@@ -55,7 +55,7 @@ export default function FeaturedNfts({featuredNfts}:props) {
         
         </div>
         <div className='px-6 md:px-0  md:order-1 md:mt-8'>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-brandbrown mb-5 md:w-[10ch]">{name}</h1>
+          <h1 className="text-2xl md:text-4xl font-extrabold text-brandpurple mb-5 md:w-[10ch]">{name}</h1>
           <p className='md:w-[50ch]'>{description}</p>
       <button className=' font-semibold bg-brandyellow text-black py-2 px-6 rounded mt-10' onClick={()=>{router.push(`/collection/${name.replace(/\s/g,'').toLowerCase()}`)}}>Explore Collection</button>
         </div>

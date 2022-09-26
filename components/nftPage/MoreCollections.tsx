@@ -12,7 +12,7 @@ export default function MoreCollections() {
     }))
   return (
       <Menu>
-   <Menu.Button className='ml-1 md:ml-0 w-[98%] md:w-full h-full mt-16 bg-brandbrown text-white py-4 px-6 rounded-md '>More From This Collection <svg className='ml-4 inline' width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <Menu.Button className='ml-1 md:ml-0 w-[98%] md:w-full h-full mt-16 bg-brandpurple text-white py-4 px-6 rounded-md '>More From This Collection <svg className='ml-4 inline' width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
    <path d="M1 1L5 5L9 1" stroke="#14F3FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
    </svg>
    </Menu.Button>

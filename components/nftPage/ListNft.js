@@ -91,7 +91,7 @@ export default function PriceTag({ floorPrice, listingPrice, coinName, listed, j
   main()
   return (
     <div className='p-4 bg-[#e4e2e2] md:w-[400px]  rounded-lg mt-4'>
-      <div className='flex justify-between text-brandbrown'>
+      <div className='flex justify-between text-brandpurple'>
 
         {(nftListed === true) ? (<div>
           <h4>Listing Price</h4>
@@ -102,7 +102,7 @@ export default function PriceTag({ floorPrice, listingPrice, coinName, listed, j
       </div>
 
       <div className='w-full mt-2'>
-        <input type="number" min="0" onChange={(e) => setprice(e.target.value)} placeholder="List Price" inputMode="decimal" name="sell" step="0.1" className='w-full h-10 rounded-md outline-none border-brandbrown border bg-[#e4e2e2] p-4' />
+        <input type="number" min="0" onChange={(e) => setprice(e.target.value)} placeholder="List Price" inputMode="decimal" name="sell" step="0.1" className='w-full h-10 rounded-md outline-none border-brandpurple border bg-[#e4e2e2] p-4' />
       </div>
 
 

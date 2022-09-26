@@ -19,7 +19,7 @@ export default function DetailsDropDown({marketplaceFee,mintAddress,tokenAddress
   return (
     <div className='mt-2'>
     <DropDown label="Details">
-         <ul className='px-4 text-brandbrown font-bold'>
+         <ul className='px-4 text-brandpurple font-bold'>
              <Detail label='Mint Address' value={mintAddress}/>
              <Detail label='Token Address' value={tokenAddress}/>
              <Detail label='Owner Address' value={ownerAddress}/>

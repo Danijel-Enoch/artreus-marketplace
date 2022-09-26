@@ -48,7 +48,7 @@ export default function Nav() {
 
             <LiMenu.Button className='flex items-center capitalize'>{item === 'all' && <Menu />}{item}{item !== 'all' && <DropDown />} </LiMenu.Button>
             <LiMenu.Items as="div" className='relative z-10'>
-              <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[150px] py-4 my-2 inset-0 rounded-md text-brandbrown p-4 font-semibold'>
+              <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[150px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
                 <li>New Collection</li>
                 <li>Launchpad</li>

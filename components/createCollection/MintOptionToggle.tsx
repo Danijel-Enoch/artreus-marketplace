@@ -9,7 +9,7 @@ export default function MintOptionToggle({enabled,setEnabled}:{enabled:boolean,s
    className={`bg-[#e4e2e2] w-[35px]   rounded-full flex ${enabled?'justify-start':'justify-end'}`}
    >
        <span className="sr-only">{enabled?'free minting':'buyer will pay for minting'}</span>
-       <div className='bg-brandbrown p-2 rounded-full inline-block'></div>
+       <div className='bg-brandpurple p-2 rounded-full inline-block'></div>
 
    </Switch>
 

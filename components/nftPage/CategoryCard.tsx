@@ -6,7 +6,7 @@ export default function CategoryCard({categories}:{categories:string[]}) {
         <h4>Category:</h4>
     <div className=' space-x-2 md:space-x-4 mt-2 overflow-x-scroll whitespace-nowarp'>
         {categories.map((category,i)=>(
-            <button  className="uppercase bg-brandyellow py-1 px-6 rounded-lg text-brandbrown " key={i}>{category}</button>
+            <button  className="uppercase bg-brandyellow py-1 px-6 rounded-lg text-brandpurple " key={i}>{category}</button>
         ))}
     </div>
     <h4 className="mt-2">
