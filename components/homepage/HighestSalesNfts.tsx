@@ -13,7 +13,7 @@ const HighestNfts=({name,price,imageUri,tokenId}:{name:string,price:number,image
         <p className=' font-semibold'>{name} #{tokenId}</p>
         
        <p className='text-brandyellow  text-semibold'>{name}</p> 
-       <span className=' bg-brandpurple p-1'>{price} BNB</span>
+       <span className=' bg-brandpurple p-1'>{price} CMP</span>
          </div> 
     
      </div>)

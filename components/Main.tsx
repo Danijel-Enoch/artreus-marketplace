@@ -8,6 +8,8 @@ import MobileNav from './nav/MobileNav';
 import MobileMenuNav from './nav/MobileMenuNav';
 import MobileSearchBar from './nav/MobileSearchBar';
 import Image from 'next/image';
+
+
 export default function Main({children}:{children:React.ReactNode}) {
   const router=useRouter()
   const size=useWindowSize();
@@ -15,12 +17,14 @@ export default function Main({children}:{children:React.ReactNode}) {
  const [showMobileSearch,setShowMobileSearch]=React.useState(false)
   const navItems=['marketplace','creator',"launchPad",'networks','all']
  
+
+
   return (
     <>
     {!showMobileSearch&&(  <header className='flex  justify-between py-4 px-6 bg-brandpurple  '>
        <button className='b lock' onClick={()=>{router.push('/')}} >
        {/* <Logo className='h-7 '/> */}
-       <div className='w-32 h-5 relative'>
+       <div className='w-[167px] h-[27px] relative lg:ml-10'>
         <Image src={`/ArtLogo.png`}  layout='fill'/>
        </div>
         
@@ -39,7 +43,9 @@ export default function Main({children}:{children:React.ReactNode}) {
    {showMobileMenu&&<MobileMenuNav/>}
    
     
-    <div className='md:px-10 '>
+    
+    <div className={router.pathname !== "/profile/me" ? `md:px-10` : `px-0`}>
+
           <div className=' flex justify-center items-center md:my-5 invisible md:visible'>
           <input type="text" placeholder="Search Collections or creator" className='md:w-[80%]  bg-[#e0dfdf] border border-[#e0dfdf] px-6 py-2 rounded-xl'/>
           <button>
@@ -50,15 +56,15 @@ export default function Main({children}:{children:React.ReactNode}) {
           </button>
           
 
-          </div>
+          </div> 
+             
           <div className='-translate-y-10 md:translate-y-0'>
           {children}
           </div>
-         
+
           <Footer/>
 
     </div>
-   
     
     
     

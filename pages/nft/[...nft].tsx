@@ -147,7 +147,7 @@ export default function nft({categories,jsonUri,imageUri,name,id,creator,details
       {size.width&&size.width <765&&(<MobileLikeAndShare/>)}
      
       <SimpleInfo name={name} id={id} creator={creator} details={data.description}/>
-      <PriceTag currentPrice='5.00' highestBid='8.00' coinName='BNB'/>
+      <PriceTag currentPrice='5.00' highestBid='8.00' coinName='CMP'/>
       {/* <ListNft floorPrice='5' dbId={id} jsonUri={jsonUri} mintAddress={mintAddress} listingPrice='0.02' coinName='CAD' listed={setListed}/> */}
       <SocialLinks discord="" twitter='' website='' watchCount=''/>
       <PurchaseButtons price='5.00' nftId={id} contractId={MINTER_CONTRACT} coinName='CMP'/>

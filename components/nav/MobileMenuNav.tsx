@@ -1,54 +1,82 @@
 import React from 'react'
 import { Menu } from '@headlessui/react'
+import Link from 'next/link'
+
 
 const MenuItem = () => {
     return (
-        <Menu as="div" className={'w-full'} >
+        <div className='w-full'>
+            <Menu as="div" className={'w-full'} >
             <Menu.Button className="w-full p-4 bg-[#ccc] flex justify-between items-center font-semibold capitalize">Marketplace<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L5 5L9 1" stroke="#301300" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M1 1L5 5L9 1" stroke="#301300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             </Menu.Button>
-            <Menu.Items >
-                <ul className=' px-8 p-2 space-y-4' >
+            <Menu.Items>
+                    <ul className=' px-8 p-2 space-y-4' >
 
-                    <li>New Collection</li>
-                    <li>Launchpad</li>
-                    <li>Auctions</li>
-
-
-                </ul>
+                        <li className='w-full]'>
+                            <Link href="/">
+                            <a>Home</a>
+                            </Link>
+                        </li>
+       
+                        <li>
+                            <Link href="/new">
+                            <a>New Collection</a>
+                            </Link>
+                        </li>
+                    </ul>
             </Menu.Items>
-            
-            <Menu.Button className="w-full p-4 bg-[#ccc] flex justify-between items-center font-semibold capitalize">Creator<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L5 5L9 1" stroke="#301300" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+        </Menu>
+
+        <Menu as="div" className={'w-full'} >
+             <Menu.Button className="w-full p-4 bg-[#ccc] flex justify-between items-center font-semibold capitalize">Creator<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L5 5L9 1" stroke="#301300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             </Menu.Button>
-            <Menu.Items >
-                <ul className=' px-8 p-2 space-y-4' >
+            <Menu.Items>
+                    <ul className=' px-8 p-2 space-y-4' >
 
-                    <li>New Collection</li>
-                    <li>Launchpad</li>
-                    <li>Auctions</li>
+                    <li>
+                <Link href="/create">
+                  <a>Create</a>
+                </Link>
+             </li>
 
-
-                </ul>
+             <li>
+                <Link href="/profile/me">
+                  <a>Profile</a>
+                </Link>
+             </li>
+        </ul>
             </Menu.Items>
-
+        </Menu>
+           
+        <Menu as="div" className={'w-full'}>
             <Menu.Button className="w-full p-4 bg-[#ccc] flex justify-between items-center font-semibold capitalize">Launchpad<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L5 5L9 1" stroke="#301300" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M1 1L5 5L9 1" stroke="#301300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             </Menu.Button>
-            <Menu.Items >
+            <Menu.Items>
                 <ul className=' px-8 p-2 space-y-4' >
+                    <li>
+                        <Link href="/launchpad">
+                            <a>Launchpad</a>
+                        </Link>
+                    </li>
 
-                    <li>New Collection</li>
-                    <li>Launchpad</li>
-                    <li>Auctions</li>
-
-
+                    <li>
+                        <Link href="/stake">
+                            <a>Stake Nft</a>
+                        </Link>
+                    </li>
                 </ul>
             </Menu.Items>
         </Menu>
+            
+        
+        </div>
+        
 
     )
 }

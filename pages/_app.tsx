@@ -3,8 +3,7 @@ import type { AppProps } from 'next/app'
 import { useState } from "react"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Main from '../components/Main'
-import NavbarLayout from '../components/NavbarLayout'
+import Main from '../components/Main';
 import {AppContextProvider} from '../contexts/AppContext'
 import { useRouter, Router } from "next/router"
 import TopBarProgress from "react-topbar-progress-indicator"
@@ -14,7 +13,6 @@ import TopBarProgress from "react-topbar-progress-indicator"
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
   const [progress, setProgress] = useState(false)
 
   TopBarProgress.config({
@@ -35,17 +33,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <AppContextProvider>
-      {router.pathname !== "/profile/me" ? (
       <Main>
           {progress && <TopBarProgress />}
         <Component {...pageProps} />
       </Main>
-          ) : (
-      <NavbarLayout>
-          {progress && <TopBarProgress />}
-        <Component {...pageProps} />
-      </NavbarLayout>
-      )}
       <ToastContainer position="top-center" autoClose={3000}/>
     </AppContextProvider>
   

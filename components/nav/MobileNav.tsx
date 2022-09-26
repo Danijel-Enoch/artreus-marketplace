@@ -1,6 +1,9 @@
 import React from 'react'
+import { useRouter } from "next/router"
 
 export default function MobileNav({onClick,onSearch}:{onClick:()=>void,onSearch:()=>void}) {
+  const router=useRouter();
+
   return (
     <>
     <ul className='flex space-x-6 items-center relative'>
@@ -12,7 +15,7 @@ export default function MobileNav({onClick,onSearch}:{onClick:()=>void,onSearch:
 
         </button>
       </li>
-      <li><button name="account-buton-mobile">
+      <li><button name="account-button-mobile" onClick={() => router.push("/profile/me")}>
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9.00015 2.46146C10.1848 2.46146 11.154 3.43069 11.154 4.61531C11.154 5.79993 10.1848 6.76916 9.00015 6.76916C7.81554 6.76916 6.8463 5.79993 6.8463 4.61531C6.8463 3.43069 7.81554 2.46146 9.00015 2.46146ZM9.00015 13.2307C11.9078 13.2307 15.2463 14.6199 15.4617 15.3845H2.53861C2.7863 14.6092 6.10323 13.2307 9.00015 13.2307ZM9.00015 0.307617C6.62015 0.307617 4.69246 2.23531 4.69246 4.61531C4.69246 6.99531 6.62015 8.923 9.00015 8.923C11.3802 8.923 13.3078 6.99531 13.3078 4.61531C13.3078 2.23531 11.3802 0.307617 9.00015 0.307617ZM9.00015 11.0768C6.12477 11.0768 0.384766 12.5199 0.384766 15.3845V17.5384H17.6155V15.3845C17.6155 12.5199 11.8755 11.0768 9.00015 11.0768Z" fill="#BDBDBD"/>
 </svg>

@@ -1,10 +1,10 @@
 import Image from 'next/image'
+import UnderConstruction from '../components/UnderConstruction';
 
 function Launchpad() {
     return (
         <div>
-            <Image src='/ArtLogo.png' width={1440} height={300}/>
-            {/* <h2 className=''>Coming Soon</h2> */}
+           <UnderConstruction/>
         </div>
     );
 }
