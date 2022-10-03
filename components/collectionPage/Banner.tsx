@@ -21,7 +21,7 @@ export default function Banner({name,details,imgUrl}:props) {
        
     </div>
     <div className='ml-5 md:ml-0 -translate-y-5 md:-translate-y-16 md:translate-x-36   md:w-[450px] '>
-        <ul className='inline-flex md:flex  space-x-4 divide-x-2 border-2 bg-[#BDBDBD] border-brandyellow rounded-2xl divide-brandyellow px-4 py-2 md:py-6 md:px-8   items-center justify-center '>
+        <ul className='inline-flex md:flex  space-x-4 divide-x-2 border-2 bg-[#f5f5f5] border-brandyellow rounded-2xl divide-brandyellow px-4 py-2 md:py-6 md:px-8   items-center justify-center '>
             <Stat label="Items" stat="5000"/>
             <Stat label="Listed" stat="500"/>
             <Stat label="Floor Price" stat="500.00"/>

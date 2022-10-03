@@ -84,7 +84,7 @@ const MenuItem = () => {
 export default function MobileMenuNav() {
     const menuItems = ['marketplace', 'creators', 'launchpad', 'networks']
     return (
-        <div className='md:hidden bg-[#bdbdbd] absolute w-full z-10'>
+        <div className='md:hidden bg-[#f5f5f5] absolute w-full z-10'>
                 <MenuItem />
             <div className='flex justify-center px-6 py-4 bg-[#ccc]'>
                 <button className='bg-brandyellow px-6 py-2 flex items-center font-semibold '><svg className='mr-2' width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">

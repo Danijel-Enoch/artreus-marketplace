@@ -15,7 +15,9 @@ export default function LearnArts() {
  <CollectionBody totalItemsLength={artsVideos.length}>
 
       {artsVideos.map((videos,index)=>(
-        <img key={index} src="/youtube_banner.png" className='inline-block w-[250px] px-2 py-4'/>
+        <div className='inline-block h-[250px] bg-brandpurple w-[250px] rounded-b-[5px]'>
+          <img key={index} src="/youtube_banner.png" className=' w-[250px]'/>
+        </div>
      ))}
     
    

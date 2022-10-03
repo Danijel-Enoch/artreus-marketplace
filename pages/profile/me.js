@@ -169,7 +169,7 @@ export default Profile;
 // export async function getServerSideProps(){
 // //     let profileCollection = Array.from(Array(20).keys())
 // //     profileCollection= profileCollection.map(()=>({
-// //         name:"Okay Bears",
+// //         name:"Okay Bears", 
 // //         description:"The Okay bears is a collection  of Nft mutants and heroes.... ",
 // //         imageUri:"https://lh3.googleusercontent.com/P-g6dOO3CBlXwgh7ZGVmt6gjkw09E6XcanRxSHeVO9jX7MFN5_aSRoMrG3dsbYqpYjb9cPQaWEnbw3eF40T1y1gO-GRbaaG9ZyHfGw=w302"
 // //     }))

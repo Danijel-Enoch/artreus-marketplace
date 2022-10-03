@@ -111,8 +111,8 @@ export function LeftBluredBox({ className }: { className: string }) {
           <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1035_4824" result="shape" />
         </filter>
         <linearGradient id="paint0_linear_1035_4824" x1="242.248" y1="529.337" x2="164.251" y2="528.215" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#BDBDBD" />
-          <stop offset="1" stopColor="#BDBDBD" stopOpacity="0" />
+          <stop stopColor="#f5f5f5" />
+          <stop offset="1" stopColor="#f5f5f5" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>
@@ -181,8 +181,8 @@ export function RightBluredBox({ className }: { className: string }) {
           y2="198"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#BDBDBD"></stop>
-          <stop offset="1" stopColor="#BDBDBD" stopOpacity="0"></stop>
+          <stop stopColor="#f5f5f5"></stop>
+          <stop offset="1" stopColor="#f5f5f5" stopOpacity="0"></stop>
         </linearGradient>
       </defs>
     </svg>
