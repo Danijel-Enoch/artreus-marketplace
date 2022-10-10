@@ -96,24 +96,24 @@ function Profile() {
 
     return (
         <section className='w-full p-0 m-0'>
-           <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
-                
+            <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
+
 
                 <div className='absolute bottom-[-22px] right-[65%] lg:block hidden'>
                     <button className='w-36 h-11 mr-5 bg-brandpurple text-brandyellow rounded-md'>Add Profile</button>
                     <button className='w-36 h-11 bg-brandpurple text-brandyellow rounded-md'>Add Cover</button>
                 </div>
                 <div className='absolute rounded-full w-60 h-60 bottom-[-80px]'>
-                <Image src='/profile-picture.png' width={240} height={240} className="rounded-full"/>
+                    <Image src='/profile-picture.png' width={240} height={240} className="rounded-full" />
                 </div>
-           </div>
+            </div>
 
-                <div className='px-12'>
-                    <div>
+            <div className='px-12'>
+                <div>
                     <Tab.Group>
-                       <Tab.List className="pt-4 text-base font-medium px-12 mb-6">
+                        <Tab.List className="pt-4 text-base font-medium px-12 mb-6">
                             <Tab as={Fragment}  >
-                               {({ selected }) => (
+                                {({ selected }) => (
                                     <button className={`py-4 px-3 ${selected && 'border-x-0 border-t-0 outline-none border-b-2 border-brandpurple'}`}>Items</button>
                                 )}
                             </Tab>
@@ -135,12 +135,12 @@ function Profile() {
                                 <Tab.Panel>
                                     <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                                         {(app.connected && data) ? data.map((nfts, id) =>
-                                            <Link href={"/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f99/840/" + nftIds[id]} key={nftIds[id]}>
+                                            <Link href={"/nft/cadeceustestnet/0x57a204aa1042f6e66dd7730813f4024114d74f99/840/" + nftIds[id]} key={nftIds[id]}>
                                                 <a><ProfileCollectionCard key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
 
                                             </Link>
                                         ) : <>
-                                            </>}
+                                        </>}
                                     </div>
                                 </Tab.Panel>
                                 <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
@@ -157,9 +157,9 @@ function Profile() {
                         </div>
 
                     </Tab.Group>
-                    </div>
-               
                 </div>
+
+            </div>
         </section>
     );
 }
