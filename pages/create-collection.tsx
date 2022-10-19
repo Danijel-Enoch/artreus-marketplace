@@ -270,13 +270,16 @@ axios(config)
               <MintOptionToggle enabled={isMintFree} setEnabled={() => setIsMintFree(!isMintFree)} />
 
             </div> */}
-            <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} />
+            <Input placeholder='Your Collection Name goes here' label="Name" type='text' onChange={handleNameChange} />
             {/* <Input placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange} /> */}
-            <textarea className='placeholder-black/50 block bg-[#AEACAB] w-full p-2 mt-2 rounded-md outline-none' rows="4" placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange}></textarea>
+            <textarea className='placeholder-black/50 block bg-[#AEACAB] w-full p-2 mt-2 rounded-md outline-none' rows="4" placeholder='Enter a Short Description of your Collection' label="Description" type='text' onChange={handleDescChange}></textarea>
             {/* <Input placeholder='10' label="Royalties %" type='number' onChange={handleRoyaltyChange} /> */}
             <Input placeholder='Collection Supply' label='Supply' type='number'/>
+            <Input placeholder='Symbol' label="Symbol" type='text'/>
             <Input placeholder='https://yoursite.io/item/123' label="External Link" type='text'/>
-            <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
+            <UploadButton handleChange={handleImageUrlChange} />
+            <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 mr-4 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
+            <input type="submit" value="Mint Nfts" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
             <div>
             </div>
           </div>
