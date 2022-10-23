@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-// import NetworkInfo from '../components/createCollection/NetworkInfo'
+// import NetworkInfo from '../components/createCollection/NetworkInfo' 
 // import EthLogo from '../components/EthLogo'
 import Title from '../components/createCollection/Title';
 import ConnectionBar from '../components/createCollection/ConnectionBar';
