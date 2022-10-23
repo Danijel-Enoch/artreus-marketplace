@@ -9,6 +9,7 @@ import axios from 'axios';
 import { ethers } from "ethers"
 import { retrieve, deconstructCid } from "../../utils/utils"
 import { MINTER_CONTRACT } from "../../config/constants"
+import CardSkeleton from '../../components/CardSkeleton';
 let globalWallet;
 
 function Profile() {
@@ -94,6 +95,8 @@ function Profile() {
     //     console.log(error);
     //   });   
 
+    const items =Array.from(Array(10).keys())
+
     return (
         <section className='w-full p-0 m-0'>
             <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
@@ -140,7 +143,8 @@ function Profile() {
 
                                             </Link>
                                         ) : <>
-                                        </>}
+                                               {items.map(()=>(<CardSkeleton/>))}
+                                            </>}
                                     </div>
                                 </Tab.Panel>
                                 <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
