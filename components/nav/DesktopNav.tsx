@@ -40,78 +40,78 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
   const router = useRouter();
   return (
     <ul className='flex justify-center items-center w-full ' >
-    
-        <LiMenu as="li" className={`capitalize mx-4 `}>
 
-          <LiMenu.Button className='flex items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
-          <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute space-y-4  bg-[#e4e2e2] w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold '>
+      <LiMenu as="li" className={`capitalize mx-4 `}>
 
-                        
-             <li className='w-full]'>
-                <Link href="/">
-                  <a>Home</a>
-                </Link>
-             </li>
-       
-            <li>
-                <Link href="/new">
-                  <a>New Collection</a>
-                </Link>
-             </li>
+        <LiMenu.Button className='flex items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
+        <LiMenu.Items as="div" className='relative z-10'>
+          <ul className='absolute space-y-4  bg-[#e4e2e2] w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold '>
 
 
-            </ul>
-          </LiMenu.Items>
-
-        </LiMenu>
-      
-        <LiMenu as="li" className={`capitalize mx-4 `}>
-
-          <LiMenu.Button className='flex items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
-          <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
+            <li className='w-full]'>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+            </li>
 
             <li>
-                <Link href="/create">
-                  <a>Create</a>
-                </Link>
-             </li>
+              <Link href="/new">
+                <a>New Collection</a>
+              </Link>
+            </li>
 
-             <li>
-                <Link href="/profile/me">
-                  <a>Profile</a>
-                </Link>
-             </li>
 
-            </ul>
-          </LiMenu.Items>
+          </ul>
+        </LiMenu.Items>
 
-          </LiMenu>
+      </LiMenu>
 
-          <LiMenu as="li" className={`capitalize mx-4 `}>
+      <LiMenu as="li" className={`capitalize mx-4 `}>
 
-          <LiMenu.Button className='flex items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
-          <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
-                <li>
-                      <Link href="/launchpad">
-                          <a>Launchpad</a>
-                      </Link>
-                  </li>
+        <LiMenu.Button className='flex items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
+        <LiMenu.Items as="div" className='relative z-10'>
+          <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
-                  <li>
-                      <Link href="/stake">
-                          <a>Stake Nft</a>
-                      </Link>
-                  </li>
+            <li>
+              <Link href="/create">
+                <a>Create</a>
+              </Link>
+            </li>
 
-                </ul>
-          </LiMenu.Items>
+            <li>
+              <Link href="/profile/me">
+                <a>Profile</a>
+              </Link>
+            </li>
 
-          </LiMenu>
+          </ul>
+        </LiMenu.Items>
 
-          <Menu />
+      </LiMenu>
+
+      <LiMenu as="li" className={`capitalize mx-4 `}>
+
+        <LiMenu.Button className='flex items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
+        <LiMenu.Items as="div" className='relative z-10'>
+          <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
+            <li>
+              <Link href="/launchpad">
+                <a>Launchpad</a>
+              </Link>
+            </li>
+
+            <li>
+              <Link href="/stake">
+                <a>Stake Nft</a>
+              </Link>
+            </li>
+
+          </ul>
+        </LiMenu.Items>
+
+      </LiMenu>
+
+      <Menu />
 
       {/* <li className='ml-3  flex justify-center items-center '>Marketplace <DropDown/></li>
       <li className='ml-3 flex justify-center items-center '>Creator <DropDown/></li>

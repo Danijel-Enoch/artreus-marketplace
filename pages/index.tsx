@@ -11,6 +11,8 @@ import UpcomingLaunches from '../components/homepage/UpcomingLaunches'
 import useContract from '../hooks/useContract'
 import { useEffect, useState } from 'react'
 import { ArtreusMarketplace } from '../contract-types'
+import Link from 'next/link'
+
 type props = {
   newCollectionNfts: NewCollectionNft[]
   featuredNfts: FeaturedNft[]
