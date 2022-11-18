@@ -84,11 +84,13 @@ export const AppContextProvider = ({ children }) => {
     useEffect(() => {
         const _web3Modal = new Web3Modal({
             cacheProvider: true, // optional
-            providerOptions: { authereum: {
-                package: Authereum // required
-              }, clvwallet: {
-                package: true
-              }},
+            providerOptions: {
+                authereum: {
+                    package: Authereum // required
+                }, clvwallet: {
+                    package: true
+                }
+            },
         });
 
         setWeb3Modal(_web3Modal);
