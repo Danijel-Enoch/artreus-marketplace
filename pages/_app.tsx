@@ -8,6 +8,7 @@ import { AppContextProvider } from '../contexts/AppContext'
 import { useRouter, Router } from "next/router"
 import TopBarProgress from "react-topbar-progress-indicator"
 import "../css/styles.css";
+import { WalletSelectorContextProvider } from '../contexts/WalletSelector';
 
 
 
@@ -32,13 +33,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   })
 
   return (
-    <AppContextProvider>
-      <Main>
-        {progress && <TopBarProgress />}
-        <Component {...pageProps} />
-      </Main>
-      <ToastContainer position="top-center" autoClose={3000} />
-    </AppContextProvider>
+    <WalletSelectorContextProvider>
+      <AppContextProvider>
+        <Main>
+          {progress && <TopBarProgress />}
+          <Component {...pageProps} />
+        </Main>
+        <ToastContainer position="top-center" autoClose={3000} />
+      </AppContextProvider>
+    </WalletSelectorContextProvider>
 
 
   )

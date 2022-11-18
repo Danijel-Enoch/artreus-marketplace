@@ -27,20 +27,25 @@ declare global {
   }
 }
 
-interface WalletSelectorContextValue {
+export interface WalletSelectorContextValue {
   selector: WalletSelector;
   modal: WalletSelectorModal;
   accounts: Array<AccountState>;
   accountId: string | null;
+  connected: boolean;
+  setConnectedValue: (value: boolean) => void;
+  logOut: () => void;
+  logIn: () => void;
 }
 
 const WalletSelectorContext =
   React.createContext<WalletSelectorContextValue | null>(null);
 
-export const WalletSelectorContextProvider: React.FC = ({ children }) => {
+export const WalletSelectorContextProvider: React.FC = ({ children }: any) => {
   const [selector, setSelector] = useState<WalletSelector | null>(null);
   const [modal, setModal] = useState<WalletSelectorModal | null>(null);
   const [accounts, setAccounts] = useState<Array<AccountState>>([]);
+  const [connected, setConnected] = useState(false)
 
   const init = useCallback(async () => {
     const _selector = await setupWalletSelector({
@@ -82,6 +87,7 @@ export const WalletSelectorContextProvider: React.FC = ({ children }) => {
         // }),
       ],
     });
+
     const _modal = setupModal(_selector, { contractId: CONTRACT_ID });
     const state = _selector.store.getState();
     setAccounts(state.accounts);
@@ -123,6 +129,26 @@ export const WalletSelectorContextProvider: React.FC = ({ children }) => {
     return null;
   }
 
+  const logOut = async () => {
+    console.log("Failed to sign out");
+    const wallet = await selector.wallet();
+
+
+    wallet.signOut().catch((err) => {
+      console.log("Failed to sign out");
+      console.error(err);
+    });
+    setConnected(false)
+  };
+
+  const setConnectedValue = (value: boolean) => {
+    setConnected(value)
+  }
+
+  const logIn = () => {
+    modal.show();
+  };
+
   const accountId =
     accounts.find((account) => account.active)?.accountId || null;
 
@@ -133,6 +159,10 @@ export const WalletSelectorContextProvider: React.FC = ({ children }) => {
         modal,
         accounts,
         accountId,
+        connected,
+        setConnectedValue,
+        logOut,
+        logIn,
       }}
     >
       {children}
