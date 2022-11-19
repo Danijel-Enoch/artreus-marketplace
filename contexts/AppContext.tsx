@@ -5,7 +5,7 @@ import Authereum from "authereum";
 import { toast } from 'react-toastify'
 
 
-type VALUES = {
+export type VALUES = {
     provider: any | null,
     signer: any | null,
     account: string,
@@ -27,7 +27,7 @@ const AppContext = React.createContext(defaultValues);
 
 const snackbar = () => toast.success("Wallet Connected")
 
-export const AppContextProvider = ({ children }) => {
+export const AppContextProvider = ({ children }: any) => {
     const [account, setAccount] = useState(defaultValues.account);
     const [provider, setProvider] = useState(defaultValues.provider);
     const [signer, setSigner] = useState(defaultValues.signer);
@@ -84,11 +84,13 @@ export const AppContextProvider = ({ children }) => {
     useEffect(() => {
         const _web3Modal = new Web3Modal({
             cacheProvider: true, // optional
-            providerOptions: { authereum: {
-                package: Authereum // required
-              }, clvwallet: {
-                package: true
-              }},
+            // providerOptions: {
+            //     authereum: {
+            //         package: Authereum // required
+            //     }, clvwallet: {
+            //         package: true
+            //     }
+            // },
         });
 
         setWeb3Modal(_web3Modal);

@@ -13,159 +13,160 @@ import CardSkeleton from '../../components/CardSkeleton';
 let globalWallet;
 
 function Profile() {
-    const app = useAppContext()
-    const profileCollection = []
-    const [data, setdata] = useState("");
-    const [nftIds, setnftIds] = useState("")
-    let walletAddress = app.connected ? app.account : "Connect Wallet"
-    // console.log(typeof walletAddress)
-    globalWallet = walletAddress;
-    async function main() {
+  const app = useAppContext()
+  const profileCollection = []
+  const [data, setdata] = useState("");
+  const [nftIds, setnftIds] = useState("")
+  let walletAddress = app.connected ? app.account : "Connect Wallet"
+  // console.log(typeof walletAddress)
+  globalWallet = walletAddress;
+  async function main() {
 
 
-        if (app.connected) {
-            try {
-                const l = await getUserNft()
-                const nftsId = l.map(e => e.id);
-                setnftIds(nftsId)
-                const newerData = l.map(async (e) => {
-                    var requestOptions = {
-                        method: 'GET',
-                        redirect: 'follow'
-                    };
+    if (app.connected) {
+      try {
+        const l = await getUserNft()
+        const nftsId = l.map(e => e.id);
+        setnftIds(nftsId)
+        const newerData = l.map(async (e) => {
+          var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
 
-                    return fetch("https://ipfs.io/ipfs/" + e.metadata, requestOptions)
-                        .then(response => response.json())
-                        .catch(error => console.log('error', error));
+          return fetch("https://ipfs.io/ipfs/" + e.metadata, requestOptions)
+            .then(response => response.json())
+            .catch(error => console.log('error', error));
 
-                })
-                setdata(await Promise.all(newerData))
-                // console.log(data[0])
-            } catch (e) {
-                console.log(e)
-            }
-
-        }
-    }
-    main()
-
-
-
-    async function getUserNft() {
-        const address = MINTER_CONTRACT;
-        const abi = [
-            "function getUserNft(address user_address) view returns (tuple(uint256 id, address creator, string uri)[])"
-        ];
-        const contract = new ethers.Contract(address, abi, app.signer);
-        const data = await contract.functions.getUserNft(app.account);
-
-        //console.log(data);
-        const nft = data[0].map((e) => {
-            return ({
-                "id": e[0].toString(),
-                "metadata": e[2]
-            })
         })
-        // console.log(nft)
-        return nft
-
+        setdata(await Promise.all(newerData))
+        // console.log(data[0])
+      } catch (e) {
+        console.log(e)
+      }
 
     }
+  }
+  main()
 
 
-    //but user wallet must  connected
-    // const walletAddress=app.signer.getAddress();
 
-    // const notify = () => (
-    //     toast.success("Success Notification !", {
-    //         position: toast.POSITION.TOP_CENTER
-    //       })
-    // );
-    // var config = {
-    //     method: 'get',
-    //     url: 'https://artreuss.herokuapp.com/v1/nft/',
-    //     headers: { }
-    //   };
+  async function getUserNft() {
+    const address = MINTER_CONTRACT;
+    const abi = [
+      "function getUserNft(address user_address) view returns (tuple(uint256 id, address creator, string uri)[])"
+    ];
+    const contract = new ethers.Contract(address, abi, app.signer);
+    const data = await contract.functions.getUserNft(app.account);
 
-    //   axios(config)
-    //   .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });   
-
-    const items =Array.from(Array(10).keys())
-
-    return (
-        <section className='w-full p-0 m-0'>
-            <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
+    //console.log(data);
+    const nft = data[0].map((e) => {
+      return ({
+        "id": e[0].toString(),
+        "metadata": e[2]
+      })
+    })
+    // console.log(nft)
+    return nft
 
 
-                <div className='absolute bottom-[-22px] right-[65%] lg:block hidden'>
-                    <button className='w-36 h-11 mr-5 bg-brandpurple text-brandyellow rounded-md'>Add Profile</button>
-                    <button className='w-36 h-11 bg-brandpurple text-brandyellow rounded-md'>Add Cover</button>
-                </div>
-                <div className='absolute rounded-full w-60 h-60 bottom-[-80px]'>
-                    <Image src='/profile-picture.png' width={240} height={240} className="rounded-full" />
-                </div>
-            </div>
-
-            <div className='px-12'>
-                <div>
-                    <Tab.Group>
-                        <Tab.List className="pt-4 text-base font-medium px-12 mb-6">
-                            <Tab as={Fragment}  >
-                                {({ selected }) => (
-                                    <button className={`py-4 px-3 ${selected && 'border-x-0 border-t-0 outline-none border-b-2 border-brandpurple'}`}>Items</button>
-                                )}
-                            </Tab>
-
-                            <Tab as={Fragment}  >
-                                {({ selected }) => (
-                                    <button className={`py-4 px-3 ${selected && 'border-x-0 border-t-0 outline-none border-b-2 border-brandpurple'}`}>Collection</button>
-                                )}
-                            </Tab>
-                        </Tab.List>
-
-                        <div className='w-full h-[74px] bg-[#2F2F2F1A]'>
-
-                        </div>
-                        <div className="mt-5 pt-5 w-full border-t border-brandpurple">
+  }
 
 
-                            <Tab.Panels>
-                                <Tab.Panel>
-                                    <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                                        {(app.connected && data) ? data.map((nfts, id) =>
-                                            <Link href={"/nft/cadeceustestnet/0x57a204aa1042f6e66dd7730813f4024114d74f99/840/" + nftIds[id]} key={nftIds[id]}>
-                                                <a><ProfileCollectionCard key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
+  //but user wallet must  connected
+  // const walletAddress=app.signer.getAddress();
 
-                                            </Link>
-                                        ) : <>
-                                               {items.map(()=>(<CardSkeleton/>))}
-                                            </>}
-                                    </div>
-                                </Tab.Panel>
-                                <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                                    {profileCollection.map(({ name, imageUri, description }, index) => (
-                                        <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
-                                            <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri} /></a>
-                                        </Link>
-                                    ))}
-                                </div>
-                                <Tab.Panel>
+  // const notify = () => (
+  //     toast.success("Success Notification !", {
+  //         position: toast.POSITION.TOP_CENTER
+  //       })
+  // );
+  // var config = {
+  //     method: 'get',
+  //     url: 'https://artreuss.herokuapp.com/v1/nft/',
+  //     headers: { }
+  //   };
 
-                                </Tab.Panel>
-                            </Tab.Panels>
-                        </div>
+  //   axios(config)
+  //   .then(function (response) {
+  //     console.log(JSON.stringify(response.data));
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });   
 
-                    </Tab.Group>
-                </div>
+  const items = Array.from(Array(10).keys())
+
+  return (
+    <section className='w-full p-0 m-0'>
+      <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
+
+
+        <div className='absolute bottom-[-22px] right-[65%] lg:block hidden'>
+          <button className='w-36 h-11 mr-5 bg-brandpurple text-brandyellow rounded-md'>Add Profile</button>
+          <button className='w-36 h-11 bg-brandpurple text-brandyellow rounded-md'>Add Cover</button>
+        </div>
+        <div className='absolute rounded-full w-60 h-60 bottom-[-80px]'>
+          <Image src='/profile-picture.png' width={240} height={240} className="rounded-full" />
+        </div>
+      </div>
+
+      <div className='px-12'>
+        <div>
+          <Tab.Group>
+            <Tab.List className="pt-4 text-base font-medium px-12 mb-6">
+              <Tab as={Fragment}  >
+                {({ selected }) => (
+                  <button className={`py-4 px-3 ${selected && 'border-x-0 border-t-0 outline-none border-b-2 border-brandpurple'}`}>Items</button>
+                )}
+              </Tab>
+
+              <Tab as={Fragment}  >
+                {({ selected }) => (
+                  <button className={`py-4 px-3 ${selected && 'border-x-0 border-t-0 outline-none border-b-2 border-brandpurple'}`}>Collection</button>
+                )}
+              </Tab>
+            </Tab.List>
+
+            <div className='w-full h-[74px] bg-[#2F2F2F1A]'>
 
             </div>
-        </section>
-    );
+            <div className="mt-5 pt-5 w-full border-t border-brandpurple">
+
+
+              <Tab.Panels>
+                <Tab.Panel>
+                  <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
+                    {(app.connected && data) ? data.map((nfts, id) =>
+                      <Link href={"/nft/cadeceustestnet/0x57a204aa1042f6e66dd7730813f4024114d74f99/840/" + nftIds[id]} key={nftIds[id]}>
+                        <a><ProfileCollectionCard key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
+
+                      </Link>
+                    ) : <>
+                      {items.map((index) => (<CardSkeleton key={index} />))}
+                    </>}
+                  </div>
+                </Tab.Panel>
+                <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
+                  {/* {console.log(profileCollection)} */}
+                  {profileCollection.map(({ name, imageUri, description }, index) => (
+                    <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
+                      <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri} /></a>
+                    </Link>
+                  ))}
+                </div>
+                <Tab.Panel>
+
+                </Tab.Panel>
+              </Tab.Panels>
+            </div>
+
+          </Tab.Group>
+        </div>
+
+      </div>
+    </section>
+  );
 }
 
 export default Profile;
@@ -173,7 +174,7 @@ export default Profile;
 // export async function getServerSideProps(){
 // //     let profileCollection = Array.from(Array(20).keys())
 // //     profileCollection= profileCollection.map(()=>({
-// //         name:"Okay Bears", 
+// //         name:"Okay Bears",
 // //         description:"The Okay bears is a collection  of Nft mutants and heroes.... ",
 // //         imageUri:"https://lh3.googleusercontent.com/P-g6dOO3CBlXwgh7ZGVmt6gjkw09E6XcanRxSHeVO9jX7MFN5_aSRoMrG3dsbYqpYjb9cPQaWEnbw3eF40T1y1gO-GRbaaG9ZyHfGw=w302"
 // //     }))
@@ -188,7 +189,7 @@ export default Profile;
 // //     headers: { }
 // //   };
 
-//  const response = await fetch(`https://artreuss.herokuapp.com/v1/nft/`)   
+//  const response = await fetch(`https://artreuss.herokuapp.com/v1/nft/`)
 //  const data = await response.json()
 //  console.log(typeof data)
 // const datan=data.result.filter((a)=>{if(a.collectionAddress=='0xd68C501158529eadA7D623974008F90758F2693D'){return a}});
@@ -302,7 +303,7 @@ export default Profile;
 //     //   })
 //     //   .catch(function (error) {
 //     //     console.log(error);
-//     //   });   
+//     //   });
 
 //     return (
 //         <section className='w-full'>
@@ -388,7 +389,7 @@ export default Profile;
 // // //     headers: { }
 // // //   };
 
-// //  const response = await fetch(`https://artreuss.herokuapp.com/v1/nft/`)   
+// //  const response = await fetch(`https://artreuss.herokuapp.com/v1/nft/`)
 // //  const data = await response.json()
 // //  console.log(typeof data)
 // // const datan=data.result.filter((a)=>{if(a.collectionAddress=='0xd68C501158529eadA7D623974008F90758F2693D'){return a}});
