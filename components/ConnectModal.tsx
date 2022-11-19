@@ -1,5 +1,4 @@
 import { Dialog, Transition } from '@headlessui/react'
-import Image from 'next/image'
 import { Fragment } from 'react'
 
 export default function ConnectModal({ isOpen, setApp, setSelected, setIsOpen }: any) {
@@ -19,6 +18,7 @@ export default function ConnectModal({ isOpen, setApp, setSelected, setIsOpen }:
     setIsOpen(false)
     setSelected('nearWallet')
   }
+
 
   return (
     <>
