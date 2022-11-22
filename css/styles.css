@@ -41,7 +41,6 @@ html ::selection {
 body {
     margin: 0 auto;
     padding: 0 1em;
-    max-width: 40em;
 }
 
 fieldset {
@@ -141,4 +140,14 @@ button:active {
     border-left: 0.25em solid var(--secondary);
     padding-left: 0.25em;
     margin-left: -0.5em;
+}
+
+.j-center {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.w-fit {
+    width: fit-content;
 }
