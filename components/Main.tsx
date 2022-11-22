@@ -24,10 +24,10 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
 
       {!showMobileSearch && (
-        <header className='flex justify-between py-4 px-6 bg-brandpurple '>
+        <header className='flex justify-between py-4 px-3 bg-brandpurple '>
           <button className='b lock' onClick={() => { router.push('/') }} >
             {/* <Logo className='h-7 '/> */}
-            <div className='w-[10rem] h-[27px] relative'>
+            <div className='w-[8rem] h-[20px] relative'>
               <Image src={`/ArtLogo.png`} layout='fill' />
             </div>
           </button>

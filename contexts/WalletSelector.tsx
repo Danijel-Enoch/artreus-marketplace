@@ -130,7 +130,6 @@ export const WalletSelectorContextProvider: React.FC = ({ children }: any) => {
   }
 
   const logOut = async () => {
-    console.log("Failed to sign out");
     const wallet = await selector.wallet();
 
 
