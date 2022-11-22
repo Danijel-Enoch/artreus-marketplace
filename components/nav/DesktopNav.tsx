@@ -67,17 +67,12 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
   }
 
   if (selected == 'metamask' && app != metamask) {
-    console.log('metamask')
     setApp(metamask)
   }
 
   if (selected == 'nearWallet' && app != nearWallet) {
-    console.log('nearWallet')
     setApp(nearWallet)
   }
-
-
-  console.log(app?.connected)
 
   if (app != null) {
     if (app == nearWallet) {
@@ -85,15 +80,9 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
     }
 
     if (app.connected == false) {
-      console.log('loging in')
       app.logIn()
     }
   }
-
-
-
-
-
 
 
   return (

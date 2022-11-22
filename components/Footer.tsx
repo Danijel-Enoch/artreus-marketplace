@@ -4,7 +4,7 @@ import FooterSocialLinks from './FooterSocialLinks'
 
 export default function Footer() {
   return (
-    <footer className='md:px-6 md:py-12 border-y border-[#2F2F2F1A] flex space-y-10 md:space-y-0 pb-10 flex-col items-center md:items-start md:flex-row md:space-x-10 md:mt-16'>
+    <footer className='md:px-6 md:py-12 border-y border-[#2F2F2F1A] flex space-y-10 md:space-y-0 pb-10 flex-col items-center md:items-start md:flex-row md:space-x-10 md:mt-16 text-black'>
 
 
       <div className='w-full'>
