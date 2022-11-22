@@ -100,11 +100,11 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
     <>
       <ul className='flex justify-center items-center w-full ' >
 
-        <LiMenu as="li" className={`capitalize mx-4 `}>
+        <LiMenu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
+          <LiMenu.Button className='flex md:text-sm lg:text-md items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute space-y-4  bg-[#e4e2e2] w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold '>
+            <ul className='absolute space-y-4  bg-[#e4e2e2] w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
 
               <li className='w-full]'>
@@ -123,9 +123,9 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
           </LiMenu.Items>
         </LiMenu>
 
-        <LiMenu as="li" className={`capitalize mx-4 `}>
+        <LiMenu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
+          <LiMenu.Button className='flex md:text-sm lg:text-md items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
             <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
@@ -146,9 +146,9 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
 
         </LiMenu>
 
-        <LiMenu as="li" className={`capitalize mx-4 `}>
+        <LiMenu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
+          <LiMenu.Button className='flex md:text-sm lg:text-md items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
             <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
               <li>
@@ -168,17 +168,17 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
 
         </LiMenu>
 
-        <Menu />
+        {/* <Menu /> */}
 
         {/* <li className='ml-3  flex justify-center items-center '>Marketplace <DropDown/></li>
       <li className='ml-3 flex justify-center items-center '>Creator <DropDown/></li>
       <li className='ml-3 flex justify-center items-center '>Launchpad <DropDown/></li>
       <li className='ml-6 mr-3 flex justify-center items-center '>Networks <DropDown/></li>
       <li className='flex justify-center items-center '><Menu/>All</li> */}
-        <li ><div className='p-3 rounded-full bg-white ml-4'></div></li>
+        {/* <li ><div className='p-3 rounded-full bg-white ml-4'></div></li> */}
         <li>
           <button
-            className='mx-8 border border-brandyellow py-1 text-black px-8 rounded-xl'
+            className='md:text-sm lg:text-md border border-brandyellow py-2 rounded-xl'
             onClick={() => handleConnectButton()}>
             {app == null ? 'Connect Wallet' : app.connected ? "Disconnect Walet" : "Connect Wallet"}
           </button>
