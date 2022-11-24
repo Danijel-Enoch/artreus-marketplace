@@ -26,7 +26,7 @@ const defaultValues: VALUES = {
 const AppContext = React.createContext(defaultValues);
 
 const snackbar = () => toast.success("Wallet Connected",{
-    toastId: 'random id to keep from duplicating'
+    toastId: 'walletconnect'
 })
 
 export const AppContextProvider = ({ children }: any) => {
