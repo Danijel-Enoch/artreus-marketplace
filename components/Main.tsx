@@ -8,6 +8,8 @@ import MobileNav from './nav/MobileNav';
 import MobileMenuNav from './nav/MobileMenuNav';
 import MobileSearchBar from './nav/MobileSearchBar';
 import Image from 'next/image';
+import { useWalletSelector, WalletSelectorContextValue } from '../contexts/WalletSelector';
+import { useAppContext, VALUES } from '../contexts/AppContext';
 
 
 export default function Main({ children }: { children: React.ReactNode }) {
@@ -17,6 +19,51 @@ export default function Main({ children }: { children: React.ReactNode }) {
   const [showMobileSearch, setShowMobileSearch] = React.useState(false)
   const navItems = ['marketplace', 'creator', "launchPad", 'networks', 'all']
 
+  const nearWallet = useWalletSelector()
+  const metamask = useAppContext()
+
+  const [selected, setSelected] = React.useState(null)
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [app, setApp] = React.useState<VALUES | WalletSelectorContextValue | null>(null)
+
+  const handleConnectButton = () => {
+
+    if (app == null) {
+      setIsOpen(true)
+      return
+    } else if (app.connected) {
+      app.logOut()
+      setApp(null)
+      setSelected(null)
+      return
+    }
+
+    setSelected(null)
+    setApp(null)
+    setIsOpen(true)
+  }
+
+  if (selected == 'metamask' && app != metamask) {
+    setApp(metamask)
+  }
+
+  if (selected == 'nearWallet' && app != nearWallet) {
+    setApp(nearWallet)
+  }
+
+  if (app != null) {
+    if (app == nearWallet) {
+      app.setConnectedValue(app.selector.isSignedIn())
+    }
+
+    if (app.connected == false) {
+      app.logIn()
+    } else {
+      localStorage.setItem('accType', JSON.stringify({ name: 'metamask', connected: 'true' }))
+    }
+  }
+
+  console.log(app)
 
 
   return (
@@ -35,7 +82,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
           <div>
             <nav className='text-white w-fit w-full '>
               <div className='hidden md:flex'>
-                <DesktopNav navItems={navItems} />
+                <DesktopNav navItems={navItems} isOpen={isOpen} handleConnect={handleConnectButton} setSelected={setSelected} app={app} setApp={setApp} setIsOpen={setIsOpen} />
               </div>
 
               <div className='md:hidden'>

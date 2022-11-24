@@ -38,52 +38,9 @@ const Menu = () => {
       ></path>
     </svg>)
 }
-export default function DesktopNav({ navItems }: { navItems: string[] }) {
+export default function DesktopNav({ navItems, setSelected, isOpen, handleConnect, app, setIsOpen }: any) {
 
-  const [app, setApp] = useState<VALUES | WalletSelectorContextValue | null>(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const [selected, setSelected] = useState(null)
   const router = useRouter();
-
-  const nearWallet = useWalletSelector()
-  const metamask = useAppContext()
-
-
-  const handleConnectButton = () => {
-
-    if (app == null) {
-      setIsOpen(true)
-      return
-    } else if (app.connected) {
-      app.logOut()
-      setApp(null)
-      setSelected(null)
-      return
-    }
-
-    setSelected(null)
-    setApp(null)
-    setIsOpen(true)
-  }
-
-  if (selected == 'metamask' && app != metamask) {
-    setApp(metamask)
-  }
-
-  if (selected == 'nearWallet' && app != nearWallet) {
-    setApp(nearWallet)
-  }
-
-  if (app != null) {
-    if (app == nearWallet) {
-      app.setConnectedValue(app.selector.isSignedIn())
-    }
-
-    if (app.connected == false) {
-      app.logIn()
-    }
-  }
-
 
   return (
     <>
@@ -168,7 +125,7 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
         <li>
           <button
             className='md:text-sm lg:text-md border border-brandyellow py-2 rounded-xl'
-            onClick={() => handleConnectButton()}>
+            onClick={() => handleConnect()}>
             {app == null ? 'Connect Wallet' : app.connected ? "Disconnect Walet" : "Connect Wallet"}
           </button>
         </li>
@@ -177,7 +134,7 @@ export default function DesktopNav({ navItems }: { navItems: string[] }) {
       </ul>
 
 
-      <ConnectModal isOpen={isOpen} setSelected={setSelected} setApp={setApp} setIsOpen={setIsOpen} />
+      <ConnectModal isOpen={isOpen} setSelected={setSelected} setIsOpen={setIsOpen} />
 
       {/* <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>

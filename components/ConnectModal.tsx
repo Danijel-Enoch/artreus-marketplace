@@ -1,11 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-export default function ConnectModal({ isOpen, setApp, setSelected, setIsOpen }: any) {
+export default function ConnectModal({ isOpen, setSelected, setIsOpen }: any) {
 
   function closeModal() {
     setIsOpen(false)
-    setApp(null)
     setSelected(null)
   }
 
