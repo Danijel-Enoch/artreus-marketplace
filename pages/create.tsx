@@ -232,11 +232,11 @@ export default function Create() {
   // }, [contract])
   return (
     <section className='md:mx-16 px-4 md:px-0'>
-      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts</h1>
+      <h1 className='text-xl md:text-3xl font-bold mb-4 text-bodycopy'>Create New Nfts</h1>
       {size.width && size.width < 765 && (<ImagePreview imageUrl='' />)}
 
-      <div className='md:flex'>
-        <div>
+      <div className='md:flex flex flex-row border border-black justify-between items-start w-[100%]'>
+        <div className='w-full border'>
           <div className='flex flex-col'>
             <UploadButton handleChange={handleImageUrlChange} />
             {/* <ConnectionBar /> */}
@@ -280,7 +280,8 @@ export default function Create() {
             </div>
           </div>
         </div>
-        {size.width && size.width >= 765 && (<div className=' md:ml-16'>
+        {size.width && size.width >= 765 && (
+        <div className='w-full'>
           <ImagePreview imageUrl={imageUrl} />
         </div>)}
       </div>
