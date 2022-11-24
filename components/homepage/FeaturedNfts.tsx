@@ -63,7 +63,7 @@ export default function FeaturedNfts({ featuredNfts }: props) {
       ))}
       <div className='invisible md:visible my-5 flex space-x-2 justify-center'>
 
-        {featuredNfts.map((_, index) => (<div key={index} className={`w-[50px] p-1 ${!(index === (currentIndex - 2)) ? 'bg-[#6F6F6F]' : 'bg-[#eee]'}  `}></div>))}
+        {featuredNfts.map((_, index) => (<div key={index} className={`w-[50px] p-1 rounded-md ${!(index === (currentIndex - 2)) ? 'bg-[#6F6F6F]' : 'bg-[#eee]'}  `}></div>))}
       </div>
     </>
   )
