@@ -5,18 +5,20 @@ import {Tab} from '@headlessui/react'
 import Image from 'next/image'
 
 const TabHeader=({tabTitles}:{tabTitles:string[]})=>{
-    return(<nav className='self-center  flex items-center'>
-      <Tab.List className='flex bg-brandpurple space-x-2 text-white    rounded-full outline-none'>
+    return(
+    <nav className='self-center border-0 flex items-center'>
+      <Tab.List className='flex bg-brandpurple space-x-2 text-white rounded-full border-0'>
       {tabTitles.map((title,i)=>(
       <Tab as={Fragment} key={i} >
         {({selected})=>(
-          <button className={`py-2 px-3 ${selected&&'bg-[#FB005A]  rounded-full pl-4 outline-none'}`}> {title}</button>
+          <button className={`py-2 px-3 ${selected&&'bg-[#FB005A] border-0 m-1 rounded-full pl-4 outline-none'}`}> {title}</button>
         )}
       
         </Tab>
       ))}
         
-      </Tab.List></nav>)
+      </Tab.List>
+      </nav>)
 }
 const CollectionPrice=({price}:{price:number})=>{
   return(<div className='flex space-x-2 items-center'>
@@ -28,7 +30,7 @@ const Collection=({name,index,floorPrice,currentPrice}:{name:string,index:number
   const percentage=Math.floor(((currentPrice-floorPrice)/floorPrice)*100)
   return(
   <div className='flex items-center p-4'>
-      <div className='w-10 h-10  flex items-center space-x-1'><h3 className='font-bold'>{index}</h3><img src="/profile-picture.png" className='rounded-full w-full h-full'/></div>
+      <div className='w-10 h-10  flex items-center space-x-1'><h3 className='font-bold text-bodycopy'>{index}</h3><img src="/profile-picture.png" className='rounded-full w-full h-full'/></div>
       <div className='ml-8 '><h3 className='font-bold text-brandpurple'>{name}</h3><h4 className='flex items-center space-x-2 text-[#747474]'><p>Floor :</p><CollectionPrice price={floorPrice}/></h4></div>
       <div className='ml-16 md:ml-10'><p className={`${percentage>0?'text-green-800':'text-red-900'} font-bold  `}>{percentage>0&&'+'}{percentage} %</p> <CollectionPrice price={currentPrice}/></div>
   </div>)
@@ -43,7 +45,7 @@ export default function PopularCollections() {
      
         <Tab.Panels className='px-4'>
          {tabTitles.map((title,index)=>(
-            <Tab.Panel key={index} className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <Tab.Panel key={index} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {collections.map((collection,index)=>(<Collection name={`${title}`} index={index + 1} key={index} currentPrice={2} floorPrice={5}/>))}
            </Tab.Panel>
          ))}
