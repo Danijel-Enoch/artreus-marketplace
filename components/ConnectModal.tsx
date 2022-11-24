@@ -11,13 +11,14 @@ export default function ConnectModal({ isOpen, setSelected, setIsOpen }: any) {
   const handleMetamask = () => {
     setIsOpen(false)
     setSelected('metamask')
+    sessionStorage.setItem('walletType', JSON.stringify({ metamask: true, nearWallet: false }))
   }
 
   const handleNear = () => {
     setIsOpen(false)
     setSelected('nearWallet')
+    sessionStorage.setItem('walletType', JSON.stringify({ metamask: false, nearWallet: true }))
   }
-
 
   return (
     <>

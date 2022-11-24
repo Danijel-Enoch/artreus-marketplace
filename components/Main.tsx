@@ -1,5 +1,4 @@
 import React from 'react'
-import Logo from './Logo'
 import Footer from './Footer'
 import { useRouter } from 'next/router'
 import useWindowSize from '../hooks/useWindowSize';
@@ -35,6 +34,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
       app.logOut()
       setApp(null)
       setSelected(null)
+      sessionStorage.removeItem('walletType')
       return
     }
 

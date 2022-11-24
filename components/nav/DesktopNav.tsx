@@ -1,9 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
-import { Menu as LiMenu, Dialog, Transition } from '@headlessui/react'
-import { useAppContext, VALUES } from '../../contexts/AppContext'
+import { Menu as LiMenu } from '@headlessui/react'
 import Link from 'next/link'
-import { useWalletSelector, WalletSelectorContextValue } from '../../contexts/WalletSelector'
 import ConnectModal from '../ConnectModal'
 
 

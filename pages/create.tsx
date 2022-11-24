@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // import NetworkInfo from '../components/createCollection/NetworkInfo'
 // import EthLogo from '../components/EthLogo'
 import Title from '../components/createCollection/Title';
@@ -11,11 +11,12 @@ import PriceForApeice from '../components/createCollection/PriceForApeice';
 // import MintOptionToggle from '../components/createCollection/MintOptionToggle';
 import useWindowSize from '../hooks/useWindowSize';
 import useContract from '../hooks/useContract';
-import { useAppContext } from '../contexts/AppContext';
+import { useAppContext, VALUES } from '../contexts/AppContext';
 import { ethers } from 'ethers';
 import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
+import { useWalletSelector, WalletSelectorContextValue } from '../contexts/WalletSelector';
 
 const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
@@ -38,7 +39,7 @@ async function mint(uri: any) {
 }
 
 export default function Create() {
-  // const app = useAppContext();
+
   const size = useWindowSize()
   // const [isMintFree, setIsMintFree] = React.useState(true)
   const [fee, setFee] = React.useState("...")
@@ -50,7 +51,29 @@ export default function Create() {
   const [royalty, setRoyalty] = React.useState(0)
   // const [activePriceButton, setActivePriceButton] = React.useState<'Fixed Price' | 'Open Bid' | 'Timed Auction'>('Fixed Price')
   const contract = useContract();
-  const app = useAppContext();
+  // const app = useAppContext();
+
+  const nearWallet = useWalletSelector()
+  const metamask = useAppContext()
+
+  const [app, setApp] = React.useState<VALUES | WalletSelectorContextValue | null>(null)
+  const [walletType, setWalletType] = useState<Object | null>(null)
+
+  console.log(walletType)
+  console.log(app)
+
+  if (walletType != null && walletType.metamask && app != useAppContext()) {
+    setApp(metamask)
+  }
+
+  if (walletType != null && walletType.nearWallet && app != useWalletSelector()) {
+    setApp(nearWallet)
+  }
+
+  useEffect(() => {
+    setWalletType(JSON.parse(sessionStorage.getItem('walletType')))
+  }, [])
+
 
   ////////////
   const UploadToDb: any = async (name: any, description: any, jsonUrl: any, image_url: any, owner: any, categories: any) => {
@@ -87,8 +110,8 @@ export default function Create() {
         console.log(error);
       });
   }
-  ////////////
-  ////
+
+
   function getAccessToken() {
     // If you're just testing, you can paste in a token
     // and uncomment the following line:
