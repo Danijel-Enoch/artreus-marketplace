@@ -45,7 +45,7 @@ export default function CollectionBody({children,totalItemsLength,className}:pro
     
       <LeftBluredBox className='h-full -translate-x-10 md:translate-x-0  w-[150px] absolute'/>
   
-      <LeftArrowButton  className={`z-10  ${prevLeft&&nextLeft !=0 &&prevLeft===nextLeft&&"invisible"}`} onClick={()=>{scrollLeft()}}/>
+      <LeftArrowButton  className={`z-10 border-0  ${prevLeft&&nextLeft !=0 &&prevLeft===nextLeft&&"invisible"}`} onClick={()=>{scrollLeft()}}/>
    
      
      
@@ -58,7 +58,7 @@ export default function CollectionBody({children,totalItemsLength,className}:pro
     
    
      
-      <RightArrowButon onClick={()=>{scrollRight()}} className={`z-10 ${nextLeft===0&&"invisible"}`}/> 
+      <RightArrowButon onClick={()=>{scrollRight()}} className={`z-10 border-0  ${nextLeft===0&&"invisible"}`}/> 
       <RightBluredBox className='h-full translate-x-10 md:translate-x-0 w-[150px] absolute right-0'/>
       {/* <RightBluredBox className=''/>
          {/* <div className='relative h-[200px]'>

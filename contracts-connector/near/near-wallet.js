@@ -16,10 +16,10 @@ const NO_DEPOSIT = '0';
 
 // Wallet that simplifies using the wallet selector
 export class Wallet {
-  walletSelector:any;
-  wallet:any;
+  walletSelector;
+  wallet;
   network;
-  createAccessKeyFor:any;
+  createAccessKeyFor;
 
   constructor({ createAccessKeyFor = undefined, network = 'testnet' }) {
     // Login to a wallet passing a contractId will create a local
