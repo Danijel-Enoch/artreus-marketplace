@@ -48,12 +48,12 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
 
         <LiMenu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex md:text-sm lg:text-md items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
+          <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
             <ul className='absolute space-y-4  bg-[#e4e2e2] w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
 
-              <li className='w-full]'>
+              <li className='w-full'>
                 <Link href="/">
                   <a>Home</a>
                 </Link>
@@ -71,7 +71,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
 
         <LiMenu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex md:text-sm lg:text-md items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
+          <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
             <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
@@ -94,7 +94,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
 
         <LiMenu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex md:text-sm lg:text-md items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
+          <LiMenu.Button className='flex md:text-sm border-0 lg:text-md items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
             <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
               <li>
