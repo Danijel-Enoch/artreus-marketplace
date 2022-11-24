@@ -237,7 +237,7 @@ export default function Create() {
 
       <div className='md:flex md:flex-row md:justify-between md:items-baseline
        w-[100%] gap-x-[0.75rem]'>
-        <div className='w-[45%]'>
+        <div className='w-[45%] md:mx-auto '>
           <div className='flex flex-col'>
             <UploadButton handleChange={handleImageUrlChange} />
             {/* <ConnectionBar /> */}
@@ -282,7 +282,7 @@ export default function Create() {
           </div>
         </div>
         {size.width && size.width >= 765 && (
-        <div className='w-[55%]'>
+        <div className='md:w-[55%]'>
           <ImagePreview imageUrl={imageUrl} />
         </div>)}
       </div>
