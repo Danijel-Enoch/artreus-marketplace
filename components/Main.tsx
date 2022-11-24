@@ -104,7 +104,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
         <div className='flex justify-between items-center gap-x-5 flex-row md:my-5 invisible md:visible bg-[#2F2F2F1A] border-[#2F2F2F1A] outline-none px-6 py-2 rounded-full h-[2rem] w-[50%] mx-auto'>
           <input type="text" placeholder="Search Collections or creator" className='text-bodycopy border-2 border-black' />
-          <AiOutlineSearch color='#2F2F2FB2' />
+          <button className='p-0 m-0 border-0 cursor-pointer'><AiOutlineSearch color='#2F2F2FB2' /></button>
         </div>
 
         <div className='-translate-y-10 md:translate-y-0'>
