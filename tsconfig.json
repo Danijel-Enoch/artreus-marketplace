@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js", "contracts-connector/near/Index.js", "contracts-connector/near/near-wallet.js", "contracts-connector/near/near-interface.js"],
   "exclude": ["node_modules"]
 }

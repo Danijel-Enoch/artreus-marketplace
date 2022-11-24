@@ -254,12 +254,13 @@ export default function Create() {
   //   })()
   // }, [contract])
   return (
-    <section className='md:mx-16 px-4 md:px-0'>
-      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts</h1>
+    <section className='md:mx-16 px-4 md:px-0 md:pt-3'>
+      <h1 className='text-xl md:text-3xl font-bold mb-4 text-bodycopy'>Create New Nfts</h1>
       {size.width && size.width < 765 && (<ImagePreview imageUrl='' />)}
 
-      <div className='md:flex'>
-        <div>
+      <div className='md:flex md:flex-row md:justify-between md:items-baseline
+       w-[100%] gap-x-[0.75rem]'>
+        <div className='w-[45%] md:mx-auto '>
           <div className='flex flex-col'>
             <UploadButton handleChange={handleImageUrlChange} />
             {/* <ConnectionBar /> */}
@@ -277,7 +278,7 @@ export default function Create() {
             </div> */}
             {/* <PriceForApeice handleChange={handleChange} /> */}
             <div className='mt-4 mb-4 md:mt-8 space-x-4'>
-              <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
+              <button className='inline-block text-black py-2 px-4 font-bold rounded-md'>
                 Service fee {fee}%
               </button>
               {/* <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
@@ -293,17 +294,18 @@ export default function Create() {
               <MintOptionToggle enabled={isMintFree} setEnabled={() => setIsMintFree(!isMintFree)} />
 
             </div> */}
-            <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} />
+            <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} className="bg-[#2F2F2F1A]" />
             {/* <Input placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange} /> */}
-            <textarea className='placeholder-black/50 block bg-[#AEACAB] w-full p-2 mt-2 rounded-md' rows="4" placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange}></textarea>
+            <textarea className='placeholder-black/50 block bg-[#2F2F2F1A] w-full p-2 mt-2 rounded-md' rows="4" placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange}></textarea>
             {/* <Input placeholder='10' label="Royalties %" type='number' onChange={handleRoyaltyChange} /> */}
 
-            <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
+            <button type="submit" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow text-brandpurple' onClick={handleSubmit} > Create Item </button>
             <div>
             </div>
           </div>
         </div>
-        {size.width && size.width >= 765 && (<div className=' md:ml-16'>
+        {size.width && size.width >= 765 && (
+        <div className='md:w-[55%]'>
           <ImagePreview imageUrl={imageUrl} />
         </div>)}
       </div>

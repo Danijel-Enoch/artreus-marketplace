@@ -25,7 +25,9 @@ const defaultValues: VALUES = {
 
 const AppContext = React.createContext(defaultValues);
 
-const snackbar = () => toast.success("Wallet Connected")
+const snackbar = () => toast.success("Wallet Connected",{
+    toastId: 'walletconnect'
+})
 
 export const AppContextProvider = ({ children }: any) => {
     const [account, setAccount] = useState(defaultValues.account);
