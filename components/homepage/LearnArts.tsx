@@ -15,7 +15,7 @@ export default function LearnArts() {
  <CollectionBody totalItemsLength={artsVideos.length}>
 
       {artsVideos.map((videos,index)=>(
-        <div className='inline-block h-[250px] bg-brandpurple w-[250px] rounded-b-[5px] ' key={index}>
+        <div className='inline-block h-max bg-brandpurple w-[250px] rounded-b-[5px] ' key={index}>
           <img  src="/youtube_banner.png" className=' w-[250px]'/>
           <div className='px-20 py-5'>
               <h5 className='font-medium text-base text-white'>Nft Tutorial</h5>
