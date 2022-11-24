@@ -17,22 +17,22 @@ import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
-const provider=new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
+const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
 
-async function mint(uri:any) {
+async function mint(uri: any) {
   const address = "0x9Ba2fc37D6E22634852695993175Cdf5bfD105D5";
-const abi = [
-"function mint(string uri) payable returns (uint256)"
-];
-  try{
-      const contract = new ethers.Contract(address, abi, _signer);   
-const tx = await contract.functions.mint(uri);
-const receipt = await tx.wait();
-console.log("receipt", receipt);
-      return receipt
-  }catch(e){
-      return e
+  const abi = [
+    "function mint(string uri) payable returns (uint256)"
+  ];
+  try {
+    const contract = new ethers.Contract(address, abi, _signer);
+    const tx = await contract.functions.mint(uri);
+    const receipt = await tx.wait();
+    console.log("receipt", receipt);
+    return receipt
+  } catch (e) {
+    return e
   }
 
 }
@@ -53,93 +53,93 @@ export default function Create() {
   const app = useAppContext();
 
   ////////////
-  const   UploadToDb:any =async(name:any,description:any,jsonUrl:any,image_url:any,owner:any,categories:any)=>{
+  const UploadToDb: any = async (name: any, description: any, jsonUrl: any, image_url: any, owner: any, categories: any) => {
     var axios = require('axios');
-var data ={
-  "socialLinks": [
-    "Fb.com"
-  ],
-  "name": name,
-  "description": description,
-  "jsonUrl": jsonUrl,
-  "imageUrl": image_url,
-  "listed": "false",
-  "auctioned": "false",
-  "owner": owner,
-  "categories": categories,
-  "collectionAddress": MINTER_CONTRACT
-};
+    var data = {
+      "socialLinks": [
+        "Fb.com"
+      ],
+      "name": name,
+      "description": description,
+      "jsonUrl": jsonUrl,
+      "imageUrl": image_url,
+      "listed": "false",
+      "auctioned": "false",
+      "owner": owner,
+      "categories": categories,
+      "collectionAddress": MINTER_CONTRACT
+    };
 
-var config = {
-  method: 'post',
-  url: 'https://artreuss.herokuapp.com/v1/nft/',
-  headers: { 
-    'Content-Type': 'application/json'
-  },
-  data : data
-};
+    var config = {
+      method: 'post',
+      url: 'https://artreuss.herokuapp.com/v1/nft/',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
 
-axios(config)
-.then(function (response:any) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error:any) {
-  console.log(error);
-});
+    axios(config)
+      .then(function (response: any) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
   }
   ////////////
   ////
-  function getAccessToken () {
+  function getAccessToken() {
     // If you're just testing, you can paste in a token
     // and uncomment the following line:
     // return 'paste-your-token-here'
-  
+
     // In a real app, it's better to read an access token from an
     // environement variable or other configuration that's kept outside of
     // your code base. For this to work, you need to set the
     // WEB3STORAGE_TOKEN environment variable before you run your code.
     return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGNBZTE3Qjk0NzE4Q0I3MDIwOTcwZjg0NTlGQTQ5ZTk2NDNlRDg2OTYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjI4MTU5NDIyNjgsIm5hbWUiOiJhcnRlcmV1cyJ9.3yGxFeIZ8v0lsPwXsiuuRdECC76d8kly3u8D2yBsum4"
   }
-  
-  function makeStorageClient () {
+
+  function makeStorageClient() {
     return new Web3Storage({ token: getAccessToken() })
   }
-  async function storeFiles (mfiles:any) {
+  async function storeFiles(mfiles: any) {
     const client = makeStorageClient()
     const cid = await client.put(mfiles)
     console.log('stored files with cid:', cid)
     return cid
   }
-  const UploadImages:any = async (image:any,item_name:any,description:any,category:any,size:any) => {
+  const UploadImages: any = async (image: any, item_name: any, description: any, category: any, size: any) => {
     // console.log(image[0].name);
-    let cid:any
+    let cid: any
     const myRenamedFile = new File([image[0]], 'my-file-final-1-really.png');
-   console.log(image)
-      cid = await storeFiles(image);
-     console.log(cid) //add snack bar here
-     
-     //makeFileObjects(cid, image[0].name);
-     console.log("Image Cid: "+cid)
-     const obj = {
-       image_url: cid + "/" + image[0].name,
-       name: item_name,
-       description: description,
-       size: size,
-       category: category,
-     };
-  
-     const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
-     let ufiles = [new File([blob], item_name + ".json")];
-     let metaCid = await storeFiles(ufiles);
-     console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
-      console.log(ufiles)
+    console.log(image)
+    cid = await storeFiles(image);
+    console.log(cid) //add snack bar here
+
+    //makeFileObjects(cid, image[0].name);
+    console.log("Image Cid: " + cid)
+    const obj = {
+      image_url: cid + "/" + image[0].name,
+      name: item_name,
+      description: description,
+      size: size,
+      category: category,
+    };
+
+    const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
+    let ufiles = [new File([blob], item_name + ".json")];
+    let metaCid = await storeFiles(ufiles);
+    console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
+    console.log(ufiles)
     // mint(metaCid + "/" + item_name + ".json");
-     return [ufiles,cid + "/" + image[0].name,metaCid + "/" + item_name + ".json",item_name,description,category];
-   }
+    return [ufiles, cid + "/" + image[0].name, metaCid + "/" + item_name + ".json", item_name, description, category];
+  }
   /////
- 
+
   const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file:any = e.target.files
+    const file: any = e.target.files
     setFileObject(file);
     if (file) {
       let src = URL.createObjectURL(file[0])
@@ -148,17 +148,17 @@ axios(config)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val:any = +e.target.value
+    const val: any = +e.target.value
     setAmount(val)
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val:any = e.target.value
+    const val: any = e.target.value
     setName(val)
   }
 
   const handleDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val:any = e.target.value
+    const val: any = e.target.value
     setDesc(val)
     //console.log(val)
   }
@@ -178,37 +178,37 @@ axios(config)
   const walletNotConnected = () => toast.error("Wallet Not Connected")
 
   const handleSubmit = async () => {
-     // console.log(fileObject.name);
-     const data:any = await UploadImages(fileObject,name,desc,"image",fileObject.size)
-     console.log(data);
-     const owner:any =await _signer.getAddress();
-     console.log( owner)
-     try{
+    // console.log(fileObject.name);
+    const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
+    console.log(data);
+    const owner: any = await _signer.getAddress();
+    console.log(owner)
+    try {
       const address = MINTER_CONTRACT;
       const abi = [
-      "function mint(string uri) payable returns (uint256)"
+        "function mint(string uri) payable returns (uint256)"
       ];
-        try{
-            const contract = new ethers.Contract(address, abi, app.signer);   
-      const tx = await contract.functions.mint(data[2].toString(),{value: ethers.utils.parseEther("0.01")});
-      const receipt = await tx.wait();
-      console.log("receipt", receipt);
-        UploadToDb(name,desc,data[2],data[1],owner,"Nft")
+      try {
+        const contract = new ethers.Contract(address, abi, app.signer);
+        const tx = await contract.functions.mint(data[2].toString(), { value: ethers.utils.parseEther("0.01") });
+        const receipt = await tx.wait();
+        console.log("receipt", receipt);
+        UploadToDb(name, desc, data[2], data[1], owner, "Nft")
         // alert("NFT minted successful")
-           success()
+        success()
 
 
         return receipt
-        }catch(mint_error:any){
+      } catch (mint_error: any) {
         // alert("minting error")
-          error()
-            console.log(mint_error)
-        }
-        
-     }catch(e){
+        error()
+        console.log(mint_error)
+      }
+
+    } catch (e) {
       console.log(e)
-     }
-    
+    }
+
     if (!contract) return;
     // Upload to Pinata or IPFS or our server, 
     // const uri = uploadToSERVER(fileObject, name, desc, ethers.utils.formatEther(royalty))
@@ -245,7 +245,7 @@ axios(config)
           <div>
             {/* <Title>Sell on Marketplace</Title>
             <p className='text-[#00000080]'>Enter price to allow users easily purchase your NFT</p> */}
-            
+
             {/* <div className='flex space-x-2 md:space-x-4 mt-4 mb-4'>
               <PriceTypeButton title='Fixed Price' onClick={() => setActivePriceButton('Fixed Price')} active={activePriceButton === 'Fixed Price' ? true : false} />
               <PriceTypeButton title='Open Bid' onClick={() => setActivePriceButton('Open Bid')} active={activePriceButton === 'Open Bid' ? true : false} />

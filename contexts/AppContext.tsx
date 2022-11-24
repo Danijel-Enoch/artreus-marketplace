@@ -79,7 +79,15 @@ export const AppContextProvider = ({ children }: any) => {
         setConnected(true);
         setProvider(provid);
         setSigner(_signer);
+
+        // localStorage.setItem('metamask', JSON.stringify({
+        //     provider: JSON.stringify(provider),
+        //     signer: JSON.stringify(signer)
+        // }))
+
     }, [logOut, web3Modal]);
+
+    // localStorage.getItem('')
 
     useEffect(() => {
         const _web3Modal = new Web3Modal({
