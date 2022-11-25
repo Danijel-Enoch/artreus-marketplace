@@ -7,7 +7,7 @@ import LedgerIconUrl from '@near-wallet-selector/ledger/assets/ledger-icon.png';
 import MyNearIconUrl from '@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png';
 
 // wallet selector options
-import { setupWalletSelector } from '@near-wallet-selector/core';
+import { setupWalletSelector } from "@near-wallet-selector/core";
 import { setupLedger } from '@near-wallet-selector/ledger';
 import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet';
 
@@ -18,6 +18,7 @@ const NO_DEPOSIT = '0';
 export class Wallet {
   walletSelector;
   wallet;
+  connected;
   network;
   createAccessKeyFor;
 
@@ -28,6 +29,7 @@ export class Wallet {
     // asked to sign all transactions.
     this.createAccessKeyFor = createAccessKeyFor
     this.network = 'testnet'
+    this.startUp()
   }
 
   // To be called when the website loads
@@ -39,6 +41,7 @@ export class Wallet {
     });
 
     const isSignedIn = this.walletSelector.isSignedIn();
+    this.connected = isSignedIn
 
     if (isSignedIn) {
       this.wallet = await this.walletSelector.wallet();

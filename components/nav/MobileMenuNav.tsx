@@ -20,11 +20,11 @@ const MenuItem = () => {
                             </Link>
                         </li>
 
-                        <li>
+                        {/* <li>
                             <Link href="/new">
                                 <a>New Collection</a>
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </Menu.Items>
             </Menu>

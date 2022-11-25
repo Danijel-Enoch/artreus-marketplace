@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 // import NetworkInfo from '../components/createCollection/NetworkInfo'
 // import EthLogo from '../components/EthLogo'
 import Title from '../components/createCollection/Title';
@@ -11,12 +11,14 @@ import PriceForApeice from '../components/createCollection/PriceForApeice';
 // import MintOptionToggle from '../components/createCollection/MintOptionToggle';
 import useWindowSize from '../hooks/useWindowSize';
 import useContract from '../hooks/useContract';
-import { useAppContext, VALUES } from '../contexts/AppContext';
+import { useAppContext } from '../contexts/AppContext';
 import { ethers } from 'ethers';
 import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
-import { useWalletSelector, WalletSelectorContextValue } from '../contexts/WalletSelector';
+
+import { nft_mint } from '../contracts-connector/near/near-interface';
+
 
 const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
@@ -39,7 +41,7 @@ async function mint(uri: any) {
 }
 
 export default function Create() {
-
+  // const app = useAppContext();
   const size = useWindowSize()
   // const [isMintFree, setIsMintFree] = React.useState(true)
   const [fee, setFee] = React.useState("...")
@@ -51,28 +53,8 @@ export default function Create() {
   const [royalty, setRoyalty] = React.useState(0)
   // const [activePriceButton, setActivePriceButton] = React.useState<'Fixed Price' | 'Open Bid' | 'Timed Auction'>('Fixed Price')
   const contract = useContract();
-  // const app = useAppContext();
+  const app = useAppContext();
 
-  const nearWallet = useWalletSelector()
-  const metamask = useAppContext()
-
-  const [app, setApp] = React.useState<VALUES | WalletSelectorContextValue | null>(null)
-  const [walletType, setWalletType] = useState<Object | null>(null)
-
-  console.log(walletType)
-  console.log(app)
-
-  if (walletType != null && walletType.metamask && app != useAppContext()) {
-    setApp(metamask)
-  }
-
-  if (walletType != null && walletType.nearWallet && app != useWalletSelector()) {
-    setApp(nearWallet)
-  }
-
-  useEffect(() => {
-    setWalletType(JSON.parse(sessionStorage.getItem('walletType')))
-  }, [])
 
 
   ////////////
@@ -110,8 +92,8 @@ export default function Create() {
         console.log(error);
       });
   }
-
-
+  ////////////
+  ////
   function getAccessToken() {
     // If you're just testing, you can paste in a token
     // and uncomment the following line:
@@ -212,6 +194,9 @@ export default function Create() {
         "function mint(string uri) payable returns (uint256)"
       ];
       try {
+
+        nft_mint()
+
         const contract = new ethers.Contract(address, abi, app.signer);
         const tx = await contract.functions.mint(data[2].toString(), { value: ethers.utils.parseEther("0.01") });
         const receipt = await tx.wait();
@@ -254,13 +239,12 @@ export default function Create() {
   //   })()
   // }, [contract])
   return (
-    <section className='md:mx-16 px-4 md:px-0 md:pt-3'>
-      <h1 className='text-xl md:text-3xl font-bold mb-4 text-bodycopy'>Create New Nfts</h1>
+    <section className='md:mx-16 px-4 md:px-0'>
+      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts On Near</h1>
       {size.width && size.width < 765 && (<ImagePreview imageUrl='' />)}
 
-      <div className='md:flex md:flex-row md:justify-between md:items-baseline
-       w-[100%] gap-x-[0.75rem]'>
-        <div className='w-[45%] md:mx-auto '>
+      <div className='md:flex'>
+        <div>
           <div className='flex flex-col'>
             <UploadButton handleChange={handleImageUrlChange} />
             {/* <ConnectionBar /> */}
@@ -278,7 +262,7 @@ export default function Create() {
             </div> */}
             {/* <PriceForApeice handleChange={handleChange} /> */}
             <div className='mt-4 mb-4 md:mt-8 space-x-4'>
-              <button className='inline-block text-black py-2 px-4 font-bold rounded-md'>
+              <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
                 Service fee {fee}%
               </button>
               {/* <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
@@ -294,18 +278,17 @@ export default function Create() {
               <MintOptionToggle enabled={isMintFree} setEnabled={() => setIsMintFree(!isMintFree)} />
 
             </div> */}
-            <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} className="bg-[#2F2F2F1A]" />
+            <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} />
             {/* <Input placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange} /> */}
-            <textarea className='placeholder-black/50 block bg-[#2F2F2F1A] w-full p-2 mt-2 rounded-md' rows="4" placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange}></textarea>
+            <textarea className='placeholder-black/50 block bg-[#AEACAB] w-full p-2 mt-2 rounded-md' rows="4" placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange}></textarea>
             {/* <Input placeholder='10' label="Royalties %" type='number' onChange={handleRoyaltyChange} /> */}
 
-            <button type="submit" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow text-brandpurple' onClick={handleSubmit} > Create Item </button>
+            <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
             <div>
             </div>
           </div>
         </div>
-        {size.width && size.width >= 765 && (
-        <div className='md:w-[55%]'>
+        {size.width && size.width >= 765 && (<div className=' md:ml-16'>
           <ImagePreview imageUrl={imageUrl} />
         </div>)}
       </div>

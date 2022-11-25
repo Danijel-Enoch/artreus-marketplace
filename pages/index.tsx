@@ -12,6 +12,8 @@ import useContract from '../hooks/useContract'
 import { useEffect, useState } from 'react'
 import { ArtreusMarketplace } from '../contract-types'
 import Link from 'next/link'
+import { Wallet } from '../contracts-connector/near/near-wallet'
+
 
 type props = {
   newCollectionNfts: NewCollectionNft[]
@@ -34,11 +36,18 @@ export default function Home({ newCollectionNfts, featuredNfts }: props) {
   }, [instance])
 
 
+
+  const nearWa = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
+
+  // console.log(nearWa)
+
+
+
   return (
     <>
       <FeaturedNfts featuredNfts={featuredNfts} />
       <div className='space-y-16'>
-        <NewCollections newCollectionNfts={newCollectionNfts} />
+        {/* <NewCollections newCollectionNfts={newCollectionNfts} /> */}
         <LearnArts />
         <PopularCollections />
         <RecentlyListedNfts />
