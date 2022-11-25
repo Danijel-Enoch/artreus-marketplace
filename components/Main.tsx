@@ -27,10 +27,6 @@ export default function Main({ children }: { children: React.ReactNode }) {
   const [connected, setConnected] = React.useState(false)
 
 
-  const nearSignIn = () => {
-    nearWallet.signIn()
-
-  }
   const handleConnectButton = () => {
 
     if (!connected) {

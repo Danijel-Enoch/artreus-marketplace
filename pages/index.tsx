@@ -37,12 +37,6 @@ export default function Home({ newCollectionNfts, featuredNfts }: props) {
 
 
 
-  const nearWa = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
-
-  // console.log(nearWa)
-
-
-
   return (
     <>
       <FeaturedNfts featuredNfts={featuredNfts} />
