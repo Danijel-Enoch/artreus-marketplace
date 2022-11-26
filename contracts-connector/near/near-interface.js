@@ -9,8 +9,8 @@ const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
 
 
 export function walletSignIn() {
-   console.log(wallet)
    wallet.signIn()
+   return wallet.connected
 }
 
 //View functions

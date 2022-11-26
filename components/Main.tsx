@@ -20,7 +20,13 @@ export default function Main({ children }: { children: React.ReactNode }) {
   const navItems = ['marketplace', 'creator', "launchPad", 'networks', 'all']
 
   const metamask = useAppContext()
-  const nearWallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
+
+  const [nearWallet, setNearWallet] = React.useState<Wallet | null>(null)
+
+  React.useEffect(() => {
+    const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
+    setNearWallet(wallet)
+  }, [])
 
   const [selected, setSelected] = React.useState(null)
   const [isOpen, setIsOpen] = React.useState(false)
@@ -36,7 +42,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
       if (selected == 'metamask') {
         metamask.signOut()
       } else {
-        nearWallet.signOut()
+        nearWallet?.signOut()
       }
       setConnected(false)
       setSelected(null)
@@ -53,10 +59,10 @@ export default function Main({ children }: { children: React.ReactNode }) {
       metamask.signIn()
     }
 
-    if (selected == 'nearWallet' && !nearWallet.connected) {
+    if (selected == 'nearWallet' && !nearWallet?.connected) {
       try {
-        walletSignIn()
-        console.log(nearWallet)
+        setConnected(walletSignIn())
+        console.log(connected)
       } catch (error) {
         console.log(error)
       }
@@ -67,12 +73,12 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
 
   React.useEffect(() => {
-    if (metamask.connected || nearWallet.connected) {
+    if (metamask.connected || nearWallet?.connected) {
       setConnected(true)
     } else {
       setConnected(false)
     }
-  }, [metamask.connected, nearWallet.connected])
+  }, [metamask.connected, nearWallet?.connected])
 
 
 
