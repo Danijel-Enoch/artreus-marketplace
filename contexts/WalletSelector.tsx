@@ -88,7 +88,7 @@ export const WalletSelectorContextProvider: React.FC = ({ children }: any) => {
       ],
     });
 
-    const _modal = setupModal(_selector, { contractId: CONTRACT_ID });
+    const _modal = setupModal(_selector, { contractId: "artreus.danieldave.testnet" });
     const state = _selector.store.getState();
     setAccounts(state.accounts);
 
