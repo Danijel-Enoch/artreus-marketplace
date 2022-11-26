@@ -10,7 +10,6 @@ import Image from 'next/image';
 import { useAppContext } from '../contexts/AppContext';
 
 import { Wallet } from '../contracts-connector/near/near-wallet'
-import { walletSignIn } from '../contracts-connector/near/near-interface'
 
 export default function Main({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -20,7 +19,6 @@ export default function Main({ children }: { children: React.ReactNode }) {
   const navItems = ['marketplace', 'creator', "launchPad", 'networks', 'all']
 
   const metamask = useAppContext()
-
   const [nearWallet, setNearWallet] = React.useState<Wallet | null>(null)
 
   React.useEffect(() => {
@@ -61,15 +59,13 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
     if (selected == 'nearWallet' && !nearWallet?.connected) {
       try {
-        setConnected(walletSignIn())
-        console.log(connected)
+        nearWallet?.signIn()
+        setConnected(nearWallet?.connected)
       } catch (error) {
         console.log(error)
       }
     }
   }, [selected])
-
-  console.log(nearWallet)
 
 
   React.useEffect(() => {

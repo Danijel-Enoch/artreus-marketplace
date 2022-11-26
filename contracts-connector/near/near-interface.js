@@ -5,13 +5,8 @@ const CONTRACT_ADDRESS = process.env.CONTRACT_NAME;
 
 // When creating the wallet you can optionally ask to create an access key
 // Having the key enables to call non-payable methods without interrupting the user to sign
+
 const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
-
-
-export function walletSignIn() {
-   wallet.signIn()
-   return wallet.connected
-}
 
 //View functions
 // await wallet.callMethod({ method: 'set_greeting', args: { greeting: greeting.value }, contractId: CONTRACT_ADDRESS });
@@ -26,7 +21,6 @@ export async function nft_token({ token_id }) {
 
 //NFT Minting call function
 export async function nft_mint({ token_id, metadata, receiver_id, perpetual_royalties }) {
-   console.log(CONTRACT_ADDRESS)
    return await wallet.callMethod({ method: 'nft_mint', args: { token_id, metadata, receiver_id, perpetual_royalties }, contractId: CONTRACT_ADDRESS });
 }
 

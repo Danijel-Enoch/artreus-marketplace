@@ -3,16 +3,12 @@ import { providers } from 'near-api-js';
 // wallet selector UI
 import '@near-wallet-selector/modal-ui/styles.css';
 import { setupModal } from '@near-wallet-selector/modal-ui';
-import LedgerIconUrl from '@near-wallet-selector/ledger/assets/ledger-icon.png';
-import MyNearIconUrl from '@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png';
 
 import { setupDefaultWallets } from "@near-wallet-selector/default-wallets";
 import { setupNearWallet } from "@near-wallet-selector/near-wallet";
 
 // wallet selector options
 import { setupWalletSelector } from "@near-wallet-selector/core";
-import { setupLedger } from '@near-wallet-selector/ledger';
-import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet';
 
 const THIRTY_TGAS = '30000000000000';
 const NO_DEPOSIT = '0';
@@ -45,6 +41,8 @@ export class Wallet {
         setupNearWallet()
       ],
     });
+
+    window.selector = this.walletSelector
 
     const isSignedIn = this.walletSelector.isSignedIn();
     this.connected = isSignedIn

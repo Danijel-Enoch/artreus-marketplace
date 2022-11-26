@@ -16,7 +16,9 @@ import { ethers } from 'ethers';
 import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
+
 import { Wallet } from '../contracts-connector/near/near-wallet';
+
 
 const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
@@ -50,16 +52,16 @@ export default function Create() {
   const [desc, setDesc] = React.useState(0)
   const [royalty, setRoyalty] = React.useState(0)
   // const [activePriceButton, setActivePriceButton] = React.useState<'Fixed Price' | 'Open Bid' | 'Timed Auction'>('Fixed Price')
+
+
   const contract = useContract();
   const app = useAppContext();
+  const [nearWallet, setNearWallet] = React.useState<Wallet | null>(null)
 
-
-
-
-  const nearWallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
-
-  nearWallet.startUp()
-  console.log(nearWallet)
+  React.useEffect(() => {
+    const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
+    setNearWallet(wallet)
+  }, [])
 
 
 
