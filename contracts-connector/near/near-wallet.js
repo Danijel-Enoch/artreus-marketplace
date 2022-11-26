@@ -6,6 +6,9 @@ import { setupModal } from '@near-wallet-selector/modal-ui';
 import LedgerIconUrl from '@near-wallet-selector/ledger/assets/ledger-icon.png';
 import MyNearIconUrl from '@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png';
 
+import { setupDefaultWallets } from "@near-wallet-selector/default-wallets";
+import { setupNearWallet } from "@near-wallet-selector/near-wallet";
+
 // wallet selector options
 import { setupWalletSelector } from "@near-wallet-selector/core";
 import { setupLedger } from '@near-wallet-selector/ledger';
@@ -36,8 +39,11 @@ export class Wallet {
   async startUp() {
     this.walletSelector = await setupWalletSelector({
       network: this.network,
-      modules: [setupMyNearWallet({ iconUrl: MyNearIconUrl }),
-      setupLedger({ iconUrl: LedgerIconUrl })],
+      debug: true,
+      modules: [
+        ...(await setupDefaultWallets()),
+        setupNearWallet()
+      ],
     });
 
     const isSignedIn = this.walletSelector.isSignedIn();
@@ -49,6 +55,10 @@ export class Wallet {
     }
 
     return isSignedIn;
+  }
+
+  checkIfSignedIn() {
+    return this.walletSelector.isSignedIn()
   }
 
   // Sign-in method
