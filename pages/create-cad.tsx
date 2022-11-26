@@ -37,7 +37,6 @@ async function mint(uri: any) {
   } catch (e) {
     return e
   }
-
 }
 
 export default function Create() {
@@ -60,9 +59,9 @@ export default function Create() {
 
   React.useEffect(() => {
     const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
+    wallet.startUp()
     setNearWallet(wallet)
   }, [])
-
 
 
 

@@ -28,7 +28,6 @@ export class Wallet {
     // asked to sign all transactions.
     this.createAccessKeyFor = createAccessKeyFor
     this.network = 'testnet'
-    this.startUp()
   }
 
   // To be called when the website loads

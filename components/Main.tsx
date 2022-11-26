@@ -23,6 +23,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
+    wallet.startUp()
     setNearWallet(wallet)
   }, [])
 
