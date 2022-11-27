@@ -12,12 +12,12 @@ export type highestNFTs = {
 
 const HighestNfts = ({ name, price, imageUri, tokenId }: { name: string, price: number, imageUri: string, tokenId: string }) => {
   return (
-    <div className='w-[250px] inline-block rounded-[5px]'>
-      <div className='w-full h-[200px]'>
-        <img src={imageUri} className='rounded-t-[5px] w-[250px] h-[230px] object-cover' />
+    <div className='w-[230px] inline-block rounded-[5px]'>
+      <div className='w-full'>
+        <img src={imageUri} className='rounded-t-[5px] w-[230px] h-[230px] object-cover' />
       </div>
-      <div className='bg-brandpurple p-2 text-white flex flex-col justify-center items-center space-y-2 rounded-b-[5px]'>
-        <p className=' font-semibold'>{name} #{tokenId}</p>
+      <div className='bg-brandpurple py-2 text-white flex flex-col justify-center items-center  rounded-b-[5px] pt-4'>
+        <p className='font-semibold'>{name} #{tokenId}</p>
         <p className='text-brandyellow  text-semibold'>{name}</p>
         <span className=' bg-brandpurple p-1'>{price} CMP</span>
       </div>
