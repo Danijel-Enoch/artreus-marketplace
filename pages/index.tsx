@@ -9,6 +9,7 @@ import PopularCollections from '../components/homepage/PopularCollections'
 import RecentlyListedNfts from '../components/homepage/RecentlyListedNfts'
 import type { NFT } from '../components/homepage/RecentlyListedNfts';
 import HighestSalesNfts from '../components/homepage/HighestSalesNfts'
+import type { highestNFTs } from '../components/homepage/HighestSalesNfts'
 import UpcomingLaunches from '../components/homepage/UpcomingLaunches'
 import useContract from '../hooks/useContract'
 import { useEffect, useState } from 'react'
@@ -20,9 +21,10 @@ type props = {
   featuredNfts: FeaturedNft[]
   learnArts: artVideos[]
   recentNFTs: NFT[]
+  highestSoldNFTs : highestNFTs[]
 }
 
-export default function Home({ newCollectionNfts, featuredNfts, learnArts,recentNFTs }: props) {
+export default function Home({ newCollectionNfts, featuredNfts, learnArts,recentNFTs,highestSoldNFTs }: props) {
   const [unsoldNFTS, setUnsoldNFTS] = useState<ArtreusMarketplace.ItemStructOutput[]>();
   const instance = useContract();
 
@@ -47,7 +49,7 @@ export default function Home({ newCollectionNfts, featuredNfts, learnArts,recent
         <LearnArts learnArts={learnArts} />
         <PopularCollections />
         <RecentlyListedNfts recentNFTs={recentNFTs} />
-        <HighestSalesNfts />
+        <HighestSalesNfts highestSoldNFTs={highestSoldNFTs} />
         <UpcomingLaunches />
       </div>
 
@@ -183,12 +185,52 @@ export async function getServerSideProps() {
     },
   ]
 
+  const highestSoldNFTs : highestNFTs[] = [
+    {
+      name:'Crypto Birdies',
+      price:3,
+      imageURI:'https://i.seadn.io/gcs/files/154ea199ed44bbe15fad24be55952265.gif?auto=format&w=1920',
+      tokenId:''
+    },
+    {
+      name:'MekaVerse',
+      price:3,
+      imageURI:'https://img.seadn.io/files/54a6e47cabe22aca5026f5d529b9b61a.png?auto=format&fit=max&w=512',
+      tokenId:''
+    },
+    {
+      name:'Tron Warz',
+      price:5,
+      imageURI:'https://i.seadn.io/gcs/files/1e6ac237b1336f329030a3a312049f2a.png?auto=format&w=1920',
+      tokenId:''
+    },
+    {
+      name:'TsuKimi',
+      price:3,
+      imageURI:'https://i.seadn.io/gcs/files/2dcc373f150631b61e0fd0c45d18bee5.png?auto=format&w=1920',
+      tokenId:''
+    },
+    {
+      name:'Fantastic Mysteries',
+      price:1,
+      imageURI:'https://i.seadn.io/gae/PY0pGSV5rPsXXePEUeOabUZUwhI3ViUogQdoEiWNYhcY7jxFDssr6IBboUSUKe9ugqlbIa-XDElDFoZXvkkM5PwxA_fijtkpjVL1dg?auto=format&w=512',
+      tokenId:''
+    },
+    {
+      name:'Killabits',
+      price:2,
+      imageURI:'https://i.seadn.io/gcs/files/da6c85dade2452fbed34b935e1909318.png?auto=format&w=1920',
+      tokenId:''
+    },
+  ]
+
   return {
     props: {
       newCollectionNfts,
       featuredNfts,
       learnArts,
-      recentNFTs
+      recentNFTs,
+      highestSoldNFTs
     }
   }
 }
