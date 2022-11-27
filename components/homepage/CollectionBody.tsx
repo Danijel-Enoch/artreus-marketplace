@@ -37,14 +37,14 @@ export default function CollectionBody({ children, totalItemsLength, className }
   // },[])
   return (
     <>
-      <div className='flex relative items-center overflow-x-hidden'>
-        <LeftBluredBox className='h-full -translate-x-10 md:translate-x-0  w-[150px] absolute' />
-        <LeftArrowButton className={`z-10 border-0  ${prevLeft && nextLeft != 0 && prevLeft === nextLeft && "invisible"}`} onClick={() => { scrollLeft() }} />
+      <div className='flex relative items-center overflow-x-hidden '>
+        <LeftBluredBox className='hidden md:block h-full -translate-x-10 md:translate-x-0  w-[150px] absolute' />
+        <LeftArrowButton className={`hidden md:block z-10 border-0  ${prevLeft && nextLeft != 0 && prevLeft === nextLeft && "invisible"}`} onClick={() => { scrollLeft() }} />
         <div ref={scrollContainerRef} className='space-x-2 overflow-x-scroll md:overflow-x-hidden scroll-smooth  px-2 md:px-8 whitespace-nowrap'>
           {children}
         </div>
-        <RightArrowButon onClick={() => { scrollRight() }} className={`z-10 border-0  ${nextLeft === 0 && "invisible"}`} />
-        <RightBluredBox className='h-full translate-x-10 md:translate-x-0 w-[150px] absolute right-0' />
+        <RightArrowButon onClick={() => { scrollRight() }} className={`hidden md:block z-10 border-0  ${nextLeft === 0 && "invisible"}`} />
+        <RightBluredBox className='hidden md:block h-full translate-x-10 md:translate-x-0 w-[150px] absolute right-0' />
         {/* <RightBluredBox className=''/>
          {/* <div className='relative h-[200px]'>
         </div>  */}
