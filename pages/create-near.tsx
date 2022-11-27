@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
 import { nft_mint } from '../contracts-connector/near/near-interface';
+import { wallet } from '../contracts-connector/near/near-interface';
 
 
 const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
@@ -182,39 +183,42 @@ export default function Create() {
   //snackbar notification for wallet not connected
   const walletNotConnected = () => toast.error("Wallet Not Connected")
 
+  useEffect(() => {
+    wallet.startUp()
+  }, [])
+
+  console.log(wallet.accountId)
   const handleSubmit = async () => {
     // console.log(fileObject.name);
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
     console.log(data);
-    const owner: any = await _signer.getAddress();
-    console.log(owner)
+
     try {
-      const address = MINTER_CONTRACT;
-      const abi = [
-        "function mint(string uri) payable returns (uint256)"
-      ];
-      try {
+      const metadata = data[2]
 
-        nft_mint()
-
-        const contract = new ethers.Contract(address, abi, app.signer);
-        const tx = await contract.functions.mint(data[2].toString(), { value: ethers.utils.parseEther("0.01") });
-        const receipt = await tx.wait();
-        console.log("receipt", receipt);
-        UploadToDb(name, desc, data[2], data[1], owner, "Nft")
-        // alert("NFT minted successful")
-        success()
-
-
-        return receipt
-      } catch (mint_error: any) {
-        // alert("minting error")
-        error()
-        console.log(mint_error)
+      const token = Math.random() * 100
+      const token1 = token
+      const token2 = token
+      const mintData = {
+        token,
+        metadata,
+        token1,
+        token2
       }
 
-    } catch (e) {
-      console.log(e)
+      const tx = nft_mint(mintData)
+
+      console.log("receipt", tx);
+      UploadToDb(name, desc, data[2], data[1], wallet.accountId, "Nft")
+      // alert("NFT minted successful")
+      success()
+
+
+      return tx
+    } catch (mint_error: any) {
+      // alert("minting error")
+      error()
+      console.log(mint_error)
     }
 
     if (!contract) return;

@@ -6,7 +6,7 @@ const CONTRACT_ADDRESS = process.env.CONTRACT_NAME;
 // When creating the wallet you can optionally ask to create an access key
 // Having the key enables to call non-payable methods without interrupting the user to sign
 
-const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
+export const wallet = new Wallet({ createAccessKeyFor: CONTRACT_ADDRESS })
 
 //View functions
 // await wallet.callMethod({ method: 'set_greeting', args: { greeting: greeting.value }, contractId: CONTRACT_ADDRESS });

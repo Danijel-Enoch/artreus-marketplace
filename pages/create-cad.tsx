@@ -17,8 +17,6 @@ import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
-import { Wallet } from '../contracts-connector/near/near-wallet';
-
 
 const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
@@ -55,13 +53,6 @@ export default function Create() {
 
   const contract = useContract();
   const app = useAppContext();
-  const [nearWallet, setNearWallet] = React.useState<Wallet | null>(null)
-
-  React.useEffect(() => {
-    const wallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
-    wallet.startUp()
-    setNearWallet(wallet)
-  }, [])
 
 
 
