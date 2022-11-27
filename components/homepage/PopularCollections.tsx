@@ -11,7 +11,9 @@ const TabHeader = ({ tabTitles }: { tabTitles: string[] }) => {
         {tabTitles.map((title, i) => (
           <Tab as={Fragment} key={i} >
             {({ selected }) => (
-              <button className={`py-2 px-3 border-0 ${selected && 'bg-[#FB005A] m-1 rounded-full pl-4 outline-none'}`}> {title}</button>
+              <button className={`py-2 px-3 active:rounded-full border-0 ${selected && 'bg-[#FB005A] m-1 rounded-full pl-4 outline-none'}`}>
+                {title}
+              </button>
             )}
           </Tab>
         ))}
