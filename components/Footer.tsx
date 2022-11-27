@@ -12,7 +12,7 @@ export default function Footer() {
             <div className='flex w-full justify-center'>
               <div className='w-[70%] md:w-[90%] flex justify-center bg-[#2F2F2F1A] rounded'>
                 <input type="text" placeholder="Your email" className='align-center inline-block md:inline text-[#666] placeholder:text-[#2F2F2FB2] placeholder:font-bold py-2 pl-4 h-12 w-full m-auto outline-none' />
-                <button className='whitespace-nowrap md:whitespace-normal bg-brandpurple py-1 px-4 text-white rounded w-fit'>I'm in</button>
+                <button className='whitespace-nowrap md:whitespace-normal bg-brandpurple py-1 px-4 text-white rounded w-fit m-1'>I'm in</button>
               </div>
             </div>
           </section>
