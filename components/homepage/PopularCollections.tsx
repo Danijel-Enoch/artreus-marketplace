@@ -7,11 +7,11 @@ import Image from 'next/image'
 const TabHeader = ({ tabTitles }: { tabTitles: string[] }) => {
   return (
     <nav className='self-center border-0 flex items-center'>
-      <Tab.List className='flex bg-brandpurple space-x-2 text-white rounded-full border-0'>
+      <Tab.List className='flex bg-brandpurple space-x-2 px-2 text-white rounded-full border-0'>
         {tabTitles.map((title, i) => (
           <Tab as={Fragment} key={i} >
             {({ selected }) => (
-              <button className={`py-2 px-3 active:rounded-full border-0 ${selected && 'bg-[#FB005A] m-1 rounded-full pl-4 outline-none'}`}>
+              <button className={`py-2 px-3 active:rounded-full active:bg-[transparent] border-0 ${selected && 'bg-[#FB005A] m-1 rounded-full pl-4 outline-none'}`}>
                 {title}
               </button>
             )}
