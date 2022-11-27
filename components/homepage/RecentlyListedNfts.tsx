@@ -13,8 +13,8 @@ export type NFT = {
 
 const RecentNfts = ({ name, price, imageURI, linkToDetails }: { name: string, price: number, imageURI: string, linkToDetails: string }) => {
     return (
-        <div className='w-[250px] inline-block rounded-[5px]'>
-            <img src={imageURI} className='rounded-t-[5px] w-[250px] h-[230px] object-cover' />
+        <div className='w-[230px] inline-block rounded-[5px]'>
+            <img src={imageURI} className='rounded-t-[5px] w-[230px] h-[230px] object-cover' />
             <div className='bg-brandpurple p-2 text-white rounded-b-[5px]'>
                 <p className='text-center font-semibold'>{name}</p>
                 <div className='flex justify-between items-center mt-4'>
