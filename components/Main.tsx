@@ -91,7 +91,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
       {!showMobileSearch && (
         <header className='flex justify-between py-4 px-3 bg-brandpurple '>
-          <button className='b lock' onClick={() => { router.push('/') }} >
+          <button className='b lock border-0' onClick={() => { router.push('/') }} >
             {/* <Logo className='h-7 '/> */}
             <div className='w-[8rem] h-[20px] relative'>
               <Image src={`/ArtLogo.png`} layout='fill' />
