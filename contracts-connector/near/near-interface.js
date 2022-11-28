@@ -15,7 +15,15 @@ export const wallet = new Wallet({ createAccessKeyFor: CONTRACT_ADDRESS })
 export async function nft_token({ token_id }) {
    await wallet.viewMethod({ method: 'nft_token', args: { token_id }, contractId: CONTRACT_ADDRESS });
 }
-
+//view function
+//get user nfts
+export async function  nft_tokens_for_owner({ account_id, from_index, limit }) {
+   await wallet.viewMethod({ method: 'nft_tokens_for_owner', args: { account_id, from_index, limit }, contractId: CONTRACT_ADDRESS });
+}
+//get all nfts
+export async function nft_tokens({ from_index, limit }){
+   await wallet.viewMethod({ method: 'nft_tokens', args: { from_index, limit }, contractId: CONTRACT_ADDRESS });
+}
 //Call fucntion
 // const currentGreeting = await wallet.viewMethod({ method: 'get_greeting', contractId: CONTRACT_ADDRESS });
 
