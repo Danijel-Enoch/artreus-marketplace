@@ -7,7 +7,11 @@ import MobileNav from './nav/MobileNav';
 import MobileMenuNav from './nav/MobileMenuNav';
 import MobileSearchBar from './nav/MobileSearchBar';
 import Image from 'next/image';
-import { useAppContext } from '../contexts/AppContext';
+import { useWalletSelector, WalletSelectorContextValue } from '../contexts/WalletSelector';
+import { useAppContext, VALUES } from '../contexts/AppContext';
+import { AiOutlineSearch } from 'react-icons/ai';
+
+
 
 import { Wallet } from '../contracts-connector/near/near-wallet'
 
@@ -95,7 +99,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
           </button>
 
           <div>
-            <nav className='text-white w-fit w-full '>
+            <nav className='text-white w-fit '>
               <div className='hidden md:flex'>
                 <DesktopNav navItems={navItems} isOpen={isOpen} handleConnect={handleConnectButton} setSelected={setSelected} connected={connected} setIsOpen={setIsOpen} />
               </div>

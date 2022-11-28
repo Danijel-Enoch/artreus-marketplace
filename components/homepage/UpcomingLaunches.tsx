@@ -4,21 +4,23 @@ import CollectionBody from './CollectionBody'
 import CollectionHeader from './CollectionHeader'
 import NftCollectionCard from './NftCollectionCard'
 
-export default function UpcomingLaunches() {
-    const upcomingNfts=Array.from(Array(5).keys())
+export type Upcoming = {
+  name: string,
+  imageURI: string,
+  tokenId: string,
+}
+
+export default function UpcomingLaunches({ upcomingNFTs }: { upcomingNFTs: Upcoming[] }) {
   return (
     <>
-    <CollectionHeader>
-      <SectionTitle title='Upcoming Launches'/>
-    </CollectionHeader>
-    <CollectionBody totalItemsLength={upcomingNfts.length}>
-
-        {upcomingNfts.map((nft,index)=>(<NftCollectionCard key={index} name="Bored Apes" imageUri={"https://picsum.photos/200"}  tokenId={`${1}`}/>))}
-     
-    </CollectionBody>
- 
-   
-    
+      <CollectionHeader>
+        <SectionTitle title='Upcoming Launches' />
+      </CollectionHeader>
+      <CollectionBody totalItemsLength={upcomingNFTs.length}>
+        {upcomingNFTs.map((nft, index) => (
+          <NftCollectionCard key={index} name={nft?.name} imageUri={nft?.imageURI} tokenId={nft?.tokenId} />
+        ))}
+      </CollectionBody>
     </>
   )
 }
