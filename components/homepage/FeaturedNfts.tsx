@@ -10,34 +10,19 @@ type props = {
 }
 export default function FeaturedNfts({ featuredNfts }: props) {
 
-
   const router = useRouter();
   const current = React.useRef(0)
   const [currentIndex, setCurrentIndex] = React.useState(0)
 
 
   React.useEffect(() => {
-
     const interval = setInterval(function () {
-
-
-
-
       if (current.current >= featuredNfts.length) {
-
         current.current = 0
         setCurrentIndex(current.current)
-
       }
-
-
-
       current.current = current.current + 1
       setCurrentIndex(current.current + 1)
-
-
-
-
     }, 4500)
 
     return () => clearInterval(interval)
@@ -48,16 +33,13 @@ export default function FeaturedNfts({ featuredNfts }: props) {
 
       {featuredNfts.map(({ name, imageUrl, description }, index) => (
         <div key={index} className={`flex flex-col md:flex-row md:space-x-6  ${!(index === (currentIndex - 2)) ? 'hidden' : 'visible'} '`}>
-
-
           <div className='py-6 md:py-0  md:block  w-full h-[400px] md:order-2 md:ml-12 md:mt-2 md:pl-16 '>
             <img src={`${imageUrl}`} className='w-full h-full rounded-t-2xl md:rounded-2xl  object-cover ' />
-
           </div>
           <div className='px-6 md:px-0  md:order-1 md:mt-8'>
-            <h1 className="text-2xl md:text-4xl font-extrabold text-brandpurple mb-5 md:w-[10ch]">{name}</h1>
+            <h1 className="text-4xl font-bold md:font-extrabold text-brandpurple mb-5 md:w-[10ch]">{name}</h1>
             <p className='md:w-[25ch] lg:w-[50ch] text-bodycopy'>{description}</p>
-            <button className=' font-semibold bg-brandyellow text-brandpurple border-0 py-2 px-6 rounded-lg mt-10' onClick={() => { router.push(`/collection/${name.replace(/\s/g, '').toLowerCase()}`) }}>Explore Collection</button>
+            <button className='font-semibold text-[18px]  bg-brandpurple md:text-xl text-[#fff] md:bg-brandyellow md:text-brandpurple border-0 py-2 px-6 rounded-lg mt-10' onClick={() => { router.push(`/collection/${name.replace(/\s/g, '').toLowerCase()}`) }}>Explore Collection</button>
           </div>
         </div>
       ))}
