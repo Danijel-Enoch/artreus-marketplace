@@ -1,9 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
-import { Menu as LiMenu, Dialog, Transition } from '@headlessui/react'
-import { useAppContext, VALUES } from '../../contexts/AppContext'
+import { Menu as LiMenu } from '@headlessui/react'
 import Link from 'next/link'
-import { useWalletSelector, WalletSelectorContextValue } from '../../contexts/WalletSelector'
 import ConnectModal from '../ConnectModal'
 
 
@@ -38,7 +36,7 @@ const Menu = () => {
       ></path>
     </svg>)
 }
-export default function DesktopNav({ navItems, setSelected, isOpen, handleConnect, app, setIsOpen }: any) {
+export default function DesktopNav({ navItems, setSelected, isOpen, handleConnect, connected, setIsOpen }: any) {
 
   const router = useRouter();
 
@@ -50,7 +48,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
 
           <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute flex flex-col justify-center items-center space-y-4  bg-[#e4e2e2] w-[200px] h-[100px] py-5 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
+            <ul className='absolute flex flex-col justify-center items-center space-y-4  bg-[#e4e2e2] w-[200px] h-fit py-5 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
 
               <li className='w-full'>
@@ -59,11 +57,11 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
                 </Link>
               </li>
 
-              <li className="w-full">
+              {/* <li className="w-full">
                 <Link href="/new">
                   <a>New Collection</a>
                 </Link>
-              </li>
+              </li> */}
 
             </ul>
           </LiMenu.Items>
@@ -73,11 +71,17 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
 
           <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
           <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute space-y-4 bg-[#e4e2e2]  w-[200px] h-[100px] py-5 flex flex-col justify-center items-center my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
+            <ul className='absolute space-y-4 bg-[#e4e2e2]  w-[200px] h-fit py-5 flex flex-col justify-center items-center my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
               <li className='w-full'>
-                <Link href="/create">
-                  <a>Create</a>
+                <Link href="/create-cad">
+                  <a>Create On CMP</a>
+                </Link>
+              </li>
+
+              <li className='w-full'>
+                <Link href="/create-near">
+                  <a>Create On Near</a>
                 </Link>
               </li>
 
@@ -126,7 +130,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
           <button
             className='md:text-sm lg:text-md border border-brandyellow py-2 rounded-xl'
             onClick={() => handleConnect()}>
-            {app == null ? 'Connect Wallet' : app.connected ? "Disconnect Walet" : "Connect Wallet"}
+            {connected ? "Disconnect Walet" : "Connect Wallet"}
           </button>
         </li>
         {/* <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={() => { router.push('/connect') }}>Connect Wallet</button></li> */}
