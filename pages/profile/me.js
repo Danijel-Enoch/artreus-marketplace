@@ -10,6 +10,11 @@ import { ethers } from "ethers"
 import { retrieve, deconstructCid } from "../../utils/utils"
 import { MINTER_CONTRACT } from "../../config/constants"
 import CardSkeleton from '../../components/CardSkeleton';
+
+import { wallet, nft_tokens_for_owner, nft_supply_for_owner, nft_metadata } from '../../contracts-connector/near/near-interface'
+
+
+
 let globalWallet;
 
 function Profile() {
@@ -20,6 +25,22 @@ function Profile() {
   let walletAddress = app.connected ? app.account : "Connect Wallet"
   // console.log(typeof walletAddress)
   globalWallet = walletAddress;
+
+  React.useEffect(() => {
+    wallet.startUp()
+  }, [])
+
+
+  // React.useEffect(() => {
+  //   if (metamask.connected || wallet.connected) {
+  //     setConnected(true)
+  //   } else {
+  //     setConnected(false)
+  //   }
+  // }, [metamask.connected, wallet.connected])
+
+  const walletId = wallet.accountId
+
   async function main() {
 
 
@@ -50,24 +71,48 @@ function Profile() {
   main()
 
 
+  const getUserNfts = async () => {
+    const data = await nft_supply_for_owner({ walletId })
+    setdata(data)
+    return data
+  }
+
+  const getUserNftsMeta = async () => {
+    const d = {
+      walletId,
+      from_index: 2,
+      limit: 4
+    }
+    const data = await nft_tokens_for_owner(d)
+    setdata(data)
+    return data
+  }
+
+  // getUserNftsMeta()
+
+  console.log(data)
 
   async function getUserNft() {
-    const address = MINTER_CONTRACT;
-    const abi = [
-      "function getUserNft(address user_address) view returns (tuple(uint256 id, address creator, string uri)[])"
-    ];
-    const contract = new ethers.Contract(address, abi, app.signer);
-    const data = await contract.functions.getUserNft(app.account);
 
-    //console.log(data);
-    const nft = data[0].map((e) => {
-      return ({
-        "id": e[0].toString(),
-        "metadata": e[2]
+    if (app.connected) {
+
+      const address = MINTER_CONTRACT;
+      const abi = [
+        "function getUserNft(address user_address) view returns (tuple(uint256 id, address creator, string uri)[])"
+      ];
+      const contract = new ethers.Contract(address, abi, app.signer);
+      const data = await contract.functions.getUserNft(app.account);
+
+      //console.log(data);
+      const nft = data[0].map((e) => {
+        return ({
+          "id": e[0].toString(),
+          "metadata": e[2]
+        })
       })
-    })
-    // console.log(nft)
-    return nft
+      // console.log(nft)
+      return nft
+    }
 
 
   }
@@ -102,7 +147,7 @@ function Profile() {
       <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
 
 
-        <div className='absolute bottom-[-22px] right-[65%] lg:block hidden'>
+        <div className='absolute bottom-[-22px] right-[65%] lg:block '>
           <button className='w-36 h-11 mr-5 bg-brandpurple text-brandyellow rounded-md'>Add Profile</button>
           <button className='w-36 h-11 bg-brandpurple text-brandyellow rounded-md'>Add Cover</button>
         </div>

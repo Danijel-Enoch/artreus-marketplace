@@ -187,19 +187,21 @@ export default function Create() {
     wallet.startUp()
   }, [])
 
-  console.log(wallet.accountId)
+  // console.log(wallet)
+
   const handleSubmit = async () => {
     // console.log(fileObject.name);
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
     console.log(data);
 
     try {
-      const metadata = data[2]
+      const metadata = data[2].toString()
+
 
       const token = Math.random() * 100
       const token1 = token
       const token2 = token
-      const mintData = {
+      const mintData: any = {
         token,
         metadata,
         token1,
@@ -221,7 +223,7 @@ export default function Create() {
       console.log(mint_error)
     }
 
-    if (!contract) return;
+    // if (!contract) return;
     // Upload to Pinata or IPFS or our server, 
     // const uri = uploadToSERVER(fileObject, name, desc, ethers.utils.formatEther(royalty))
     // create NFT on smart contract 
