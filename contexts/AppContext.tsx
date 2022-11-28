@@ -10,8 +10,8 @@ export type VALUES = {
     signer: any | null,
     account: string,
     connected: boolean,
-    logOut: () => void,
-    logIn: () => void,
+    signOut: () => void,
+    signIn: () => void,
 }
 
 const defaultValues: VALUES = {
@@ -19,13 +19,13 @@ const defaultValues: VALUES = {
     signer: null,
     account: "",
     connected: false,
-    logOut: () => { },
-    logIn: () => { },
+    signOut: () => { },
+    signIn: () => { },
 }
 
 const AppContext = React.createContext(defaultValues);
 
-const snackbar = () => toast.success("Wallet Connected",{
+const snackbar = () => toast.success("Wallet Connected", {
     toastId: 'walletconnect'
 })
 
@@ -36,13 +36,13 @@ export const AppContextProvider = ({ children }: any) => {
     const [connected, setConnected] = useState(defaultValues.connected);
     const [web3Modal, setWeb3Modal] = useState<any>(null);
 
-    const logOut = useCallback(async () => {
+    const signOut = useCallback(async () => {
         web3Modal.clearCachedProvider();
         setConnected(false);
         setAccount("");
     }, [web3Modal]);
 
-    const logIn = useCallback(async () => {
+    const signIn = useCallback(async () => {
         const instance = await web3Modal.connect();
         snackbar()
 
@@ -53,7 +53,7 @@ export const AppContextProvider = ({ children }: any) => {
                 setAccount(accounts[0]);
                 return;
             }
-            logOut();
+            signOut();
         });
 
         // Subscribe to chainId change
@@ -87,7 +87,7 @@ export const AppContextProvider = ({ children }: any) => {
         //     signer: JSON.stringify(signer)
         // }))
 
-    }, [logOut, web3Modal]);
+    }, [signOut, web3Modal]);
 
     // localStorage.getItem('')
 
@@ -114,8 +114,8 @@ export const AppContextProvider = ({ children }: any) => {
                 connected,
                 provider,
                 signer,
-                logOut,
-                logIn
+                signOut,
+                signIn
             }}
         >
             {children}

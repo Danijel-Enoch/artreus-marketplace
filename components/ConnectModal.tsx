@@ -18,7 +18,6 @@ export default function ConnectModal({ isOpen, setSelected, setIsOpen }: any) {
     setSelected('nearWallet')
   }
 
-
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>

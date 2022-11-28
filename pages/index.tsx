@@ -16,6 +16,8 @@ import useContract from '../hooks/useContract'
 import { useEffect, useState } from 'react'
 import { ArtreusMarketplace } from '../contract-types'
 import Link from 'next/link'
+import { Wallet } from '../contracts-connector/near/near-wallet'
+
 
 type props = {
   newCollectionNfts: NewCollectionNft[]
@@ -41,6 +43,7 @@ export default function Home({ newCollectionNfts, featuredNfts, learnArts, recen
     )()
 
   }, [instance])
+
 
 
   return (

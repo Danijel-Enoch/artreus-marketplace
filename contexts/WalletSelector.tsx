@@ -6,18 +6,6 @@ import { setupModal } from "@near-wallet-selector/modal-ui";
 import type { WalletSelectorModal } from "@near-wallet-selector/modal-ui";
 import { setupDefaultWallets } from "@near-wallet-selector/default-wallets";
 import { setupNearWallet } from "@near-wallet-selector/near-wallet";
-// import { setupHereWallet } from "@near-wallet-selector/here-wallet";
-// import { setupSender } from "@near-wallet-selector/sender";
-// import { setupMathWallet } from "@near-wallet-selector/math-wallet";
-// import { setupNightly } from "@near-wallet-selector/nightly";
-// import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
-// import { setupWelldoneWallet } from "@near-wallet-selector/welldone-wallet";
-// import { setupNightlyConnect } from "@near-wallet-selector/nightly-connect";
-// import { setupNearFi } from "@near-wallet-selector/nearfi";
-// import { setupWalletConnect } from "@near-wallet-selector/wallet-connect";
-// import { setupCoin98Wallet } from "@near-wallet-selector/coin98-wallet";
-// import { setupNeth } from "@near-wallet-selector/neth";
-// import { setupOptoWallet } from "@near-wallet-selector/opto-wallet";
 import { CONTRACT_ID } from "../config/constants";
 
 declare global {
@@ -34,8 +22,8 @@ export interface WalletSelectorContextValue {
   accountId: string | null;
   connected: boolean;
   setConnectedValue: (value: boolean) => void;
-  logOut: () => void;
-  logIn: () => void;
+  signOut: () => void;
+  signIn: () => void;
 }
 
 const WalletSelectorContext =
@@ -53,38 +41,7 @@ export const WalletSelectorContextProvider: React.FC = ({ children }: any) => {
       debug: true,
       modules: [
         ...(await setupDefaultWallets()),
-        setupNearWallet(),
-        // setupSender(),
-        // setupMathWallet(),
-        // setupNightly(),
-        // setupMeteorWallet(),
-        // setupWelldoneWallet(),
-        // setupHereWallet(),
-        // setupCoin98Wallet(),
-        // setupNearFi(),
-        // setupNeth({
-        //     gas: "300000000000000",
-        //     bundle: false,
-        // }),
-        // setupOptoWallet(),
-        // setupWalletConnect({
-        //     projectId: "c4f79cc...",
-        //     metadata: {
-        //         name: "NEAR Wallet Selector",
-        //         description: "Example dApp used by NEAR Wallet Selector",
-        //         url: "https://github.com/near/wallet-selector",
-        //         icons: ["https://avatars.githubusercontent.com/u/37784886"],
-        //     },
-        // }),
-        // setupNightlyConnect({
-        //     url: "wss://relay.nightly.app/app",
-        //     appMetadata: {
-        //         additionalInfo: "",
-        //         application: "NEAR Wallet Selector",
-        //         description: "Example dApp used by NEAR Wallet Selector",
-        //         icon: "https://near.org/wp-content/uploads/2020/09/cropped-favicon-192x192.png",
-        //     },
-        // }),
+        setupNearWallet()
       ],
     });
 
@@ -129,7 +86,7 @@ export const WalletSelectorContextProvider: React.FC = ({ children }: any) => {
     return null;
   }
 
-  const logOut = async () => {
+  const signOut = async () => {
     const wallet = await selector.wallet();
 
 
@@ -144,9 +101,10 @@ export const WalletSelectorContextProvider: React.FC = ({ children }: any) => {
     setConnected(value)
   }
 
-  const logIn = () => {
+  const signIn = () => {
     modal.show();
   };
+
 
   const accountId =
     accounts.find((account) => account.active)?.accountId || null;
@@ -160,8 +118,8 @@ export const WalletSelectorContextProvider: React.FC = ({ children }: any) => {
         accountId,
         connected,
         setConnectedValue,
-        logOut,
-        logIn,
+        signOut,
+        signIn,
       }}
     >
       {children}

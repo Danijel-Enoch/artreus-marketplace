@@ -19,7 +19,6 @@ const MenuItem = () => {
                                 Home
                             </Link>
                         </li>
-
                         <li>
                             <Link href="/new" className='text-bold'>
                                 New Collection
@@ -28,8 +27,9 @@ const MenuItem = () => {
                         <li>
                             <Link href="/auctions" className='text-bold'>
                                 Auctions
+
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </Menu.Items>
             </Menu>
