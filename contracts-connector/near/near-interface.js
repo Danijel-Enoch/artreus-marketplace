@@ -19,20 +19,21 @@ export async function nft_token({ token_id }) {
 }
 //view function
 //get user nfts
-export async function  nft_tokens_for_owner({ account_id, from_index, limit }) {
-   await wallet.viewMethod({ method: 'nft_tokens_for_owner', args: { account_id, from_index, limit }, contractId: CONTRACT_ADDRESS });
+export async function nft_tokens_for_owner({ account_id, from_index, limit }) {
+   wallet.startUp()
+   return await wallet.viewMethod({ method: 'nft_tokens_for_owner', args: { account_id, from_index, limit }, contractId: CONTRACT_ADDRESS });
 }
 //get all nfts
-export async function nft_tokens({ from_index, limit }){
-   await wallet.viewMethod({ method: 'nft_tokens', args: { from_index, limit }, contractId: CONTRACT_ADDRESS });
+export async function nft_tokens({ from_index, limit }) {
+   return await wallet.viewMethod({ method: 'nft_tokens', args: { from_index, limit }, contractId: CONTRACT_ADDRESS });
 }
 //Call fucntion
 // const currentGreeting = await wallet.viewMethod({ method: 'get_greeting', contractId: CONTRACT_ADDRESS });
 
 //NFT Minting call function
-export async function nft_mint({ token_id, metadata, receiver_id, perpetual_royalties }) {
+export async function nft_mint({ token_id, metadata, receiver_id, perpetual_royalties, deposit }) {
    wallet.startUp()
-   return await wallet.callMethod({ method: 'nft_mint', args: { token_id, metadata, receiver_id, perpetual_royalties }, contractId: CONTRACT_ADDRESS });
+   return await wallet.callMethod({ method: 'nft_mint', args: { token_id, metadata, receiver_id, perpetual_royalties }, contractId: CONTRACT_ADDRESS, deposit: deposit });
 }
 
 
@@ -92,17 +93,17 @@ export async function nft_total_supply() {
 
 }
 
-export async function nft_tokens({ from_index, limit }) {
-   wallet.startUp()
-   return await wallet.viewMethod({ method: 'nft_tokens', args: { from_index, limit }, contractId: CONTRACT_ADDRESS });
+// export async function nft_tokens({ from_index, limit }) {
+//    wallet.startUp()
+//    return await wallet.viewMethod({ method: 'nft_tokens', args: { from_index, limit }, contractId: CONTRACT_ADDRESS });
 
-}
+// }
 
-export async function nft_tokens_for_owner({ account_id, from_index, limit }) {
-   wallet.startUp()
-   return await wallet.viewMethod({ method: 'nft_tokens_for_owner', args: { account_id, from_index, limit }, contractId: CONTRACT_ADDRESS });
+// export async function nft_tokens_for_owner({ account_id, from_index, limit }) {
+//    wallet.startUp()
+//    return await wallet.viewMethod({ method: 'nft_tokens_for_owner', args: { account_id, from_index, limit }, contractId: CONTRACT_ADDRESS });
 
-}
+// }
 
 export async function nft_supply_for_owner({ account_id }) {
    wallet.startUp()

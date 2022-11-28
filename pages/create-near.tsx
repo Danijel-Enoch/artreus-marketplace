@@ -113,19 +113,19 @@ export default function Create() {
   async function storeFiles(mfiles: any) {
     const client = makeStorageClient()
     const cid = await client.put(mfiles)
-    console.log('stored files with cid:', cid)
+    // console.log('stored files with cid:', cid)
     return cid
   }
   const UploadImages: any = async (image: any, item_name: any, description: any, category: any, size: any) => {
     // console.log(image[0].name);
     let cid: any
     const myRenamedFile = new File([image[0]], 'my-file-final-1-really.png');
-    console.log(image)
+    // console.log(image)
     cid = await storeFiles(image);
-    console.log(cid) //add snack bar here
+    // console.log(cid) //add snack bar here
 
     //makeFileObjects(cid, image[0].name);
-    console.log("Image Cid: " + cid)
+    // console.log("Image Cid: " + cid)
     const obj = {
       image_url: cid + "/" + image[0].name,
       name: item_name,
@@ -137,8 +137,8 @@ export default function Create() {
     const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
     let ufiles = [new File([blob], item_name + ".json")];
     let metaCid = await storeFiles(ufiles);
-    console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
-    console.log(ufiles)
+    // console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
+    // console.log(ufiles)
     // mint(metaCid + "/" + item_name + ".json");
     return [ufiles, cid + "/" + image[0].name, metaCid + "/" + item_name + ".json", item_name, description, category];
   }
@@ -187,25 +187,19 @@ export default function Create() {
     wallet.startUp()
   }, [])
 
-  // console.log(wallet)
 
   const handleSubmit = async () => {
-    // console.log(fileObject.name);
+    console.log('Loading: ',)
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
-    console.log(data);
 
     try {
       const metadata = data[2].toString()
-
-
-      const token = Math.random() * 100
-      const token1 = token
-      const token2 = token
       const mintData: any = {
-        token,
-        metadata,
-        token1,
-        token2
+        token_id: '0',
+        metadata: metadata,
+        receiver_id: wallet.accountId,
+        perpetual_royalties: '',
+        deposit: '9040000000000000000000'
       }
 
       const tx = nft_mint(mintData)

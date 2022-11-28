@@ -11,7 +11,7 @@ import { retrieve, deconstructCid } from "../../utils/utils"
 import { MINTER_CONTRACT } from "../../config/constants"
 import CardSkeleton from '../../components/CardSkeleton';
 
-import { wallet, nft_tokens_for_owner, nft_supply_for_owner, nft_metadata } from '../../contracts-connector/near/near-interface'
+import { wallet, nft_tokens_for_owner, nft_supply_for_owner, nft_metadata, nft_total_supply, get_supply_by_owner_id, storage_balance_of, nft_tokens } from '../../contracts-connector/near/near-interface'
 
 
 
@@ -22,33 +22,49 @@ function Profile() {
   const profileCollection = []
   const [data, setdata] = useState("");
   const [nftIds, setnftIds] = useState("")
+  const [connected, setConnected] = useState("")
+
+  const walletId = wallet.accountId
+
   let walletAddress = app.connected ? app.account : "Connect Wallet"
-  // console.log(typeof walletAddress)
   globalWallet = walletAddress;
+
+
 
   React.useEffect(() => {
     wallet.startUp()
   }, [])
 
+  React.useEffect(() => {
+    if (app.connected || wallet.connected) {
+      setConnected(true)
+    } else {
+      setConnected(false)
+    }
+  }, [app.connected, wallet.connected])
 
-  // React.useEffect(() => {
-  //   if (metamask.connected || wallet.connected) {
-  //     setConnected(true)
-  //   } else {
-  //     setConnected(false)
-  //   }
-  // }, [metamask.connected, wallet.connected])
-
-  const walletId = wallet.accountId
+  console.log(connected)
 
   async function main() {
+    if (connected) {
 
+      let l = ''
+      if (app.connected) {
+        l = await getUserNft()
+      } else {
+        l = await nft_tokens_for_owner(
+          {
+            account_id: walletId,
+            from_index: 0,
+            limit: 5
+          }
+        )
+      }
 
-    if (app.connected) {
+      const nftsId = l.map(e => e.id);
+      setnftIds(nftsId)
+
       try {
-        const l = await getUserNft()
-        const nftsId = l.map(e => e.id);
-        setnftIds(nftsId)
         const newerData = l.map(async (e) => {
           var requestOptions = {
             method: 'GET',
@@ -65,35 +81,17 @@ function Profile() {
       } catch (e) {
         console.log(e)
       }
-
     }
-  }
-  main()
 
-
-  const getUserNfts = async () => {
-    const data = await nft_supply_for_owner({ walletId })
-    setdata(data)
-    return data
   }
 
-  const getUserNftsMeta = async () => {
-    const d = {
-      walletId,
-      from_index: 2,
-      limit: 4
-    }
-    const data = await nft_tokens_for_owner(d)
-    setdata(data)
-    return data
-  }
-
-  // getUserNftsMeta()
+  React.useEffect(() => {
+    main()
+  }, [connected])
 
   console.log(data)
 
   async function getUserNft() {
-
     if (app.connected) {
 
       const address = MINTER_CONTRACT;
@@ -117,28 +115,6 @@ function Profile() {
 
   }
 
-
-  //but user wallet must  connected
-  // const walletAddress=app.signer.getAddress();
-
-  // const notify = () => (
-  //     toast.success("Success Notification !", {
-  //         position: toast.POSITION.TOP_CENTER
-  //       })
-  // );
-  // var config = {
-  //     method: 'get',
-  //     url: 'https://artreuss.herokuapp.com/v1/nft/',
-  //     headers: { }
-  //   };
-
-  //   axios(config)
-  //   .then(function (response) {
-  //     console.log(JSON.stringify(response.data));
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });   
 
   const items = Array.from(Array(10).keys())
 
@@ -182,7 +158,7 @@ function Profile() {
               <Tab.Panels>
                 <Tab.Panel>
                   <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                    {(app.connected && data) ? data.map((nfts, id) =>
+                    {(connected && data) ? data.map((nfts, id) =>
                       <Link href={"/nft/cadeceustestnet/0x57a204aa1042f6e66dd7730813f4024114d74f99/840/" + nftIds[id]} key={nftIds[id]}>
                         <a><ProfileCollectionCard key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
 
