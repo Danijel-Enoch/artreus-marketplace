@@ -27,7 +27,7 @@ export default function Footer() {
         </section>
       </div>
       <div className="flex justify-center">
-        <div className='my-3 text-[14px] text-brandpurple flex gap-2'>
+        <div className='my-3 text-[10px] md:text-[14px] text-brandpurple flex gap-2'>
           <span>Copyright 2022 Artreus.</span>
           <a href="#">All right reserved</a>
           <a href="#">Terms</a>
