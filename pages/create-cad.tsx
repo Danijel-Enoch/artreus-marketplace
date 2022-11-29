@@ -17,7 +17,6 @@ import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
-
 const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
 
@@ -35,6 +34,7 @@ async function mint(uri: any) {
   } catch (e) {
     return e
   }
+
 }
 
 export default function Create() {
@@ -49,8 +49,6 @@ export default function Create() {
   const [desc, setDesc] = React.useState(0)
   const [royalty, setRoyalty] = React.useState(0)
   // const [activePriceButton, setActivePriceButton] = React.useState<'Fixed Price' | 'Open Bid' | 'Timed Auction'>('Fixed Price')
-
-
   const contract = useContract();
   const app = useAppContext();
 
@@ -236,7 +234,7 @@ export default function Create() {
   // }, [contract])
   return (
     <section className='md:mx-16 px-4 md:px-0'>
-      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts On CMP</h1>
+      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts</h1>
       {size.width && size.width < 765 && (<ImagePreview imageUrl='' />)}
 
       <div className='md:flex'>
