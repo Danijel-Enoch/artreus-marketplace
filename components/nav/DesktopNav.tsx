@@ -130,7 +130,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
           <button
             className='md:text-sm lg:text-md border-2 border-brandyellow py-2 rounded-xl'
             onClick={() => handleConnect()}>
-            {connected ? "Disconnect Walet" : "Connect Wallet"}
+            {connected ? "Disconnect Wallet" : "Connect Wallet"}
           </button>
         </li>
         {/* <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={() => { router.push('/connect') }}>Connect Wallet</button></li> */}

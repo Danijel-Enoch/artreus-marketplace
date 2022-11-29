@@ -22,7 +22,7 @@ function Profile() {
   const profileCollection = []
   const [data, setdata] = useState("");
   const [nftIds, setnftIds] = useState("")
-  const [connected, setConnected] = useState("")
+  const [connected, setConnected] = useState(false)
 
   const walletId = wallet.accountId
 
@@ -43,25 +43,27 @@ function Profile() {
     }
   }, [app.connected, wallet.connected])
 
-  console.log(connected)
 
   async function main() {
     if (connected) {
 
       let l = ''
+      let nftsId = []
       if (app.connected) {
         l = await getUserNft()
+        nftsId = l.map(e => e.id);
       } else {
         l = await nft_tokens_for_owner(
           {
             account_id: walletId,
             from_index: 0,
-            limit: 5
+            limit: 15
           }
         )
+        nftsId = l.map(e => e.token_id);
+        // console.log(l)
       }
 
-      const nftsId = l.map(e => e.id);
       setnftIds(nftsId)
 
       try {
@@ -77,7 +79,6 @@ function Profile() {
 
         })
         setdata(await Promise.all(newerData))
-        // console.log(data[0])
       } catch (e) {
         console.log(e)
       }
@@ -89,7 +90,6 @@ function Profile() {
     main()
   }, [connected])
 
-  console.log(data)
 
   async function getUserNft() {
     if (app.connected) {
@@ -159,25 +159,25 @@ function Profile() {
                 <Tab.Panel>
                   <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                     {(connected && data) ? data.map((nfts, id) =>
-                      <Link href={"/nft/cadeceustestnet/0x57a204aa1042f6e66dd7730813f4024114d74f99/840/" + nftIds[id]} key={nftIds[id]}>
-                        <a><ProfileCollectionCard key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
+                      <Link href={"/nft/neartestnet/" + walletId + "/" + nftIds[id]} key={nftIds[id]} >
+                        <a ><ProfileCollectionCard className='' key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
 
                       </Link>
                     ) : <>
-                      {items.map((index) => (<CardSkeleton key={index} />))}
-                    </>}
+                      <p>You Have no minted nfts yet. </p>
+                    </>
+                    }
                   </div>
                 </Tab.Panel>
-                <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                  {/* {console.log(profileCollection)} */}
-                  {profileCollection.map(({ name, imageUri, description }, index) => (
-                    <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
-                      <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri} /></a>
-                    </Link>
-                  ))}
-                </div>
                 <Tab.Panel>
-
+                  <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
+                    {/* {console.log(profileCollection)} */}
+                    {profileCollection.map(({ name, imageUri, description }, index) => (
+                      <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
+                        <a><ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri} /></a>
+                      </Link>
+                    ))}
+                  </div>
                 </Tab.Panel>
               </Tab.Panels>
             </div>
