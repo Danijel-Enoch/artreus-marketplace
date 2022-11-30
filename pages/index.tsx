@@ -16,7 +16,6 @@ import useContract from '../hooks/useContract'
 import { useEffect, useState } from 'react'
 import { ArtreusMarketplace } from '../contract-types'
 import Link from 'next/link'
-import { Wallet } from '../contracts-connector/near/near-wallet'
 
 
 type props = {
@@ -50,9 +49,9 @@ export default function Home({ newCollectionNfts, featuredNfts, learnArts, recen
     <>
       <FeaturedNfts featuredNfts={featuredNfts} />
       <div className='space-y-16'>
-        <NewCollections newCollectionNfts={newCollectionNfts} />
+        {/* <NewCollections newCollectionNfts={newCollectionNfts} /> */}
         <LearnArts learnArts={learnArts} />
-        <PopularCollections />
+        {/* <PopularCollections /> */}
         <RecentlyListedNfts recentNFTs={recentNFTs} />
         <HighestSalesNfts highestSoldNFTs={highestSoldNFTs} />
         <UpcomingLaunches upcomingNFTs={upcomingNFTs} />
@@ -190,6 +189,8 @@ export async function getServerSideProps() {
     },
   ]
 
+  // const l = 
+
   const highestSoldNFTs: highestNFTs[] = [
     {
       name: 'Crypto Birdies',
@@ -231,39 +232,39 @@ export async function getServerSideProps() {
 
   const upcomingNFTs: Upcoming[] = [
     {
-      name:'DYI-OLD',
-      imageURI:'https://i.seadn.io/gae/7xjqqhHqmsTwpotmW-xj6Suhu2IcpoSXaE6ZSkgSjjeHj6WRBM_U_9sXJIRYA0iGahc8ROXKxpdCemV707Ad5oFuqOjRWHdMviStNMw?auto=format&w=1920',
-      tokenId:''
+      name: 'DYI-OLD',
+      imageURI: 'https://i.seadn.io/gae/7xjqqhHqmsTwpotmW-xj6Suhu2IcpoSXaE6ZSkgSjjeHj6WRBM_U_9sXJIRYA0iGahc8ROXKxpdCemV707Ad5oFuqOjRWHdMviStNMw?auto=format&w=1920',
+      tokenId: ''
     },
     {
-      name:'KillaBits',
-      imageURI:'https://i.seadn.io/gcs/files/da6c85dade2452fbed34b935e1909318.png?auto=format&w=1920',
-      tokenId:''
+      name: 'KillaBits',
+      imageURI: 'https://i.seadn.io/gcs/files/da6c85dade2452fbed34b935e1909318.png?auto=format&w=1920',
+      tokenId: ''
     },
     {
-      name:'Social-BEEs',
-      imageURI:'https://i.seadn.io/gcs/files/d0cdf15b6de3ff18f047102ef4897fe6.png?auto=format&w=1920',
-      tokenId:''
+      name: 'Social-BEEs',
+      imageURI: 'https://i.seadn.io/gcs/files/d0cdf15b6de3ff18f047102ef4897fe6.png?auto=format&w=1920',
+      tokenId: ''
     },
     {
-      name:'GoblinTown',
-      imageURI:'https://i.seadn.io/gae/cb_wdEAmvry_noTfeuQzhqKpghhZWQ_sEhuGS9swM03UM8QMEVJrndu0ZRdLFgGVqEPeCUzOHGTUllxug9U3xdvt0bES6VFdkRCKPqg?auto=format&w=1920',
-      tokenId:''
+      name: 'GoblinTown',
+      imageURI: 'https://i.seadn.io/gae/cb_wdEAmvry_noTfeuQzhqKpghhZWQ_sEhuGS9swM03UM8QMEVJrndu0ZRdLFgGVqEPeCUzOHGTUllxug9U3xdvt0bES6VFdkRCKPqg?auto=format&w=1920',
+      tokenId: ''
     },
     {
-      name:'Exo Sama',
-      imageURI:'https://i.seadn.io/gcs/files/725700d73c8459bc9e3b29eed95670d8.png?auto=format&w=1920',
-      tokenId:''
+      name: 'Exo Sama',
+      imageURI: 'https://i.seadn.io/gcs/files/725700d73c8459bc9e3b29eed95670d8.png?auto=format&w=1920',
+      tokenId: ''
     },
     {
-      name:'Imposter Aliens',
-      imageURI:'https://i.seadn.io/gae/c-Z_v9W9Ege04QdpjzSsQQIkDR1h4tnBVgwgg9DBuJKdfpmziz9SBOEFBE3EjKW8XESxR_mndEtFFhhxyYUgEwZVAL32uBmQr4H1lQ?auto=format&w=1920',
-      tokenId:''
+      name: 'Imposter Aliens',
+      imageURI: 'https://i.seadn.io/gae/c-Z_v9W9Ege04QdpjzSsQQIkDR1h4tnBVgwgg9DBuJKdfpmziz9SBOEFBE3EjKW8XESxR_mndEtFFhhxyYUgEwZVAL32uBmQr4H1lQ?auto=format&w=1920',
+      tokenId: ''
     },
     {
-      name:'StickMen Toys',
-      imageURI:'https://i.seadn.io/gcs/files/2d21367a0bdef1d9db4505e86dba8fdd.gif?auto=format&w=1920',
-      tokenId:''
+      name: 'StickMen Toys',
+      imageURI: 'https://i.seadn.io/gcs/files/2d21367a0bdef1d9db4505e86dba8fdd.gif?auto=format&w=1920',
+      tokenId: ''
     },
   ]
 

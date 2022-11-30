@@ -23,13 +23,13 @@ function Profile() {
   const [data, setdata] = useState("");
   const [nftIds, setnftIds] = useState("")
   const [connected, setConnected] = useState(false)
+  const [connectedWallet, setConnectedWallet] = useState('')
+  const [uAddress, setUaddress] = useState('')
 
   const walletId = wallet.accountId
 
   let walletAddress = app.connected ? app.account : "Connect Wallet"
   globalWallet = walletAddress;
-
-
 
   React.useEffect(() => {
     wallet.startUp()
@@ -38,11 +38,19 @@ function Profile() {
   React.useEffect(() => {
     if (app.connected || wallet.connected) {
       setConnected(true)
+      if (app.connected) {
+        setConnectedWallet('cmp')
+        setUaddress('0x57a204aa1042f6e66dd7730813f4024114d74f99')
+      } else {
+        setConnectedWallet('near')
+        setUaddress(walletId)
+      }
     } else {
       setConnected(false)
+      setConnectedWallet('')
     }
-  }, [app.connected, wallet.connected])
 
+  }, [app.connected, wallet.connected])
 
   async function main() {
     if (connected) {
@@ -61,7 +69,7 @@ function Profile() {
           }
         )
         nftsId = l.map(e => e.token_id);
-        // console.log(l)
+        console.log(l)
       }
 
       setnftIds(nftsId)
@@ -85,6 +93,7 @@ function Profile() {
     }
 
   }
+
 
   React.useEffect(() => {
     main()
@@ -159,7 +168,7 @@ function Profile() {
                 <Tab.Panel>
                   <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                     {(connected && data) ? data.map((nfts, id) =>
-                      <Link href={"/nft/neartestnet/" + walletId + "/" + nftIds[id]} key={nftIds[id]} >
+                      <Link href={`/nft/${connectedWallet}/${connectedWallet}/${uAddress}/${nftIds[id]}`} key={nftIds[id]} >
                         <a ><ProfileCollectionCard className='' key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
 
                       </Link>

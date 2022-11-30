@@ -4,7 +4,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import axios from 'axios';
 import { MARKETPLACE_ADDRESS, MINTER_CONTRACT } from '../../config/constants';
 export default function PriceTag({ floorPrice, listingPrice, coinName, listed, jsonUri, ownerAddress, mintAddress, dbId }) {
-  const [nftListed, setNftListed] = useState(true)
+  const [nftListed, setNftListed] = useState(false)
   const [currentPrice, setCurrentPrice] = useState(0)
   const [buyer, setbuyer] = useState(false)
   const [price, setprice] = useState("")

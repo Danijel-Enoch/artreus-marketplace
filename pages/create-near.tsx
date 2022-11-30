@@ -197,7 +197,7 @@ export default function Create() {
       const metadata = data[2].toString()
       const userTotalNfts = await nft_supply_for_owner({ account_id: walletId })
       const mintData: any = {
-        token_id: userTotalNfts,
+        token_id: userTotalNfts.toString(),
         metadata: metadata,
         receiver_id: wallet.accountId,
         perpetual_royalties: '',

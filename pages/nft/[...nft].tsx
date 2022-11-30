@@ -18,7 +18,6 @@ import axios from "axios"
 import { useAppContext } from '../../contexts/AppContext';
 import { ethers } from "ethers"
 import { MINTER_CONTRACT } from "../../config/constants"
-import { nft_tokens_for_owner, wallet } from '../../contracts-connector/near/near-interface';
 
 const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
 const _signer = provider.getSigner();
@@ -60,80 +59,42 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
   const app = useAppContext()
   const [price, setprice] = useState()
   const [listed, setListed] = useState(true)
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState("");
   const [creators, setCreator] = useState("")
 
-  const [connected, setConnected] = useState(false)
-  const walletId = wallet.accountId
 
-
-  React.useEffect(() => {
-    wallet.startUp()
-  }, [])
-
-  React.useEffect(() => {
-    if (app.connected || wallet.connected) {
-      setConnected(true)
-    } else {
-      setConnected(false)
-    }
-  }, [app.connected, wallet.connected])
 
   async function main() {
 
-    // try {
-    //   const l = await getUserNft()
-    //   // const nftsId = 
-    //   setCreator(l[0][1])
-    //   // console.log()
-    //   var requestOptions: any = {
-    //     method: 'GET',
-    //     redirect: 'follow'
-    //   };
-    //   //  console.log(l)
-    //   const newerData: any =
-    //     fetch("https://ipfs.io/ipfs/" + l[0][2], requestOptions)
-    //       .then(response => response.json())
-    //       .catch(error => console.log('error', error))
+
+    if (app.connected) {
+      try {
+        const l = await getUserNft()
+        // const nftsId = 
+        setCreator(l[0][1])
+        // console.log()
+        var requestOptions: any = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        //  console.log(l)
+        const newerData: any =
+          fetch("https://ipfs.io/ipfs/" + l[0][2], requestOptions)
+            .then(response => response.json())
+            .catch(error => console.log('error', error))
 
 
-    //   setdata(await newerData)
-    //   //setdata(await Promise.all(newerData))
-    //   //console.log(data)
-    // } catch (e) {
-    //   console.log(e)
-    // }
-
-    if (connected) {
-
-      let l: any = []
-      if (app.connected) {
-        l = await getUserNft()
-      } else {
-        l = await nft_tokens_for_owner(
-          {
-            account_id: walletId,
-            from_index: 0,
-            limit: 5
-          }
-        )
+        setdata(await newerData)
+        //setdata(await Promise.all(newerData))
+        //console.log(data)
+      } catch (e) {
+        console.log(e)
       }
-
-      console.log(l)
-
-      // const data = l.filter(({ item }: any) => console.log(item))
-      // setdata(data)
-
 
     }
   }
+  main()
 
-  React.useEffect(() => {
-    main()
-  }, [connected])
-
-  let img = data[0]
-  console.log(img)
 
 
   async function getUserNft() {
@@ -146,7 +107,7 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
       const data = await contract.functions.getUserNft(app.account);
 
       //  console.log(data);
-      const nft = data[0].filter((e: any) => {
+      const nft = data[0].filter((e) => {
         // console.log(id)
         if (e[0].toString() === (id).toString()) return ({
           "id": e[0].toString(),
@@ -163,6 +124,9 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
   }
 
 
+  // app.account;
+
+  //console.log(id)
 
   const size = useWindowSize()
   return (
@@ -184,13 +148,9 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
 
           <SimpleInfo name={name} id={id} creator={creator} details={data.description} />
           <PriceTag currentPrice='5.00' highestBid='8.00' coinName='CMP' />
-
           <ListNft floorPrice='5' dbId={id} jsonUri={jsonUri} mintAddress={mintAddress} listingPrice='0.02' coinName='CAD' listed={setListed} />
-
           <SocialLinks discord="" twitter='' website='' watchCount='' />
-
           <PurchaseButtons price='5.00' nftId={id} contractId={MINTER_CONTRACT} coinName='CMP' />
-
           <div className='mt-16'>
             {/* <PropertiesDropDown features={features}/> */}
             <DetailsDropDown mintAddress={creators} tokenAddress={tokenAddress} ownerAddress={app.account} royaltyPercentage={royaltyPercentage} transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee} />
@@ -217,7 +177,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const network = path[0]
   const address = path[1]
   const tokenId = path[2]
-  // const idnew = path[3]
+  const idnew = path[3]
   let mine: any;
 
   // console.log(data)
@@ -228,13 +188,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       imageUri: "",
-      creator: address,
+      creator: "",
       details: "",
       jsonUri: "",
-      id: tokenId,
+      id: idnew,
       mintAddress: "",
       tokenAddress: "",
-      ownerAddress: address,
+      ownerAddress: "",
       royaltyPercentage: 10,
       transactionFeePercentage: 10,
       marketplaceFee: 10,

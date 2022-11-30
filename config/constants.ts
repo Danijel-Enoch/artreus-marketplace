@@ -9,5 +9,6 @@ export const minterCONTRACT = {
 }
 
 export const CONTRACT_ID = "guest-book.testnet";
+export const NEAR_MARKETPLACE_ADDRESS = "marketplace.danieldave.testnet"
 
 

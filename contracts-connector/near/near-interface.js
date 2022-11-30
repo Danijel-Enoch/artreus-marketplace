@@ -52,9 +52,9 @@ export async function nft_resolve_transfer({ authorized_id, owner_id, receiver_i
    return await wallet.callMethod({ method: 'nft_resolve_transfer', args: { authorized_id, owner_id, receiver_id, token_id, approved_account_ids, memo }, contractId: CONTRACT_ADDRESS });
 }
 
-export async function nft_approve({ token_id, account_id, msg }) {
+export async function nft_approve({ token_id, account_id, msg, deposit }) {
    wallet.startUp()
-   return await wallet.callMethod({ method: 'nft_approve', args: { token_id, account_id, msg }, contractId: CONTRACT_ADDRESS });
+   return await wallet.callMethod({ method: 'nft_approve', args: { token_id, account_id, msg }, contractId: CONTRACT_ADDRESS, deposit: deposit });
 
 }
 //view method
@@ -117,9 +117,9 @@ export async function nft_metadata() {
 
 }
 
-export async function storage_deposit({ account_id }) {
+export async function storage_deposit({ account_id, contractId, deposit }) {
    wallet.startUp()
-   return await wallet.callMethod({ method: 'storage_deposit', args: { account_id }, contractId: CONTRACT_ADDRESS });
+   return await wallet.callMethod({ method: 'storage_deposit', args: { account_id }, contractId: contractId, deposit: deposit });
 }
 
 export async function storage_withdraw() {
@@ -132,9 +132,9 @@ export async function storage_minimum_balance() {
    return await wallet.viewMethod({ method: 'storage_minimum_balance', contractId: CONTRACT_ADDRESS });
 }
 
-export async function storage_balance_of({ account_id }) {
+export async function storage_balance_of({ account_id, contractId }) {
    wallet.startUp()
-   return await wallet.viewMethod({ method: ' storage_balance_of', args: { account_id }, contractId: CONTRACT_ADDRESS });
+   return await wallet.viewMethod({ method: 'storage_balance_of', args: { account_id }, contractId: contractId });
 }
 
 export async function remove_sale({ nft_contract_id, token_id }) {
@@ -157,9 +157,9 @@ export async function resolve_purchase({ buyer_id, price }) {
    return await wallet.callMethod({ method: 'resolve_purchase', args: { buyer_id, price }, contractId: CONTRACT_ADDRESS });
 }
 
-export async function get_supply_sales() {
+export async function get_supply_sales({ contractId }) {
    wallet.startUp()
-   return await wallet.viewMethod({ method: 'get_supply_sales', contractId: CONTRACT_ADDRESS });
+   return await wallet.viewMethod({ method: 'get_supply_sales', contractId: contractId });
 }
 
 export async function get_supply_by_owner_id({ account_id }) {
