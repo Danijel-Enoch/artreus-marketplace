@@ -10,7 +10,7 @@ import { setupNearWallet } from "@near-wallet-selector/near-wallet";
 // wallet selector options
 import { setupWalletSelector } from "@near-wallet-selector/core";
 
-const THIRTY_TGAS = '30000000000000';
+const THIRTY_TGAS = '300000000000000';
 const NO_DEPOSIT = '0';
 
 // Wallet that simplifies using the wallet selector
