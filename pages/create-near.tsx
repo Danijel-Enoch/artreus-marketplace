@@ -177,6 +177,7 @@ export default function Create() {
   //snackbar notification for successful mint
   const success = () => toast.success("NFT minted successfully")
   const minting = () => toast.success("NFT is being minted. Please Wait")
+  // const minting = () => toast.success("NFT is being minted. Please Wait")
 
   //snackbar notification for unsuccessful mint
   const error = () => toast.error("minting error")
@@ -190,6 +191,11 @@ export default function Create() {
 
 
   const handleSubmit = async () => {
+    if (!wallet.connected) {
+      walletNotConnected()
+      return
+    }
+
     minting()
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
 

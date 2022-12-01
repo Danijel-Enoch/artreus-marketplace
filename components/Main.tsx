@@ -114,7 +114,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
       {showMobileSearch && (<MobileSearchBar onSearch={() => { }} onBackButtonPresssed={() => { setShowMobileSearch(false) }} />)}
 
-      {showMobileMenu && <MobileMenuNav />}
+      {showMobileMenu && <MobileMenuNav isOpen={isOpen} handleConnect={handleConnectButton} setSelected={setSelected} connected={connected} setIsOpen={setIsOpen} />}
 
 
 
