@@ -30,7 +30,7 @@ const MenuItem = () => {
                                 Auctions
 
                             </Link>
-                        </li> */}
+                        </li>  */}
                     </ul>
                 </Menu.Items>
             </Menu>

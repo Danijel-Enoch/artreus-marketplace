@@ -163,7 +163,7 @@ export default function Create() {
     setName(val)
   }
 
-  const handleDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val: any = e.target.value
     setDesc(val)
     //console.log(val)
@@ -229,57 +229,37 @@ export default function Create() {
 
   return (
     <section className='md:mx-16 px-4 md:px-0'>
-      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts On Near</h1>
+      <h1 className='text-3xl font-bold my-4 text-bodycopy'>Create New Nfts On Near</h1>
       {size.width && size.width < 765 && (<ImagePreview imageUrl='' />)}
 
-      <div className='md:flex'>
-        <div>
+      <div className='flex sm:flex-row flex-col-reverse w-full justify-between flex-wrap items-baseline'>
+        <div className="w-[100%] sm:w-[40%]">
           <div className='flex flex-col'>
             <UploadButton handleChange={handleImageUrlChange} />
             {/* <ConnectionBar /> */}
           </div>
 
           <div>
-            {/* <Title>Sell on Marketplace</Title>
-            <p className='text-[#00000080]'>Enter price to allow users easily purchase your NFT</p> */}
-
-            {/* <div className='flex space-x-2 md:space-x-4 mt-4 mb-4'>
-              <PriceTypeButton title='Fixed Price' onClick={() => setActivePriceButton('Fixed Price')} active={activePriceButton === 'Fixed Price' ? true : false} />
-              <PriceTypeButton title='Open Bid' onClick={() => setActivePriceButton('Open Bid')} active={activePriceButton === 'Open Bid' ? true : false} />
-              <PriceTypeButton title='Timed Auction' onClick={() => setActivePriceButton('Timed Auction')} logo='time' active={activePriceButton === 'Timed Auction' ? true : false} />
-
-            </div> */}
-            {/* <PriceForApeice handleChange={handleChange} /> */}
             <div className='mt-4 mb-4 md:mt-8 space-x-4'>
               <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
                 Service fee {fee}%
               </button>
-              {/* <button className='inline-block text-black border border-black py-2 px-4 font-bold rounded-md'>
-                You will get {amount - (amount * (fee / 100))}
-              </button> */}
-
             </div>
-            {/* <div className='flex justify-between my-6 md:mt-6'>
-              <div className='font-semibold'>
-                <p className={`${!isMintFree && 'text-black/50'}`}>Free Minting</p>
-                <p className={`${isMintFree && 'text-black/50 '}`}>Buyer will pay fee for Minting</p>
-              </div>
-              <MintOptionToggle enabled={isMintFree} setEnabled={() => setIsMintFree(!isMintFree)} />
-
-            </div> */}
             <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} />
             {/* <Input placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange} /> */}
-            <textarea className='placeholder-black/50 block bg-[#AEACAB] w-full p-2 mt-2 rounded-md' rows="4" placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange}></textarea>
+            <textarea className='placeholder-black/50 block bg-[#2F2F2F1A] w-full p-2 mt-2 rounded-md' rows={4} placeholder='Enter a Short Description of your NFT' label="Description" type='text' handleDescChange={handleDescChange}></textarea>
             {/* <Input placeholder='10' label="Royalties %" type='number' onChange={handleRoyaltyChange} /> */}
 
-            <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
+            <button type="submit" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow text-brandpurple' onClick={handleSubmit} >Create Item</button>
             <div>
             </div>
           </div>
         </div>
-        {size.width && size.width >= 765 && (<div className=' md:ml-16'>
-          <ImagePreview imageUrl={imageUrl} />
-        </div>)}
+        {size.width && size.width >= 765 && (
+          <div className='w-[55%]'>
+            <ImagePreview imageUrl={imageUrl} />
+          </div>
+        )}
       </div>
     </section>
   )
