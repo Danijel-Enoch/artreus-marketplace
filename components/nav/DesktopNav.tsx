@@ -128,7 +128,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
         {/* <li ><div className='p-3 rounded-full bg-white ml-4'></div></li> */}
         <li>
           <button
-            className='md:text-sm lg:text-md border-2 border-brandyellow py-2 rounded-xl'
+            className='md:text-sm lg:text-md border-2 border-brandyellow py-2 rounded-lg'
             onClick={() => handleConnect()}>
             {connected ? "Disconnect Wallet" : "Connect Wallet"}
           </button>
