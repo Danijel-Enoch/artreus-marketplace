@@ -17,7 +17,7 @@ import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
-import { nft_mint } from '../contracts-connector/near/near-interface';
+import { nft_mint, nft_supply_for_owner } from '../contracts-connector/near/near-interface';
 import { wallet } from '../contracts-connector/near/near-interface';
 
 
@@ -53,8 +53,8 @@ export default function Create() {
   const [desc, setDesc] = React.useState(0)
   const [royalty, setRoyalty] = React.useState(0)
   // const [activePriceButton, setActivePriceButton] = React.useState<'Fixed Price' | 'Open Bid' | 'Timed Auction'>('Fixed Price')
-  const contract = useContract();
-  const app = useAppContext();
+
+  const walletId = wallet.accountId
 
 
 
@@ -113,19 +113,19 @@ export default function Create() {
   async function storeFiles(mfiles: any) {
     const client = makeStorageClient()
     const cid = await client.put(mfiles)
-    console.log('stored files with cid:', cid)
+    // console.log('stored files with cid:', cid)
     return cid
   }
   const UploadImages: any = async (image: any, item_name: any, description: any, category: any, size: any) => {
     // console.log(image[0].name);
     let cid: any
     const myRenamedFile = new File([image[0]], 'my-file-final-1-really.png');
-    console.log(image)
+    // console.log(image)
     cid = await storeFiles(image);
-    console.log(cid) //add snack bar here
+    // console.log(cid) //add snack bar here
 
     //makeFileObjects(cid, image[0].name);
-    console.log("Image Cid: " + cid)
+    // console.log("Image Cid: " + cid)
     const obj = {
       image_url: cid + "/" + image[0].name,
       name: item_name,
@@ -137,8 +137,8 @@ export default function Create() {
     const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
     let ufiles = [new File([blob], item_name + ".json")];
     let metaCid = await storeFiles(ufiles);
-    console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
-    console.log(ufiles)
+    // console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
+    // console.log(ufiles)
     // mint(metaCid + "/" + item_name + ".json");
     return [ufiles, cid + "/" + image[0].name, metaCid + "/" + item_name + ".json", item_name, description, category];
   }
@@ -176,6 +176,7 @@ export default function Create() {
 
   //snackbar notification for successful mint
   const success = () => toast.success("NFT minted successfully")
+  const minting = () => toast.success("NFT is being minted. Please Wait")
 
   //snackbar notification for unsuccessful mint
   const error = () => toast.error("minting error")
@@ -187,23 +188,20 @@ export default function Create() {
     wallet.startUp()
   }, [])
 
-  console.log(wallet.accountId)
+
   const handleSubmit = async () => {
-    // console.log(fileObject.name);
+    minting()
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
-    console.log(data);
 
     try {
-      const metadata = data[2]
-
-      const token = Math.random() * 100
-      const token1 = token
-      const token2 = token
-      const mintData = {
-        token,
-        metadata,
-        token1,
-        token2
+      const metadata = data[2].toString()
+      const userTotalNfts = await nft_supply_for_owner({ account_id: walletId })
+      const mintData: any = {
+        token_id: userTotalNfts.toString(),
+        metadata: metadata,
+        receiver_id: wallet.accountId,
+        perpetual_royalties: '',
+        deposit: '10040000000000000000000'
       }
 
       const tx = nft_mint(mintData)
@@ -220,28 +218,9 @@ export default function Create() {
       error()
       console.log(mint_error)
     }
-
-    if (!contract) return;
-    // Upload to Pinata or IPFS or our server, 
-    // const uri = uploadToSERVER(fileObject, name, desc, ethers.utils.formatEther(royalty))
-    // create NFT on smart contract 
-    // const nftId = await oprahr.safeMint(url);
-    //then send to contract
-    // await contract.connect(app.signer).listNFT(oprahr.address, nftId, ethers.utils.formatEther(amount))
   }
-  // useEffect(() => {
-  //   (async () => {
-  //     if (contract) {
-  //       const _fee = await contract.feePercent()
-  //       const precision = await contract.precision()
 
-  //       const percent = _fee / precision;
-  //       console.log(percent);
 
-  //       setFee((percent * 100).toString())
-  //     }
-  //   })()
-  // }, [contract])
   return (
     <section className='md:mx-16 px-4 md:px-0'>
       <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts On Near</h1>

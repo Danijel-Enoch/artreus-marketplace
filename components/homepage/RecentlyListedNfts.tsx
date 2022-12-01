@@ -3,6 +3,7 @@ import SectionTitle from '../SectionTitle'
 import CollectionBody from './CollectionBody'
 import CollectionHeader from './CollectionHeader'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export type NFT = {
     name: string,
@@ -10,6 +11,8 @@ export type NFT = {
     imageURI: string,
     linkToDetails: string
 }
+
+
 
 const RecentNfts = ({ name, price, imageURI, linkToDetails }: { name: string, price: number, imageURI: string, linkToDetails: string }) => {
     return (
@@ -23,7 +26,11 @@ const RecentNfts = ({ name, price, imageURI, linkToDetails }: { name: string, pr
                         <p>{price}</p>
                     </div>
                     <div>
-                        <button className='border rounded-sm border-brandyellow py-1 px-6'>Details</button>
+                        <Link href={linkToDetails}>
+                            <a>
+                                <button className='border rounded-sm border-brandyellow py-1 px-6'>Details</button>
+                            </a>
+                        </Link>
                     </div>
                 </div>
             </div>
