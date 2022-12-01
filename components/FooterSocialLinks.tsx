@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function FooterSocialLinks() {
   return (
-    <ul className='flex space-x-4 py-6'>
+    <ul className='flex items-center space-x-4 py-6'>
       <li><a href='https://twitter.com/OfficialArtreus'><svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
