@@ -3,38 +3,53 @@ import SectionTitle from '../SectionTitle'
 import CollectionBody from './CollectionBody'
 import CollectionHeader from './CollectionHeader'
 import Image from 'next/image'
+import Link from 'next/link'
 
-const RecentNfts=({name,price,imageUri,linktoDetails}:{name:string,price:number,imageUri:string,linktoDetails:string})=>{
-    return(<div className='w-[250px] inline-block '><img  src={imageUri} className='w-full h-[200px]'/>
-    <div className='bg-brandpurple p-2 text-white '>
-        <p className='text-center font-semibold'>{name}</p>
-        <div className='flex justify-between items-center mt-4'>
-             <div className='flex space-x-2'> 
-                <Image src={`/CMPBlue3D.png`} width={25} height={25}/>
-             <p>{price}</p></div>
-                 <div><button className='border rounded-full border-brandyellow py-1 px-6'>Details</button></div>
-         </div>
-        
-         </div> 
-    
-     </div>)
+export type NFT = {
+    name: string,
+    price: number,
+    imageURI: string,
+    linkToDetails: string
 }
-export default function RecentlyListedNfts() {
-    const recentNFTS=Array.from(Array(5).keys())
-  return (
-    <>
-    <CollectionHeader>
-       <SectionTitle title="Recently Listed NFTs"/>
-    </CollectionHeader>
-    <CollectionBody totalItemsLength={recentNFTS.length}>
-     
-        {recentNFTS.map((recentNft,index)=>(<RecentNfts key={index} name='Richard Mason' price={0} imageUri={"https://picsum.photos/200"} linktoDetails=""/>))}
 
-    </CollectionBody> 
-        
-    
-    </>
-  )
+
+
+const RecentNfts = ({ name, price, imageURI, linkToDetails }: { name: string, price: number, imageURI: string, linkToDetails: string }) => {
+    return (
+        <div className='w-[230px] inline-block rounded-[5px]'>
+            <img src={imageURI} className='rounded-t-[5px] w-[230px] h-[230px] object-cover' />
+            <div className='bg-brandpurple p-2 text-white rounded-b-[5px]'>
+                <p className='text-center font-semibold'>{name}</p>
+                <div className='flex justify-between items-center mt-4'>
+                    <div className='flex space-x-2'>
+                        <Image src={`/CMPBlue3D.png`} width={25} height={25} />
+                        <p>{price}</p>
+                    </div>
+                    <div>
+                        <Link href={linkToDetails}>
+                            <a>
+                                <button className='border rounded-sm border-brandyellow py-1 px-6'>Details</button>
+                            </a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default function RecentlyListedNfts({ recentNFTs }: { recentNFTs: NFT[] }) {
+    return (
+        <>
+            <CollectionHeader>
+                <SectionTitle title="Recently Listed NFTs" />
+            </CollectionHeader>
+            <CollectionBody totalItemsLength={recentNFTs.length}>
+                {recentNFTs.map((nft, index) => (
+                    <RecentNfts key={index} name={nft?.name} price={nft?.price} imageURI={nft.imageURI} linkToDetails={nft?.linkToDetails} />
+                ))}
+            </CollectionBody>
+        </>
+    )
 }
 
 

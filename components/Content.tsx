@@ -245,7 +245,7 @@ const Content = () => {
                 account={account}
                 onSubmit={(e) => handleSubmit(e as unknown as SubmitEvent)}
             /> */}
-      <Messages messages={messages} />
+      {/* <Messages messages={messages} /> */}
     </Fragment>
   );
 };

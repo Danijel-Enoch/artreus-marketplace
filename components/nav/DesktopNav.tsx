@@ -1,8 +1,10 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { Menu as LiMenu } from '@headlessui/react'
-import { useAppContext } from '../../contexts/AppContext'
 import Link from 'next/link'
+import ConnectModal from '../ConnectModal'
+
+
 const DropDown = () => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
@@ -34,97 +36,123 @@ const Menu = () => {
       ></path>
     </svg>)
 }
-export default function DesktopNav({ navItems }: { navItems: string[] }) {
-  const app = useAppContext();
+export default function DesktopNav({ navItems, setSelected, isOpen, handleConnect, connected, setIsOpen }: any) {
 
   const router = useRouter();
+
   return (
-    <ul className='flex justify-center items-center w-full ' >
+    <>
+      <ul className='flex justify-center items-center w-full ' >
 
-      <LiMenu as="li" className={`capitalize mx-4 `}>
+        <LiMenu as="li" className={`capitalize mx-2 `}>
 
-        <LiMenu.Button className='flex items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
-        <LiMenu.Items as="div" className='relative z-10'>
-          <ul className='absolute space-y-4  bg-[#e4e2e2] w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold '>
-
-
-            <li className='w-full]'>
-              <Link href="/">
-                <a>Home</a>
-              </Link>
-            </li>
-
-            <li>
-              <Link href="/new">
-                <a>New Collection</a>
-              </Link>
-            </li>
+          <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Marketplace{<DropDown />} </LiMenu.Button>
+          <LiMenu.Items as="div" className='relative z-10'>
+            <ul className='absolute flex flex-col justify-center items-center space-y-4  bg-[#e4e2e2] w-[200px] h-fit py-5 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
 
-          </ul>
-        </LiMenu.Items>
+              <li className='w-full'>
+                <Link href="/">
+                  <a>Home</a>
+                </Link>
+              </li>
 
-      </LiMenu>
+              {/* <li className="w-full">
+                <Link href="/new">
+                  <a>New Collection</a>
+                </Link>
+              </li> */}
 
-      <LiMenu as="li" className={`capitalize mx-4 `}>
+            </ul>
+          </LiMenu.Items>
+        </LiMenu>
 
-        <LiMenu.Button className='flex items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
-        <LiMenu.Items as="div" className='relative z-10'>
-          <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
+        <LiMenu as="li" className={`capitalize mx-2 `}>
 
-            <li>
-              <Link href="/create">
-                <a>Create</a>
-              </Link>
-            </li>
+          <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
+          <LiMenu.Items as="div" className='relative z-10'>
+            <ul className='absolute space-y-4 bg-[#e4e2e2]  w-[200px] h-fit py-5 flex flex-col justify-center items-center my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
 
-            <li>
-              <Link href="/profile/me">
-                <a>Profile</a>
-              </Link>
-            </li>
+              <li className='w-full'>
+                <Link href="/create-cad">
+                  <a>Create On CMP</a>
+                </Link>
+              </li>
 
-          </ul>
-        </LiMenu.Items>
+              <li className='w-full'>
+                <Link href="/create-near">
+                  <a>Create On Near</a>
+                </Link>
+              </li>
 
-      </LiMenu>
+              <li className='w-full'>
+                <Link href="/profile/me">
+                  <a>Profile</a>
+                </Link>
+              </li>
 
-      <LiMenu as="li" className={`capitalize mx-4 `}>
+            </ul>
+          </LiMenu.Items>
 
-        <LiMenu.Button className='flex items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
-        <LiMenu.Items as="div" className='relative z-10'>
-          <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
-            <li>
-              <Link href="/launchpad">
-                <a>Launchpad</a>
-              </Link>
-            </li>
+        </LiMenu>
 
-            <li>
-              <Link href="/stake">
-                <a>Stake Nft</a>
-              </Link>
-            </li>
+        <LiMenu as="li" className={`capitalize mx-2 `}>
 
-          </ul>
-        </LiMenu.Items>
+          <LiMenu.Button className='flex md:text-sm border-0 lg:text-md items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
+          <LiMenu.Items as="div" className='relative z-10'>
+            <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 flex flex-col justify-center items-center font-semibold'>
+              <li className='w-full'>
+                <Link href="/launchpad">
+                  <a>Launchpad</a>
+                </Link>
+              </li>
 
-      </LiMenu>
+              <li className='w-full'>
+                <Link href="/stake">
+                  <a>Stake Nft</a>
+                </Link>
+              </li>
 
-      <Menu />
+            </ul>
+          </LiMenu.Items>
 
-      {/* <li className='ml-3  flex justify-center items-center '>Marketplace <DropDown/></li>
+        </LiMenu>
+
+        {/* <Menu /> */}
+
+        {/* <li className='ml-3  flex justify-center items-center '>Marketplace <DropDown/></li>
       <li className='ml-3 flex justify-center items-center '>Creator <DropDown/></li>
       <li className='ml-3 flex justify-center items-center '>Launchpad <DropDown/></li>
       <li className='ml-6 mr-3 flex justify-center items-center '>Networks <DropDown/></li>
       <li className='flex justify-center items-center '><Menu/>All</li> */}
-      <li ><div className='p-3 rounded-full bg-white ml-4'></div></li>
-      <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={app.connected ? app.logOut : app.logIn}>{app.connected ? "Disconnect Walet" : "Connect Wallet"}</button></li>
-      {/* <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={() => { router.push('/connect') }}>Connect Wallet</button></li> */}
+        {/* <li ><div className='p-3 rounded-full bg-white ml-4'></div></li> */}
+        <li>
+          <button
+            className='md:text-sm lg:text-md border-2 border-brandyellow py-2 rounded-lg'
+            onClick={() => handleConnect()}>
+            {connected ? "Disconnect Wallet" : "Connect Wallet"}
+          </button>
+        </li>
+        {/* <li><button className='mx-8 border border-brandyellow py-1 px-8 rounded-xl' onClick={() => { router.push('/connect') }}>Connect Wallet</button></li> */}
 
-    </ul>
+      </ul>
+
+
+      <ConnectModal isOpen={isOpen} setSelected={setSelected} setIsOpen={setIsOpen} />
+
+    </>
   )
 }
+
+
+
+
+
+
+
+
+
+
 
 
 // import React from 'react'

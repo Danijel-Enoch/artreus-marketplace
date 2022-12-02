@@ -5,13 +5,13 @@ import Authereum from "authereum";
 import { toast } from 'react-toastify'
 
 
-type VALUES = {
+export type VALUES = {
     provider: any | null,
     signer: any | null,
     account: string,
     connected: boolean,
-    logOut: () => void,
-    logIn: () => void,
+    signOut: () => void,
+    signIn: () => void,
 }
 
 const defaultValues: VALUES = {
@@ -19,28 +19,30 @@ const defaultValues: VALUES = {
     signer: null,
     account: "",
     connected: false,
-    logOut: () => { },
-    logIn: () => { },
+    signOut: () => { },
+    signIn: () => { },
 }
 
 const AppContext = React.createContext(defaultValues);
 
-const snackbar = () => toast.success("Wallet Connected")
+const snackbar = () => toast.success("Wallet Connected", {
+    toastId: 'walletconnect'
+})
 
-export const AppContextProvider = ({ children }) => {
+export const AppContextProvider = ({ children }: any) => {
     const [account, setAccount] = useState(defaultValues.account);
     const [provider, setProvider] = useState(defaultValues.provider);
     const [signer, setSigner] = useState(defaultValues.signer);
     const [connected, setConnected] = useState(defaultValues.connected);
     const [web3Modal, setWeb3Modal] = useState<any>(null);
 
-    const logOut = useCallback(async () => {
+    const signOut = useCallback(async () => {
         web3Modal.clearCachedProvider();
         setConnected(false);
         setAccount("");
     }, [web3Modal]);
 
-    const logIn = useCallback(async () => {
+    const signIn = useCallback(async () => {
         const instance = await web3Modal.connect();
         snackbar()
 
@@ -51,7 +53,7 @@ export const AppContextProvider = ({ children }) => {
                 setAccount(accounts[0]);
                 return;
             }
-            logOut();
+            signOut();
         });
 
         // Subscribe to chainId change
@@ -79,18 +81,26 @@ export const AppContextProvider = ({ children }) => {
         setConnected(true);
         setProvider(provid);
         setSigner(_signer);
-    }, [logOut, web3Modal]);
+
+        // localStorage.setItem('metamask', JSON.stringify({
+        //     provider: JSON.stringify(provider),
+        //     signer: JSON.stringify(signer)
+        // }))
+
+    }, [signOut, web3Modal]);
+
+    // localStorage.getItem('')
 
     useEffect(() => {
         const _web3Modal = new Web3Modal({
             cacheProvider: true, // optional
-            providerOptions: {
-                authereum: {
-                    package: Authereum // required
-                }, clvwallet: {
-                    package: true
-                }
-            },
+            // providerOptions: {
+            //     authereum: {
+            //         package: Authereum // required
+            //     }, clvwallet: {
+            //         package: true
+            //     }
+            // },
         });
 
         setWeb3Modal(_web3Modal);
@@ -104,8 +114,8 @@ export const AppContextProvider = ({ children }) => {
                 connected,
                 provider,
                 signer,
-                logOut,
-                logIn
+                signOut,
+                signIn
             }}
         >
             {children}
