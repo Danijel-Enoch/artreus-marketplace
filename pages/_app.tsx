@@ -46,8 +46,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
 
-
-
   return (
     <AppContextProvider>
       <Main>

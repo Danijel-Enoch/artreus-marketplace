@@ -180,7 +180,8 @@ export default function Create() {
   // const minting = () => toast.success("NFT is being minted. Please Wait")
 
   //snackbar notification for unsuccessful mint
-  const error = () => toast.error("minting error")
+  // const error = () => toast.error("minting error")
+  const error = ({ text }: any) => toast.error(text)
 
   //snackbar notification for wallet not connected
   const walletNotConnected = () => toast.error("Wallet Not Connected")
@@ -196,8 +197,14 @@ export default function Create() {
       return
     }
 
-    minting()
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
+
+    if (!data) {
+      error('Please Enter All The Fields To Mint Your Nfts')
+      return
+    }
+
+    minting()
 
     try {
       const metadata = data[2].toString()
@@ -221,7 +228,7 @@ export default function Create() {
       return tx
     } catch (mint_error: any) {
       // alert("minting error")
-      error()
+      error("minting error")
       console.log(mint_error)
     }
   }

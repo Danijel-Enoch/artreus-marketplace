@@ -174,17 +174,29 @@ export default function Create() {
   const success = () => toast.success("NFT minted successfully")
 
   //snackbar notification for unsuccessful mint
-  const error = () => toast.error("minting error")
+  // const error = () => toast.error("minting error")
+  const error = ({ text }: any) => toast.error(text)
 
   //snackbar notification for wallet not connected
   const walletNotConnected = () => toast.error("Wallet Not Connected")
 
   const handleSubmit = async () => {
+
+    if (!app.connected) {
+      walletNotConnected()
+      return
+    }
+
     // console.log(fileObject.name);
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
-    console.log(data);
+
+    if (!data) {
+      error('Please Enter All The Fields To Mint Your Nfts')
+      return
+    }
+
     const owner: any = await _signer.getAddress();
-    console.log(owner)
+
     try {
       const address = MINTER_CONTRACT;
       const abi = [
@@ -203,7 +215,7 @@ export default function Create() {
         return receipt
       } catch (mint_error: any) {
         // alert("minting error")
-        error()
+        error("minting error")
         console.log(mint_error)
       }
 
