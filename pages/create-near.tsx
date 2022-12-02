@@ -17,7 +17,7 @@ import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
-import { nft_mint, nft_supply_for_owner } from '../contracts-connector/near/near-interface';
+import { nft_mint, nft_total_supply } from '../contracts-connector/near/near-interface';
 import { wallet } from '../contracts-connector/near/near-interface';
 
 
@@ -201,7 +201,7 @@ export default function Create() {
 
     try {
       const metadata = data[2].toString()
-      const userTotalNfts = await nft_supply_for_owner({ account_id: walletId })
+      const userTotalNfts = await nft_total_supply()
       const mintData: any = {
         token_id: userTotalNfts.toString(),
         metadata: metadata,
