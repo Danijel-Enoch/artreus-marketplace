@@ -201,9 +201,10 @@ export default function Create() {
 
     try {
       const metadata = data[2].toString()
-      const userTotalNfts = await nft_total_supply()
+      let TotalNfts = await nft_total_supply()
+      totalNfts = totalNfts + 1
       const mintData: any = {
-        token_id: userTotalNfts.toString(),
+        token_id: totalNfts.toString(),
         metadata: metadata,
         receiver_id: wallet.accountId,
         perpetual_royalties: '',
