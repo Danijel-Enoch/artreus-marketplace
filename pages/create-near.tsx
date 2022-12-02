@@ -201,7 +201,7 @@ export default function Create() {
 
     try {
       const metadata = data[2].toString()
-      let TotalNfts = await nft_total_supply()
+      let totalNfts = await nft_total_supply()
       totalNfts = totalNfts + 1
       const mintData: any = {
         token_id: totalNfts.toString(),
