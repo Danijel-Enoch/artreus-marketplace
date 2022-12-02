@@ -234,7 +234,7 @@ export default function Create() {
   // }, [contract])
   return (
     <section className='md:mx-16 px-4 md:px-0'>
-      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts</h1>
+      <h1 className='text-xl md:text-3xl font-bold mb-4'>Create New Nfts On CMP</h1>
       {size.width && size.width < 765 && (<ImagePreview imageUrl='' />)}
 
       <div className='md:flex'>

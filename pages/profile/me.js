@@ -25,6 +25,7 @@ function Profile() {
   const [connected, setConnected] = useState(false)
   const [connectedWallet, setConnectedWallet] = useState('')
   const [uAddress, setUaddress] = useState('')
+  const [loadingData, setLoadingData] = useState('Loading Your Nfts, Please Wait')
 
   const walletId = wallet.accountId
 
@@ -69,13 +70,17 @@ function Profile() {
           }
         )
         nftsId = l.map(e => e.token_id);
-        console.log(l)
       }
 
       setnftIds(nftsId)
 
+      if (l == '') {
+        setLoadingData('You Currently Have No Minted Nfts Yet. Go To The Create PAge To Mint Your Nfts')
+        return
+      }
+
       try {
-        const newerData = l.map(async (e) => {
+        let newerData = l.map(async (e) => {
           var requestOptions = {
             method: 'GET',
             redirect: 'follow'
@@ -84,14 +89,15 @@ function Profile() {
           return fetch("https://ipfs.io/ipfs/" + e.metadata, requestOptions)
             .then(response => response.json())
             .catch(error => console.log('error', error));
-
         })
-        setdata(await Promise.all(newerData))
+
+        newerData = await Promise.all(newerData)
+        setdata(newerData.filter(data => data != undefined))
+
       } catch (e) {
         console.log(e)
       }
     }
-
   }
 
 
@@ -125,12 +131,9 @@ function Profile() {
   }
 
 
-  const items = Array.from(Array(10).keys())
-
   return (
     <section className='w-full p-0 m-0'>
       <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
-
 
         <div className='absolute bottom-[-22px] right-[65%] lg:block '>
           <button className='w-36 h-11 mr-5 bg-brandpurple text-brandyellow rounded-md'>Add Profile</button>
@@ -166,18 +169,25 @@ function Profile() {
 
               <Tab.Panels>
                 <Tab.Panel>
-                  <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                    {(connected && data) ? data.map((nfts, id) =>
-                      <Link href={`/nft/${connectedWallet}/${connectedWallet}/${uAddress}/${nftIds[id]}`} key={nftIds[id]} >
-                        <a ><ProfileCollectionCard className='' key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
-
-                      </Link>
-                    ) : <>
-                      <p>You Have no minted nfts yet. </p>
-                    </>
+                  <div>
+                    {
+                      (!connected) ?
+                        <p className='text-center'>
+                          Connect Wallet To View Your Minted Nfts
+                        </p> :
+                        !data ?
+                          <p className='text-center'>{loadingData}</p> :
+                          <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
+                            {data.map((nfts, id) =>
+                              <Link href={`/nft/${connectedWallet}/${connectedWallet}/${uAddress}/${nftIds[id]}`} key={nftIds[id]} >
+                                <a ><ProfileCollectionCard className='' key={"2"} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} /></a>
+                              </Link>
+                            )}
+                          </div>
                     }
                   </div>
                 </Tab.Panel>
+
                 <Tab.Panel>
                   <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                     {/* {console.log(profileCollection)} */}
