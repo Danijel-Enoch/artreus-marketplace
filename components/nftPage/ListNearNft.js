@@ -8,7 +8,7 @@ import { get_supply_sales, nft_approve, nft_is_approved, nft_total_supply, stora
 
 export default function PriceTag({ floorPrice, listingPrice, coinName, listed, jsonUri, ownerAddress, mintAddress, dbId }) {
     const [nftListed, setNftListed] = useState(false)
-    const [currentPrice, setCurrentPrice] = useState(0)
+    const [currentPrice, setCurrentPrice] = useState(8)
     const [buyer, setbuyer] = useState(false)
     const [price, setprice] = useState("")
     const app = useAppContext()
@@ -76,7 +76,7 @@ export default function PriceTag({ floorPrice, listingPrice, coinName, listed, j
             // })
 
             console.log("receipt", tx);
-            alert("approval Successful")
+            // alert("approval Successful")
         } catch (e) {
             console.log(e)
             alert("error", e)
@@ -118,8 +118,8 @@ export default function PriceTag({ floorPrice, listingPrice, coinName, listed, j
 
             </div>
 
-            <div className='w-full mt-2'>
-                <input type="number" min="0" onChange={(e) => setprice(e.target.value)} placeholder="List Price" inputMode="decimal" name="sell" step="0.1" className='w-full h-10 rounded-md outline-none border-brandpurple border bg-[#e4e2e2] p-4' />
+            <div className='w-[200px] mt-2'>
+                <input type="number" min="0" onChange={(e) => setprice(e.target.value)} placeholder="List Price" inputMode="decimal" name="sell" step="0.1" className='w-[50px] h-10 rounded-md bg-white outline-none border-brandpurple border p-4' />
             </div>
 
 

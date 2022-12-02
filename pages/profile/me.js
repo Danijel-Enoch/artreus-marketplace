@@ -130,7 +130,6 @@ function Profile() {
 
   }
 
-
   return (
     <section className='w-full p-0 m-0'>
       <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
