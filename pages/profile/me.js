@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+Uimport React, { Fragment, useState } from 'react'
 import { Tab } from "@headlessui/react";
 import Image from "next/image"
 import ProfileCollectionCard from "../../components/profile/ProfileCollectionCard";
@@ -66,7 +66,7 @@ function Profile() {
           {
             account_id: walletId,
             from_index: 0,
-            limit: 15
+            limit: 50
           }
         )
         nftsId = l.map(e => e.token_id);
