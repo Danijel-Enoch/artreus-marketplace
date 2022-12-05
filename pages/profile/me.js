@@ -1,4 +1,4 @@
-Uimport React, { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Tab } from "@headlessui/react";
 import Image from "next/image"
 import ProfileCollectionCard from "../../components/profile/ProfileCollectionCard";
