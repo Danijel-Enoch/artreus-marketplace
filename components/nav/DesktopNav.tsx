@@ -19,22 +19,7 @@ const DropDown = () => {
     ></path>
   </svg>)
 }
-const Menu = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="21"
-      height="19"
-      fill="none"
-      viewBox="0 0 21 19"
-      className='mr-1'
-    >
-      <path
-        fill="#F4F3FF"
-        d="M.35 10.95h20.3v-2.9H.35v2.9zm0 7.25h20.3v-2.9H.35v2.9zM.35.8v2.9h20.3V.8H.35z"
-      ></path>
-    </svg>)
-}
+
 export default function DesktopNav({ navItems, setSelected, isOpen, handleConnect, connected, setIsOpen }: any) {
 
   return (
