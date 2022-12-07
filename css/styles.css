@@ -151,3 +151,13 @@ button:active {
 .w-fit {
     width: fit-content;
 }
+
+.h-fit {
+    height: fit-content;
+}
+
+.a-center {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}

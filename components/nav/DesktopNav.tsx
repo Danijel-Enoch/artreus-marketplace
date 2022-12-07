@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu as LiMenu } from '@headlessui/react'
+import { Menu } from '@headlessui/react'
 import Link from 'next/link'
 import ConnectModal from '../ConnectModal'
 
@@ -26,70 +26,89 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
     <>
       <ul className='flex justify-center items-center w-full ' >
 
-        <LiMenu as="li" className={`capitalize mx-2 `}>
+        <Menu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Marketplace{<DropDown />}
-          </LiMenu.Button>
-          <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute flex flex-col justify-center items-center space-y-4  bg-[#e4e2e2] w-[200px] h-fit py-5 my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
+          <Menu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>
+            Marketplace{<DropDown />}
+          </Menu.Button>
 
-              <li className='w-full'>
-                <Link href="/">
-                  Home
-                </Link>
-              </li>
-            </ul>
-          </LiMenu.Items>
-        </LiMenu>
+          <Menu.Items as="div" className='relative z-10'>
+            <Menu.Item>
+              {({ close }) => (
+                <div className='absolute flex flex-col justify-center items-center bg-[#e4e2e2] h-fit py-2 inset-0 rounded-md text-brandpurple p-2 font-semibold'>
+                  <span className='w-full border-0'>
+                    <Link href="/" className='w-full px-10 pl-2 border-2 border-red-500' onClick={close}>
+                      Home
+                    </Link>
+                  </span>
+                </div>
+              )}
+            </Menu.Item>
+          </Menu.Items>
+        </Menu>
 
-        <LiMenu as="li" className={`capitalize mx-2 `}>
+        <Menu as="li" className={`capitalize mx-2 `}>
 
-          <LiMenu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>Creator{<DropDown />} </LiMenu.Button>
-          <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute space-y-4 bg-[#e4e2e2]  w-[200px] h-fit py-5 flex flex-col justify-center items-center my-2 inset-0 rounded-md text-brandpurple p-4 font-semibold'>
+          <Menu.Button className='flex md:text-sm lg:text-md border-0 items-center capitalize'>
+            Creator{<DropDown />}
+          </Menu.Button>
 
-              <li className='w-full'>
-                <Link href="/create-cad">
-                  Create On CMP
-                </Link>
-              </li>
+          <Menu.Items as="div" className='relative z-10'>
+            <div className='absolute bg-[#e4e2e2] w-fit h-fit inset-0 rounded-md text-brandpurple p-3 flex flex-col justify-center items-center font-semibold'>
 
-              <li className='w-full'>
-                <Link href="/create-near">
-                  Create On Near
-                </Link>
-              </li>
+              <Menu.Item>
+                {({ close }) => (
+                  <span className='w-full py-[0.3rem] border-0'>
+                    <Link href="/create" className='w-full px-10 pl-2' onClick={close}>
+                      Create
+                    </Link>
+                  </span>
+                )}
+              </Menu.Item>
 
-              <li className='w-full'>
-                <Link href="/profile/me">
-                  Profile
-                </Link>
-              </li>
+              <Menu.Item>
+                {({ close }) => (
+                  <span className='w-full py-[0.3rem] border-0'>
+                    <Link href="/profile/me" className='w-full px-10 pl-2' onClick={close}>
+                      Profile
+                    </Link>
+                  </span>
+                )}
+              </Menu.Item>
+            </div>
+          </Menu.Items>
+        </Menu>
 
-            </ul>
-          </LiMenu.Items>
-        </LiMenu>
+        <Menu as="li" className={`capitalize mx-2 `}>
 
-        <LiMenu as="li" className={`capitalize mx-2 `}>
+          <Menu.Button className='flex md:text-sm border-0 lg:text-md items-center capitalize'>
+            Launchpad{<DropDown />}
+          </Menu.Button>
+          <Menu.Items as="div" className='relative z-10'>
+            <div className='absolute bg-[#e4e2e2] w-fit h-fit inset-0 rounded-md text-brandpurple p-3 flex flex-col justify-center items-center font-semibold'>
 
-          <LiMenu.Button className='flex md:text-sm border-0 lg:text-md items-center capitalize'>Launchpad{<DropDown />} </LiMenu.Button>
-          <LiMenu.Items as="div" className='relative z-10'>
-            <ul className='absolute space-y-4  bg-[#e4e2e2]  w-[200px] h-[100px] py-4 my-2 inset-0 rounded-md text-brandpurple p-4 flex flex-col justify-center items-center font-semibold'>
-              <li className='w-full'>
-                <Link href="/launchpad">
-                  Launchpad
-                </Link>
-              </li>
+              <Menu.Item>
+                {({ close }) => (
+                  <span className='w-full py-[0.3rem] border-0'>
+                    <Link href="/launchpad" className='w-full px-10 pl-2' onClick={close}>
+                      Launchpad
+                    </Link>
+                  </span>
+                )}
+              </Menu.Item>
 
-              <li className='w-full'>
-                <Link href="/stake">
-                  Stake Nft
-                </Link>
-              </li>
-
-            </ul>
-          </LiMenu.Items>
-        </LiMenu>
+              <Menu.Item>
+                {({ close }) => (
+                  <span className='w-full py-[0.3rem] border-0'>
+                    <Link href="/stake" className='w-full px-10 pl-2' onClick={close}>
+                      Stake Nft
+                    </Link>
+                  </span>
+                )}
+              </Menu.Item>
+            </div>
+          </Menu.Items>
+        </Menu>
 
         <li>
           <button
