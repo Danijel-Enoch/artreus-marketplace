@@ -215,7 +215,7 @@ export default function Create() {
   }
 
   return (
-    <section className='md:mx-10 px-16 md:px-0 mt-5'>
+    <section className='md:mx-10 px-10 md:px-0 mt-5'>
       <h1 className='text-2xl text-center md:text-3xl font-bold mb-4'>Create New Nfts On CMP</h1>
       <ImagePreview classes='md:hidden' imageUrl={imageUrl} />
 
