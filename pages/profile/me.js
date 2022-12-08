@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAppContext } from "../../contexts/AppContext"
 import { ethers } from "ethers"
 import { MINTER_CONTRACT } from "../../config/constants"
-
+import { toast } from 'react-toastify';
 import { nearWallet, nft_tokens_for_owner } from '../../contracts-connector/near/near-interface'
 import { getConnectedWallet } from '../../utils/utils'
 
@@ -124,6 +124,7 @@ function Profile() {
   const handleLimit = (e) => {
     const val = e.target.value
     setLimit(val)
+    toast.success("Loading New Limits")
   }
 
   return (
@@ -157,8 +158,8 @@ function Profile() {
             </Tab.List>
 
             <div className='w-full flex a-center h-[74px] bg-[#2F2F2F1A]'>
-              <div className='pl-4 flex w-[15%]'>
-                <select onChange={handleLimit} className='h-9 w-full text-lg ring-1 ring-brandpurple px-2 outline-none rounded-md'>
+              <div className='pl-4 flex md:w-[15%] w-[25%]'>
+                <select onChange={handleLimit} className='h-9 w-full text-sm md:text-lg  ring-1 ring-brandpurple px-2 outline-none rounded-md'>
                   <option disabled='true'>Limit</option>
                   <option>5</option>
                   <option>10</option>
