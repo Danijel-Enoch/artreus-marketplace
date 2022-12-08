@@ -37,7 +37,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
               {({ close }) => (
                 <div className='absolute flex flex-col justify-center items-center bg-[#e4e2e2] h-fit py-2 inset-0 rounded-md text-brandpurple p-2 font-semibold'>
                   <span className='w-full border-0'>
-                    <Link href="/" className='w-full px-10 pl-2 border-2 border-red-500' onClick={close}>
+                    <Link href="/" className='w-full px-10 pl-2' onClick={close}>
                       Home
                     </Link>
                   </span>

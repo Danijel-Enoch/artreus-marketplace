@@ -30,6 +30,7 @@ const Header = () => {
   const handleConnectButton = () => {
 
     if (!connected) {
+      setSelected(null)
       setIsOpen(true)
       return
     } else if (connected) {
@@ -56,7 +57,7 @@ const Header = () => {
     if (selected == 'nearWallet' && !nearWallet.connected) {
       try {
         nearWallet.signIn()
-        setConnected(nearWallet?.connected)
+        setConnected(nearWallet.connected)
       } catch (error) {
         console.log(error)
       }

@@ -1,5 +1,12 @@
 import { Web3Storage } from 'web3.storage'
+import { useState, useEffect } from 'react'
+
 import axios from 'axios'
+
+import { nearWallet } from '../contracts-connector/near/near-interface';
+import { useAppContext } from '../contexts/AppContext';
+
+
 function getAccessToken() {
     // If you're just testing, you can paste in a token
     // and uncomment the following line:
@@ -63,11 +70,24 @@ export const deconstructToken = async () => {
 
 }
 
-// var requestOptions = {
-//     method: 'GET',
-//     redirect: 'follow'
-// };
+export const getConnectedWallet = () => {
+    const [connectedWallet, setConnectedWallet] = useState('')
+    const app = useAppContext();
 
-// return fetch("https://ipfs.io/ipfs/bafybeibaso2ocxeorz2q5fciy5xkpn4gkzmg54rpqpedxoge6cdlvn4soy/Daniels NFt.json", requestOptions)
-//     .then(response => response.json())
-//     .catch(error => console.log('error', error));
+    useEffect(() => {
+        nearWallet.startUp()
+    }, [])
+
+    useEffect(() => {
+        if (app.connected || nearWallet.connected) {
+            if (app.connected) {
+                setConnectedWallet('cmp')
+            } else {
+                setConnectedWallet('near')
+            }
+        } else {
+            setConnectedWallet('')
+        }
+    }, [app.connected, nearWallet.connected])
+    return connectedWallet
+}
