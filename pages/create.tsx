@@ -93,13 +93,8 @@ export default function Create() {
   const UploadImages: any = async (image: any, item_name: any, description: any, category: any, size: any) => {
     // console.log(image[0].name);
     let cid: any
-    const myRenamedFile = new File([image[0]], 'my-file-final-1-really.png');
-    console.log(image)
     cid = await storeFiles(image);
-    console.log(cid) //add snack bar here
 
-    //makeFileObjects(cid, image[0].name);
-    console.log("Image Cid: " + cid)
     const obj = {
       image_url: cid + "/" + image[0].name,
       name: item_name,
@@ -111,8 +106,7 @@ export default function Create() {
     const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
     let ufiles = [new File([blob], item_name + ".json")];
     let metaCid = await storeFiles(ufiles);
-    console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
-    console.log(ufiles)
+
     return [ufiles, cid + "/" + image[0].name, metaCid + "/" + item_name + ".json", item_name, description, category];
   }
 
@@ -138,12 +132,6 @@ export default function Create() {
   const handleDescChange = (e: any) => {
     const val: any = e.target.value
     setDesc(val)
-
-  }
-
-  const handleRoyaltyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = +e.target.value
-    setRoyalty(val)
   }
 
   //snackbar notification for successful mint
@@ -184,14 +172,12 @@ export default function Create() {
         // alert("NFT minted successful")
         success()
 
-
         return receipt
       } catch (mint_error: any) {
         // alert("minting error")
         error("minting error")
         console.log(mint_error)
       }
-
     } catch (e) {
       console.log(e)
     }
@@ -244,6 +230,7 @@ export default function Create() {
       <h1 className='text-2xl text-center md:text-3xl font-bold mb-4'>Create New Nfts
         {connectedWallet == '' ? '' : ` On ${connectedWallet.toUpperCase()}`}
       </h1>
+
       <ImagePreview classes='md:hidden' imageUrl={imageUrl} />
 
       <div className='md:flex justify-between'>
