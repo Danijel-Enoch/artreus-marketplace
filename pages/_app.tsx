@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {progress && <TopBarProgress />}
         <Component {...pageProps} />
       </Layout>
-      <ToastContainer position="top-center" autoClose={5000} />
+      <ToastContainer position="top-center" autoClose={3000} />
     </AppContextProvider>
   )
 }

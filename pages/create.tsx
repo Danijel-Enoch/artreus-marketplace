@@ -1,53 +1,36 @@
 import React, { useEffect } from 'react'
 import ImagePreview from '../components/createCollection/ImagePreview';
 import UploadButton from '../components/createCollection/UploadButton';
-// // import PriceTypeButton from '../components/createCollection/PriceTypeButton';
 import Input from '../components/createCollection/Input';
-// import PriceForApeice from '../components/createCollection/PriceForApeice';
-// import MintOptionToggle from '../components/createCollection/MintOptionToggle';
-import useWindowSize from '../hooks/useWindowSize';
-import useContract from '../hooks/useContract';
 import { useAppContext } from '../contexts/AppContext';
 import { ethers } from 'ethers';
 import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
-const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
-const _signer = provider.getSigner();
+import { nft_mint, nft_total_supply } from '../contracts-connector/near/near-interface';
+import { nearWallet } from '../contracts-connector/near/near-interface';
+import { getConnectedWallet } from '../utils/utils'
 
-async function mint(uri: any) {
-  const address = "0x9Ba2fc37D6E22634852695993175Cdf5bfD105D5";
-  const abi = [
-    "function mint(string uri) payable returns (uint256)"
-  ];
-  try {
-    const contract = new ethers.Contract(address, abi, _signer);
-    const tx = await contract.functions.mint(uri);
-    const receipt = await tx.wait();
-    console.log("receipt", receipt);
-    return receipt
-  } catch (e) {
-    return e
-  }
-
-}
 
 export default function Create() {
-  const size = useWindowSize()
-  // const [isMintFree, setIsMintFree] = React.useState(true)
-  const [fee, setFee] = React.useState("...")
+
+  const provider = new ethers.providers.JsonRpcProvider("https://mainnet.block.caduceus.foundation/")
+  const _signer = provider.getSigner();
+
   const [fileObject, setFileObject] = React.useState("")
   const [imageUrl, setImageUrl] = React.useState("")
   const [amount, setAmount] = React.useState(0)
   const [name, setName] = React.useState(0)
   const [desc, setDesc] = React.useState(0)
-  const [royalty, setRoyalty] = React.useState(0)
-  // const [activePriceButton, setActivePriceButton] = React.useState<'Fixed Price' | 'Open Bid' | 'Timed Auction'>('Fixed Price')
-  const contract = useContract();
+
   const app = useAppContext();
 
+  const connectedWallet = getConnectedWallet()
 
+  useEffect(() => {
+    nearWallet.startUp()
+  }, [])
 
   ////////////
   const UploadToDb: any = async (name: any, description: any, jsonUrl: any, image_url: any, owner: any, categories: any) => {
@@ -110,13 +93,8 @@ export default function Create() {
   const UploadImages: any = async (image: any, item_name: any, description: any, category: any, size: any) => {
     // console.log(image[0].name);
     let cid: any
-    const myRenamedFile = new File([image[0]], 'my-file-final-1-really.png');
-    console.log(image)
     cid = await storeFiles(image);
-    console.log(cid) //add snack bar here
 
-    //makeFileObjects(cid, image[0].name);
-    console.log("Image Cid: " + cid)
     const obj = {
       image_url: cid + "/" + image[0].name,
       name: item_name,
@@ -128,8 +106,7 @@ export default function Create() {
     const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
     let ufiles = [new File([blob], item_name + ".json")];
     let metaCid = await storeFiles(ufiles);
-    console.log("metadata URI:" + metaCid + "/" + item_name + ".json");
-    console.log(ufiles)
+
     return [ufiles, cid + "/" + image[0].name, metaCid + "/" + item_name + ".json", item_name, description, category];
   }
 
@@ -152,18 +129,14 @@ export default function Create() {
     setName(val)
   }
 
-  const handleDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescChange = (e: any) => {
     const val: any = e.target.value
     setDesc(val)
   }
 
-  const handleRoyaltyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = +e.target.value
-    setRoyalty(val)
-  }
-
   //snackbar notification for successful mint
   const success = () => toast.success("NFT minted successfully")
+  const minting = () => toast.success("NFT is being minted. Please Wait")
 
   //snackbar notification for unsuccessful mint
   const error = ({ text }: any) => toast.error(text)
@@ -171,8 +144,7 @@ export default function Create() {
   //snackbar notification for wallet not connected
   const walletNotConnected = () => toast.error("Wallet Not Connected")
 
-  const handleSubmit = async () => {
-
+  const HandleCmpSubmit = async () => {
     if (!app.connected) {
       walletNotConnected()
       return
@@ -184,7 +156,6 @@ export default function Create() {
       error('Please Enter All The Fields To Mint Your Nfts')
       return
     }
-
 
     const owner: any = await _signer.getAddress();
     try {
@@ -201,22 +172,65 @@ export default function Create() {
         // alert("NFT minted successful")
         success()
 
-
         return receipt
       } catch (mint_error: any) {
         // alert("minting error")
         error("minting error")
         console.log(mint_error)
       }
-
     } catch (e) {
       console.log(e)
     }
   }
 
+  const handleNearSubmit = async () => {
+    if (!nearWallet.connected) {
+      walletNotConnected()
+      return
+    }
+
+    const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
+
+    if (!data) {
+      error('Please Enter All The Fields To Mint Your Nfts')
+      return
+    }
+
+    minting()
+
+    try {
+      const metadata = data[2].toString()
+      let totalNfts = await nft_total_supply()
+      totalNfts = totalNfts + 1
+      const mintData: any = {
+        token_id: totalNfts.toString(),
+        metadata: metadata,
+        receiver_id: nearWallet.accountId,
+        perpetual_royalties: '',
+        deposit: '10040000000000000000000'
+      }
+
+      const tx = nft_mint(mintData)
+
+      console.log("receipt", tx);
+      UploadToDb(name, desc, data[2], data[1], nearWallet.accountId, "Nft")
+      // alert("NFT minted successful")
+      success()
+
+      return tx
+    } catch (mint_error: any) {
+      // alert("minting error")
+      error("minting error")
+      console.log(mint_error)
+    }
+  }
+
   return (
-    <section className='md:mx-10 px-10 md:px-0 mt-5'>
-      <h1 className='text-2xl text-center md:text-3xl font-bold mb-4'>Create New Nfts On CMP</h1>
+    <section className='md:mx-10 px-16 md:px-0 mt-5'>
+      <h1 className='text-2xl text-center md:text-3xl font-bold mb-4'>Create New Nfts
+        {connectedWallet == '' ? '' : ` On ${connectedWallet.toUpperCase()}`}
+      </h1>
+
       <ImagePreview classes='md:hidden' imageUrl={imageUrl} />
 
       <div className='md:flex justify-between'>
@@ -229,9 +243,14 @@ export default function Create() {
             <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} />
 
             <label>Description</label>
-            <textarea className='placeholder-black/50 block bg-[#2F2F2F1A] outline-[#AEACAB] w-full p-2 mt-2 rounded-md' rows={4} placeholder='Enter a Short Description of your Nft' name="Description" onChange={({ e }: any) => handleDescChange(e)}></textarea>
+            <textarea className='placeholder-black/50 block bg-[#2F2F2F1A] outline-[#AEACAB] w-full p-2 mt-2 rounded-md' rows={4} placeholder='Enter a Short Description of your Nft' name="Description" onChange={handleDescChange} />
 
-            <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={handleSubmit} />
+            <input type="submit" value="Create Item" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow' onClick={() => {
+              connectedWallet == '' ?
+                walletNotConnected() :
+                connectedWallet == 'cmp' ? HandleCmpSubmit() :
+                  handleNearSubmit()
+            }} />
             <div>
             </div>
           </div>
