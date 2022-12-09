@@ -66,7 +66,7 @@ function Profile() {
           {
             account_id: walletId,
             from_index: 0,
-            limit: 15
+            limit: 50
           }
         )
         nftsId = l.map(e => e.token_id);

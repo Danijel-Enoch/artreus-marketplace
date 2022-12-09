@@ -17,7 +17,7 @@ import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
 import { MINTER_CONTRACT } from '../config/constants';
 
-import { nft_mint, nft_supply_for_owner } from '../contracts-connector/near/near-interface';
+import { nft_mint, nft_total_supply } from '../contracts-connector/near/near-interface';
 import { wallet } from '../contracts-connector/near/near-interface';
 
 
@@ -208,9 +208,10 @@ export default function Create() {
 
     try {
       const metadata = data[2].toString()
-      const userTotalNfts = await nft_supply_for_owner({ account_id: walletId })
+      let totalNfts = await nft_total_supply()
+      totalNfts = totalNfts + 1
       const mintData: any = {
-        token_id: userTotalNfts.toString(),
+        token_id: totalNfts.toString(),
         metadata: metadata,
         receiver_id: wallet.accountId,
         perpetual_royalties: '',
@@ -254,7 +255,7 @@ export default function Create() {
             </div>
             <Input placeholder='Your Nft Name goes here' label="Name" type='text' onChange={handleNameChange} />
             {/* <Input placeholder='Enter a Short Description of your Nft' label="Description" type='text' onChange={handleDescChange} /> */}
-            <textarea className='placeholder-black/50 block bg-[#2F2F2F1A] w-full p-2 mt-2 rounded-md' rows={4} placeholder='Enter a Short Description of your NFT' label="Description" type='text' handleDescChange={handleDescChange}></textarea>
+            <textarea className='placeholder-black/50 block bg-[#2F2F2F1A] w-full p-2 mt-2 rounded-md' rows={4} placeholder='Enter a Short Description of your NFT' label="Description" type='text' onChange={handleDescChange}></textarea>
             {/* <Input placeholder='10' label="Royalties %" type='number' onChange={handleRoyaltyChange} /> */}
 
             <button type="submit" className='cursor-pointer py-2 px-4 mt-8 font-bold rounded-md bg-brandyellow text-brandpurple' onClick={handleSubmit} >Create Item</button>
