@@ -65,8 +65,10 @@ export default function PriceTag({ floorPrice, listingPrice, coinName, listed, j
             // const tx = await get_supply_sales({ contractId: NEAR_MARKETPLACE_ADDRESS })
             const tx = await nft_approve({
                 token_id: dbId,
-                account_id: wallet.accountId,
-                msg: 'hello sir',
+                account_id: NEAR_MARKETPLACE_ADDRESS,
+                sale_conditions: {
+    price: 25
+},
                 deposit: '1000040000000000000000000'
             })
 
