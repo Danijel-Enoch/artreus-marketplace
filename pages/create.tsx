@@ -6,10 +6,8 @@ import { useAppContext } from '../contexts/AppContext';
 import { ethers } from 'ethers';
 import { Web3Storage } from 'web3.storage'
 import { toast } from 'react-toastify';
-import { MINTER_CONTRACT } from '../config/constants';
 
-import { nft_mint, nft_total_supply } from '../contracts-connector/near/near-interface';
-import { nearWallet } from '../contracts-connector/near/near-interface';
+import { nft_mint, nft_total_supply, nearWallet } from '../contracts-connector/near/near-interface';
 import { getConnectedWallet } from '../utils/utils'
 
 
@@ -145,42 +143,42 @@ export default function Create() {
   const walletNotConnected = () => toast.error("Wallet Not Connected")
 
   const HandleCmpSubmit = async () => {
-    if (!app.connected) {
-      walletNotConnected()
-      return
-    }
+    // if (!app.connected) {
+    //   walletNotConnected()
+    //   return
+    // }
 
-    const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
+    // const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
 
-    if (!data) {
-      error('Please Enter All The Fields To Mint Your Nfts')
-      return
-    }
+    // if (!data) {
+    //   error('Please Enter All The Fields To Mint Your Nfts')
+    //   return
+    // }
 
-    const owner: any = await _signer.getAddress();
-    try {
-      const address = MINTER_CONTRACT;
-      const abi = [
-        "function mint(string uri) payable returns (uint256)"
-      ];
-      try {
-        const contract = new ethers.Contract(address, abi, app.signer);
-        const tx = await contract.functions.mint(data[2].toString(), { value: ethers.utils.parseEther("0.01") });
-        const receipt = await tx.wait();
-        console.log("receipt", receipt);
-        UploadToDb(name, desc, data[2], data[1], owner, "Nft")
-        // alert("NFT minted successful")
-        success()
+    // const owner: any = await _signer.getAddress();
+    // try {
+    //   const address = MINTER_CONTRACT;
+    //   const abi = [
+    //     "function mint(string uri) payable returns (uint256)"
+    //   ];
+    //   try {
+    //     const contract = new ethers.Contract(address, abi, app.signer);
+    //     const tx = await contract.functions.mint(data[2].toString(), { value: ethers.utils.parseEther("0.01") });
+    //     const receipt = await tx.wait();
+    //     console.log("receipt", receipt);
+    //     UploadToDb(name, desc, data[2], data[1], owner, "Nft")
+    //     // alert("NFT minted successful")
+    //     success()
 
-        return receipt
-      } catch (mint_error: any) {
-        // alert("minting error")
-        error("minting error")
-        console.log(mint_error)
-      }
-    } catch (e) {
-      console.log(e)
-    }
+    //     return receipt
+    //   } catch (mint_error: any) {
+    //     // alert("minting error")
+    //     error("minting error")
+    //     console.log(mint_error)
+    //   }
+    // } catch (e) {
+    //   console.log(e)
+    // }
   }
 
   const handleNearSubmit = async () => {

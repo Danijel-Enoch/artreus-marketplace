@@ -152,6 +152,10 @@ button:active {
     width: fit-content;
 }
 
+/* .w-full {
+    width: fit-content;
+} */
+
 .h-fit {
     height: fit-content;
 }

@@ -10,6 +10,10 @@ import { toast } from 'react-toastify';
 import { nearWallet, nft_tokens_for_owner } from '../../contracts-connector/near/near-interface'
 import { getConnectedWallet } from '../../utils/utils'
 
+import * as identicon from 'identicon'
+
+
+
 let globalWallet;
 
 function Profile() {
@@ -62,6 +66,7 @@ function Profile() {
             limit: limit
           }
         )
+        console.log(l)
         nftsId = l.map(e => e.token_id);
       }
 
@@ -127,16 +132,33 @@ function Profile() {
     toast.success("Loading New Limits")
   }
 
+  const profileImg = () => {
+    let imgUrl = '/profile-picture.png'
+    if (walletId) {
+      identicon.generate({ id: walletId, size: 250 }, (err, img) => {
+        if (err) {
+          imgUrl = '/profile-picture.png'
+        }
+        imgUrl = img
+      })
+    }
+
+    identicon.generate({ id: 'wallete.Id', size: 250 }, (err, img) => {
+      if (err) {
+        imgUrl = '/profile-picture.png'
+      }
+      imgUrl = img
+    })
+
+    return imgUrl
+  }
+
   return (
     <section className='w-full p-0 m-0'>
       <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
 
-        <div className='absolute bottom-[-22px] right-[65%] lg:block '>
-          <button className='w-36 h-11 mr-5 bg-brandpurple text-brandyellow rounded-md'>Add Profile</button>
-          <button className='w-36 h-11 bg-brandpurple text-brandyellow rounded-md'>Add Cover</button>
-        </div>
         <div className='absolute rounded-full w-60 h-60 bottom-[-80px]'>
-          <Image alt='profile-picture' src='/profile-picture.png' width={240} height={240} className="rounded-full" />
+          <Image alt='profile-picture' src={profileImg()} width={240} height={240} className="rounded-full" />
         </div>
       </div>
 
@@ -149,18 +171,12 @@ function Profile() {
                   <button className={`py-4 px-3 ${selected && 'border-x-0 border-t-0 outline-none border-b-2 border-brandpurple'}`}>Minted Nfts</button>
                 )}
               </Tab>
-
-              <Tab as={Fragment}  >
-                {({ selected }) => (
-                  <button className={`py-4 px-3 ${selected && 'border-x-0 border-t-0 outline-none border-b-2 border-brandpurple'}`}>Collection</button>
-                )}
-              </Tab>
             </Tab.List>
 
             <div className='w-full flex a-center h-[74px] bg-[#2F2F2F1A]'>
               <div className='pl-4 flex md:w-[15%] w-[25%]'>
                 <select onChange={handleLimit} className='h-9 w-full text-sm md:text-lg  ring-1 ring-brandpurple px-2 outline-none rounded-md'>
-                  <option disabled='true'>Limit</option>
+                  <option disabled={true}>Limit</option>
                   <option>5</option>
                   <option>10</option>
                   <option>20</option>
@@ -184,23 +200,12 @@ function Profile() {
                           <p className='text-center'>{loadingData}</p> :
                           <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                             {data.map((nfts, id) =>
-                              <Link href={`/nft/${connectedWallet}/${connectedWallet}/${uAddress}/${nftIds[id]}`} key={nftIds[id]} >
+                              <Link href={`/nft/${connectedWallet}/${uAddress}/${nftIds[id]}`} key={nftIds[id]} >
                                 <ProfileCollectionCard className='' key={id} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} />
                               </Link>
                             )}
                           </div>
                     }
-                  </div>
-                </Tab.Panel>
-
-                <Tab.Panel>
-                  <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
-                    {/* {console.log(profileCollection)} */}
-                    {profileCollection.map(({ name, imageUri, description }, index) => (
-                      <Link href="/nft/ethereum/0x57a204aa1042f6e66dd7730813f4024114d74f37/840/1" key={index}>
-                        <ProfileCollectionCard key={index} name={name} description={description} imageUri={imageUri} />
-                      </Link>
-                    ))}
                   </div>
                 </Tab.Panel>
               </Tab.Panels>
