@@ -26,8 +26,8 @@ export default function Home({ recentNFTs }: props) {
 
     l = await nft_tokens(
       {
-        from_index: 0,
-        limit: limit
+        from_index: 3,
+        limit: 50
       }
     )
 
