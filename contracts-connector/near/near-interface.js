@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime';
 import { Wallet } from './near-wallet';
+import { utils } from 'near-api-js';
 
 // const CONTRACT_ADDRESS = process.env.CONTRACT_NAME;
 const CONTRACT_ADDRESS = 'artreus.danieldave.testnet';
@@ -9,14 +10,12 @@ const CONTRACT_ADDRESS = 'artreus.danieldave.testnet';
 
 export const nearWallet = new Wallet({ createAccessKeyFor: 'artreus.danieldave.testnet' })
 
-//View functions
-// await nearWallet.callMethod({ method: 'set_greeting', args: { greeting: greeting.value }, contractId: CONTRACT_ADDRESS });
-
 //view function
 export async function nft_token({ token_id }) {
    nearWallet.startUp()
    await nearWallet.viewMethod({ method: 'nft_token', args: { token_id }, contractId: CONTRACT_ADDRESS });
 }
+
 //view function
 //get user nfts
 export async function nft_tokens_for_owner({ account_id, from_index, limit }) {
@@ -27,9 +26,8 @@ export async function nft_tokens_for_owner({ account_id, from_index, limit }) {
 export async function nft_tokens({ from_index, limit }) {
    return await nearWallet.viewMethod({ method: 'nft_tokens', args: { from_index, limit }, contractId: CONTRACT_ADDRESS });
 }
-//Call fucntion
-// const currentGreeting = await nearWallet.viewMethod({ method: 'get_greeting', contractId: CONTRACT_ADDRESS });
 
+//Call fucntion
 //NFT Minting call function
 export async function nft_mint({ token_id, metadata, receiver_id, perpetual_royalties, deposit }) {
    nearWallet.startUp()
@@ -90,31 +88,17 @@ export async function nft_revoke_all({ token_id }) {
 export async function nft_total_supply() {
    nearWallet.startUp()
    return await nearWallet.viewMethod({ method: 'nft_total_supply', contractId: CONTRACT_ADDRESS });
-
 }
 
-// export async function nft_tokens({ from_index, limit }) {
-//    nearWallet.startUp()
-//    return await nearWallet.viewMethod({ method: 'nft_tokens', args: { from_index, limit }, contractId: CONTRACT_ADDRESS });
-
-// }
-
-// export async function nft_tokens_for_owner({ account_id, from_index, limit }) {
-//    nearWallet.startUp()
-//    return await nearWallet.viewMethod({ method: 'nft_tokens_for_owner', args: { account_id, from_index, limit }, contractId: CONTRACT_ADDRESS });
-
-// }
 
 export async function nft_supply_for_owner({ account_id }) {
    nearWallet.startUp()
    return await nearWallet.viewMethod({ method: 'nft_supply_for_owner', args: { account_id }, contractId: CONTRACT_ADDRESS });
-
 }
 
 export async function nft_metadata() {
    nearWallet.startUp()
    return await nearWallet.viewMethod({ method: 'nft_metadata', contractId: CONTRACT_ADDRESS });
-
 }
 
 export async function storage_deposit({ account_id, contractId, deposit }) {
@@ -182,9 +166,9 @@ export async function get_sales_by_nft_contract_id({ nft_contract_id, from_index
    return await nearWallet.viewMethod({ method: 'get_sales_by_nft_contract_id', args: { nft_contract_id, from_index, limit }, contractId: CONTRACT_ADDRESS });
 }
 
-export async function get_sale({ nft_contract_token }) {
+export async function get_sale({ nft_contract_token, contractId }) {
    nearWallet.startUp()
-   return await nearWallet.viewMethod({ method: 'get_sale', args: { nft_contract_token }, contractId: CONTRACT_ADDRESS });
+   return await nearWallet.viewMethod({ method: 'get_sale', args: { nft_contract_token }, contractId: contractId });
 }
 
 export async function nft_on_approve({ token_id, owner_id, approval_id, msg }) {

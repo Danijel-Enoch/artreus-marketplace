@@ -10,6 +10,8 @@ import "../css/styles.css";
 import { AppContextProvider } from '../contexts/AppContext';
 
 
+
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [progress, setProgress] = useState(false)
 

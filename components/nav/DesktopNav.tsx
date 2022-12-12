@@ -79,7 +79,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
           </Menu.Items>
         </Menu>
 
-        <Menu as="li" className={`capitalize mx-2 `}>
+        {/* <Menu as="li" className={`capitalize mx-2 `}>
 
           <Menu.Button className='flex md:text-sm border-0 lg:text-md items-center capitalize'>
             Launchpad{<DropDown />}
@@ -108,7 +108,7 @@ export default function DesktopNav({ navItems, setSelected, isOpen, handleConnec
               </Menu.Item>
             </div>
           </Menu.Items>
-        </Menu>
+        </Menu> */}
 
         <li>
           <button

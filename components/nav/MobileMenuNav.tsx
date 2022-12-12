@@ -67,7 +67,7 @@ const MenuItem = ({ showMenu }: any) => {
         </Menu.Items>
       </Menu>
 
-      <Menu as="div" className={'w-full'}>
+      {/* <Menu as="div" className={'w-full'}>
         <Menu.Button className="w-full border-0 p-4 bg-[#fff] flex justify-between items-center font-semibold capitalize text-bodycopy">Launchpad <DropDown />
         </Menu.Button>
         <Menu.Items>
@@ -94,7 +94,7 @@ const MenuItem = ({ showMenu }: any) => {
             </Menu.Item>
           </ul>
         </Menu.Items>
-      </Menu>
+      </Menu> */}
     </div>
   )
 }
