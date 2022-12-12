@@ -66,6 +66,7 @@ export default function Home({ recentNFTs }: props) {
     <>
       <div className='space-y-4 mt-4 j-center mx-auto'>
         {isLoaded && <RecentlyListedNfts recentNFTs={data} />}
+{!isLoaded &&<p>Loading Nfts </p>}
       </div>
     </>
   )
