@@ -4,17 +4,11 @@ import Image from "next/image"
 import ProfileCollectionCard from "../../components/profile/ProfileCollectionCard";
 import Link from 'next/link';
 import { useAppContext } from "../../contexts/AppContext"
-import { ethers } from "ethers"
-import { MINTER_CONTRACT } from "../../config/constants"
 import { toast } from 'react-toastify';
 import { nearWallet, nft_tokens_for_owner } from '../../contracts-connector/near/near-interface'
 import { getConnectedWallet } from '../../utils/utils'
 
 import * as identicon from 'identicon'
-
-
-
-let globalWallet;
 
 function Profile() {
   const app = useAppContext()
@@ -28,9 +22,6 @@ function Profile() {
 
   const walletId = nearWallet.accountId
   const connectedWallet = getConnectedWallet()
-
-  let walletAddress = app.connected ? app.account : "Connect Wallet"
-  globalWallet = walletAddress;
 
   React.useEffect(() => {
     nearWallet.startUp()
@@ -101,30 +92,6 @@ function Profile() {
   React.useEffect(() => {
     main()
   }, [connected, limit])
-
-  async function getUserNft() {
-    if (app.connected) {
-
-      const address = MINTER_CONTRACT;
-      const abi = [
-        "function getUserNft(address user_address) view returns (tuple(uint256 id, address creator, string uri)[])"
-      ];
-      const contract = new ethers.Contract(address, abi, app.signer);
-      const data = await contract.functions.getUserNft(app.account);
-
-      //console.log(data);
-      const nft = data[0].map((e) => {
-        return ({
-          "id": e[0].toString(),
-          "metadata": e[2]
-        })
-      })
-      // console.log(nft)
-      return nft
-    }
-
-
-  }
 
   const handleLimit = (e) => {
     const val = e.target.value
