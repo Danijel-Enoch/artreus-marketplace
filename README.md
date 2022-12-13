@@ -27,8 +27,42 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+#  ARTREUS NEXT API ENDPOINTS
+    Endpoint
+    ```
+    /api/v1/marketplace
+    ```
+    Request Methods Types
+    ```
+    POST
+    GET
+    UPDATE
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    [Schema]
+    ```
+     metaUri: {
+            type: String,
+            required: true,
+        },
+        imageUri: {
+            type: String,
+            required: true,
+        },
+        amount: {
+            type: Number,
+            required: true,
+        },
+        listed: {
+            default:false,
+            type: Boolean,
+            required: false,
+        },
+        tokenId:{
+            type: Number,
+            required: true,
+            unique:true
+        }
+        ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    
