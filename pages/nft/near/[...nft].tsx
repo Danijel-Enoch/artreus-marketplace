@@ -110,8 +110,10 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
     }
 
     React.useEffect(() => {
-        main()
-    }, [connected])
+        setTimeout(() => {
+            main()
+        }, 2000);
+    }, [])
 
 
     const imgSrc = data != null ? "https://ipfs.io/ipfs/" + data?.image_url : ''

@@ -66,7 +66,9 @@ export default function nft({ name, id, price, creator, royaltyPercentage, trans
 
 
   React.useEffect(() => {
-    main()
+    setTimeout(() => {
+      main()
+    }, 2000);
   }, [])
 
   console.log(price)

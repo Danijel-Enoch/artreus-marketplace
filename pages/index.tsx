@@ -78,8 +78,10 @@ export default function Home({ recentNFTs }: props) {
   }
 
   useEffect(() => {
-    main()
-  }, [limit])
+    setTimeout(() => {
+      main()
+    }, 2000);
+  }, [])
 
   useEffect(() => {
     nearWallet.startUp()
@@ -91,6 +93,7 @@ export default function Home({ recentNFTs }: props) {
     <>
       <div className='space-y-4 mt-4 j-center mx-auto'>
         {isLoaded && <RecentlyListedNfts recentNFTs={data} />}
+        {!isLoaded && <p>Loading Data</p>}
       </div>
     </>
   )
