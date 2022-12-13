@@ -4,7 +4,8 @@ import type { NFT } from '../components/homepage/RecentlyListedNfts';
 
 import { useEffect, useState } from 'react'
 
-import { nft_tokens } from '../contracts-connector/near/near-interface'
+import { get_sales_by_nft_contract_id, nft_tokens, nearWallet, get_sales_by_owner_id } from '../contracts-connector/near/near-interface'
+import { NEAR_MARKETPLACE_ADDRESS } from '../config/constants';
 
 type props = {
   recentNFTs: {}
@@ -23,34 +24,54 @@ export default function Home({ recentNFTs }: props) {
 
   async function main() {
     let l = []
+    l = await get_sales_by_owner_id({
+      account_id: 'ajemark.testnet',
+      from_index: 0,
+      limit: 5,
+      contractId: NEAR_MARKETPLACE_ADDRESS
+    })
 
-    l = await nft_tokens(
-      {
-        from_index: 0,
-        limit: limit
-      }
-    )
+    console.log(l)
+
 
     try {
+      l = l.reverse()
       let newerData = l.map(async (e) => {
-        var requestOptions = {
+        let requestOptions = {
           method: 'GET',
           redirect: 'follow'
         };
 
-        let a = fetch("https://ipfs.io/ipfs/" + e.metadata, requestOptions)
-          .then(response => response.json())
-          .catch(error => console.log('error', error));
+        try {
+          let m = []
+          m = await nft_tokens({
+            from_index: e.token_id,
+            limit: 1
+          })
+          console.log(m)
 
-        return {
-          id: e.token_id,
-          data: await a
+          let a = fetch("https://ipfs.io/ipfs/" + m[0].metadata, requestOptions)
+            .then(response => response.json())
+            .catch(error => console.log('error', error));
+
+          return {
+            id: e.token_id,
+            data: await a,
+            price: e.sale_conditions.price,
+            owner_id: e.owner_id
+          }
+
+        } catch (e) {
+          console.log(e)
         }
+
       })
 
       newerData = await Promise.all(newerData)
       setdata(newerData)
       setIsLoaded(true)
+
+
     } catch (e) {
       console.log(e)
     }
@@ -60,12 +81,17 @@ export default function Home({ recentNFTs }: props) {
     main()
   }, [limit])
 
+  useEffect(() => {
+    nearWallet.startUp()
+  }, [])
+
   console.log(data)
 
   return (
     <>
       <div className='space-y-4 mt-4 j-center mx-auto'>
         {isLoaded && <RecentlyListedNfts recentNFTs={data} />}
+        {!isLoaded && <p>Loading Data</p>}
       </div>
     </>
   )

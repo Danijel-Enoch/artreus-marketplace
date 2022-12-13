@@ -7,7 +7,7 @@ import { Feature } from '../../../components/nftPage/PropertiesDropDown';
 import DetailsDropDown from '../../../components/nftPage/DetailsDropDown';
 
 import { NEAR_MARKETPLACE_ADDRESS } from "../../../config/constants"
-import { nft_tokens_for_owner, storage_balance_of, nearWallet } from '../../../contracts-connector/near/near-interface';
+import { nft_tokens_for_owner, storage_balance_of, nearWallet, nft_tokens } from '../../../contracts-connector/near/near-interface';
 import { utils } from 'near-api-js';
 
 
@@ -66,6 +66,7 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
         }
     }, [nearWallet.connected])
 
+
     async function main() {
 
         if (connected) {
@@ -83,29 +84,24 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
             }
 
             try {
-                const l = await nft_tokens_for_owner(
+                const l = await nft_tokens(
                     {
-                        account_id: walletId,
-                        from_index: 0,
-                        limit: String(id + 1)
+                        from_index: Number(id),
+                        limit: 1
                     }
                 )
+                var requestOptions: any = {
+                    method: 'GET',
+                    redirect: 'follow'
+                };
 
-                const d = l.filter(n => id == n.token_id)
-                if (d) {
-                    setCreator(d[0].owner_id)
-                    var requestOptions: any = {
-                        method: 'GET',
-                        redirect: 'follow'
-                    };
+                const newerData: any =
+                    fetch("https://ipfs.io/ipfs/" + l[0].metadata, requestOptions)
+                        .then(response => response.json())
+                        .catch(error => console.log('error', error))
 
-                    const newerData: any =
-                        fetch("https://ipfs.io/ipfs/" + d[0].metadata, requestOptions)
-                            .then(response => response.json())
-                            .catch(error => console.log('error', error))
+                setdata(await newerData)
 
-                    setdata(await newerData)
-                }
 
             } catch (e) {
                 console.log(e)
@@ -132,13 +128,11 @@ export default function nft({ categories, jsonUri, imageUri, name, id, creator, 
                     <img src={imgSrc} className="mt-4 md:mt-0 w-full  object-fit rounded-lg min-h-[500px]" />
 
                 </div>
-                <div className='md:pl-8 w-[50%]'>
+                <div className='md:pl-8 md:w-[50%] w-full'>
 
                     <SimpleInfo name={data?.name} id={id} creator={creator} details={data?.description} />
 
-                    <ListNearNft ownerAddress floorPrice='5' dbId={id} jsonUri={jsonUri} mintAddress={mintAddress} listingPrice='0.02' coinName='NEAR' listed={setListed} />
-
-                    <SocialLinks discord="" twitter='' website='' watchCount='' />
+                    <ListNearNft ownerAddress floorPrice='5' tokenId={id} jsonUri={jsonUri} mintAddress={mintAddress} listingPrice='0.02' coinName='NEAR' listed={setListed} />
 
                     <div className='mt-6'>
                         <DetailsDropDown ownerAddress={walletId} storageBalance={String(storageBalance)} royaltyPercentage={royaltyPercentage} transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee} />

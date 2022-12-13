@@ -41,8 +41,6 @@ export class Wallet {
       ],
     });
 
-    window.selector = this.walletSelector
-
     const isSignedIn = this.walletSelector.isSignedIn();
     this.connected = isSignedIn
 
@@ -74,17 +72,22 @@ export class Wallet {
 
   // Make a read-only call to retrieve information from the network
   async viewMethod({ contractId, method, args = {} }) {
-    const { network } = this.walletSelector.options;
-    const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
+    try {
+      const { network } = this.walletSelector.options;
+      const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 
-    let res = await provider.query({
-      request_type: 'call_function',
-      account_id: contractId,
-      method_name: method,
-      args_base64: Buffer.from(JSON.stringify(args)).toString('base64'),
-      finality: 'optimistic',
-    });
-    return JSON.parse(Buffer.from(res.result).toString());
+      let res = await provider.query({
+        request_type: 'call_function',
+        account_id: contractId,
+        method_name: method,
+        args_base64: Buffer.from(JSON.stringify(args)).toString('base64'),
+        finality: 'optimistic',
+      });
+      return JSON.parse(Buffer.from(res.result).toString());
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
 
   // Call a method that changes the contract's state

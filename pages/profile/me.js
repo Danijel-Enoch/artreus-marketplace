@@ -5,19 +5,25 @@ import ProfileCollectionCard from "../../components/profile/ProfileCollectionCar
 import Link from 'next/link';
 import { useAppContext } from "../../contexts/AppContext"
 import { toast } from 'react-toastify';
-import { nearWallet, nft_tokens_for_owner } from '../../contracts-connector/near/near-interface'
+import { get_sales_by_owner_id, nearWallet, nft_tokens_for_owner } from '../../contracts-connector/near/near-interface'
 import { getConnectedWallet } from '../../utils/utils'
+import { NEAR_MARKETPLACE_ADDRESS } from '../../config/constants';
 
 import * as identicon from 'identicon'
 
 function Profile() {
   const app = useAppContext()
   const profileCollection = []
-  const [data, setdata] = useState("");
+  const [data, setdata] = useState({
+    id: [],
+    data: [],
+  });
   const [nftIds, setnftIds] = useState("")
   const [limit, setLimit] = useState(5)
   const [connected, setConnected] = useState(false)
   const [uAddress, setUaddress] = useState('')
+
+  const [isLoaded, setIsLoaded] = useState(false)
   const [loadingData, setLoadingData] = useState('Loading Your Nfts, Please Wait')
 
   const walletId = nearWallet.accountId
@@ -41,7 +47,99 @@ function Profile() {
 
   }, [app.connected, nearWallet.connected])
 
+
   async function main() {
+    if (connected) {
+      let l = ''
+      let nftsId = []
+      if (app.connected) {
+        l = await getUserNft()
+        nftsId = l.map(e => e.id);
+      } else {
+        l = await nft_tokens_for_owner(
+          {
+            account_id: walletId,
+            from_index: 0,
+            limit: limit
+          }
+        )
+        console.log(l)
+        nftsId = l.map(e => e.token_id);
+      }
+
+      setnftIds(nftsId)
+
+      if (l == '') {
+        setLoadingData('You Currently Have No Minted Nfts Yet. Go To The Create PAge To Mint Your Nfts')
+        return
+      }
+
+      // try {
+      //   let newerData = l.map(async (e) => {
+      //     let requestOptions = {
+      //       method: 'GET',
+      //       redirect: 'follow'
+      //     };
+
+      //     try {
+      //       let m = []
+      //       m = await nft_tokens({
+      //         from_index: e.token_id,
+      //         limit: 1
+      //       })
+      //       console.log(m)
+
+      //       let a = fetch("https://ipfs.io/ipfs/" + m[0].metadata, requestOptions)
+      //         .then(response => response.json())
+      //         .catch(error => console.log('error', error));
+
+      //       return {
+      //         id: e.token_id,
+      //         data: await a,
+      //         price: e.sale_conditions.price,
+      //         owner_id: e.owner_id
+      //       }
+
+      //     } catch (e) {
+      //       console.log(e)
+      //     }
+
+      //   })
+
+      //   newerData = await Promise.all(newerData)
+      //   setdata(newerData)
+      //   setIsLoaded(true)
+
+
+      // } 
+      try {
+
+        let newerData = l.map(async (e) => {
+          var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+
+          let a = await fetch("https://ipfs.io/ipfs/" + e.metadata, requestOptions)
+            .then(response => response.json())
+            .catch(error => console.log('error', error));
+          return {
+            token_id: e.token_id,
+            data: a
+          }
+        })
+
+        newerData = await Promise.all(newerData)
+        setdata(newerData)
+        setIsLoaded(true)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+  }
+
+  async function mainv() {
     if (connected) {
 
       let l = ''
@@ -89,6 +187,7 @@ function Profile() {
     }
   }
 
+
   React.useEffect(() => {
     main()
   }, [connected, limit])
@@ -100,9 +199,10 @@ function Profile() {
   }
 
   const profileImg = () => {
+    let imgText = Math.random()
     let imgUrl = '/profile-picture.png'
     if (walletId) {
-      identicon.generate({ id: walletId, size: 250 }, (err, img) => {
+      identicon.generate({ id: String(walletId), size: 250 }, (err, img) => {
         if (err) {
           imgUrl = '/profile-picture.png'
         }
@@ -110,7 +210,7 @@ function Profile() {
       })
     }
 
-    identicon.generate({ id: 'wallete.Id', size: 250 }, (err, img) => {
+    identicon.generate({ id: String(imgText), size: 250 }, (err, img) => {
       if (err) {
         imgUrl = '/profile-picture.png'
       }
@@ -122,7 +222,7 @@ function Profile() {
 
   return (
     <section className='w-full p-0 m-0'>
-      <div className='w-full h-[356px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
+      <div className='w-full h-[256px] bg-[#2F2F2F1A] relative flex justify-center mb-24 md:mb-56'>
 
         <div className='absolute rounded-full w-60 h-60 bottom-[-80px]'>
           <Image alt='profile-picture' src={profileImg()} width={240} height={240} className="rounded-full" />
@@ -141,9 +241,9 @@ function Profile() {
             </Tab.List>
 
             <div className='w-full flex a-center h-[74px] bg-[#2F2F2F1A]'>
-              <div className='pl-4 flex md:w-[15%] w-[25%]'>
-                <select onChange={handleLimit} className='h-9 w-full text-sm md:text-lg  ring-1 ring-brandpurple px-2 outline-none rounded-md'>
-                  <option disabled={true}>Limit</option>
+              <div className='pl-4 flex flex-col md:w-[15%] w-[25%]'>
+                <label className='p-0 text-lg'>Enter Limit</label>
+                <select onChange={handleLimit} className='h-8 w-full text-sm md:text-lg  ring-1 ring-brandpurple px-2 outline-none rounded-md'>
                   <option>5</option>
                   <option>10</option>
                   <option>20</option>
@@ -163,12 +263,12 @@ function Profile() {
                         <p className='text-center'>
                           Connect Wallet To View Your Minted Nfts
                         </p> :
-                        !data ?
+                        !isLoaded ?
                           <p className='text-center'>{loadingData}</p> :
                           <div className='mt-4 md:mt-0 mx-2 md:mx-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-6' role="tabpanel" id="items">
                             {data.map((nfts, id) =>
-                              <Link href={`/nft/${connectedWallet}/${uAddress}/${nftIds[id]}`} key={nftIds[id]} >
-                                <ProfileCollectionCard className='' key={id} name={nfts.name} description={nfts.description} imageUri={"https://ipfs.io/ipfs/" + nfts.image_url} />
+                              <Link href={`/nft/${connectedWallet}/${uAddress}/${nfts.token_id}`} key={nfts.token_id} >
+                                <ProfileCollectionCard key={id} name={nfts.data.name} description={nfts.data.description} imageUri={"https://ipfs.io/ipfs/" + nfts.data.image_url} />
                               </Link>
                             )}
                           </div>

@@ -6,10 +6,10 @@ import SimpleInfo from '../../components/nftPage/SimpleInfo';
 import { Feature } from '../../components/nftPage/PropertiesDropDown';
 import DetailsDropDown from '../../components/nftPage/DetailsDropDown';
 import { useAppContext } from '../../contexts/AppContext';
-import { ethers } from "ethers"
-import { MINTER_CONTRACT, NEAR_MARKETPLACE_ADDRESS } from "../../config/constants"
+import { NEAR_MARKETPLACE_ADDRESS } from "../../config/constants"
 import { nft_token, nft_tokens } from '../../contracts-connector/near/near-interface';
 import Image from 'next/image';
+
 
 
 type props = {
@@ -17,6 +17,7 @@ type props = {
   name: string,
   id: string,
   creator: string,
+  price: any,
   details: "",
   features: Feature[],
   mintAddress: string,
@@ -29,9 +30,9 @@ type props = {
   jsonUri: string,
 }
 
-export default function nft({ name, id, creator, royaltyPercentage, transactionFeePercentage, marketplaceFee }: props) {
+export default function nft({ name, id, price, creator, royaltyPercentage, transactionFeePercentage, marketplaceFee }: props) {
   const app = useAppContext()
-  const [price, setprice] = useState()
+  // const [price, setprice] = useState()
   const [listed, setListed] = useState(true)
   const [data, setdata] = useState("");
   const [creators, setCreator] = useState("")
@@ -53,22 +54,22 @@ export default function nft({ name, id, creator, royaltyPercentage, transactionF
         redirect: 'follow'
       };
 
-      let newerData = fetch("https://ipfs.io/ipfs/" + e.metadata, requestOptions)
+      let newerData = await fetch("https://ipfs.io/ipfs/" + l[0].metadata, requestOptions)
         .then(response => response.json())
         .catch(error => console.log('error', error));
-
-      console.log(newerData)
-      // setdata(newerData)
+      setdata(newerData)
 
     } catch (e) {
       console.log(e)
     }
   }
 
+
   React.useEffect(() => {
     main()
   }, [])
 
+  console.log(price)
   return (
     <>
       <div className='flex flex-col md:flex-row px-4 md:px-0'>
@@ -78,10 +79,10 @@ export default function nft({ name, id, creator, royaltyPercentage, transactionF
 
         <div className='md:pl-16'>
           <SimpleInfo name={name} id={id} creator={creator} details={data.description} />
-          <PriceTag currentPrice='5.00' highestBid='8.00' coinName='NEAR' />
-          <PurchaseButtons price='5.00' nftId={id} contractId={NEAR_MARKETPLACE_ADDRESS} coinName='NEAR' />
+          <PriceTag currentPrice={price} highestBid='8.00' coinName='NEAR' />
+          <PurchaseButtons price={price} nftId={id} contractId={NEAR_MARKETPLACE_ADDRESS} coinName='NEAR' />
 
-          <div className='mt-16'>
+          <div className='mt-4'>
             <DetailsDropDown ownerAddress={app.account} royaltyPercentage={royaltyPercentage} storageBalance='Nil' transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee} />
           </div>
         </div>
@@ -95,6 +96,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const path: any = params?.nft;
   //if(path){
   const idnew = path[0]
+  const price = path[1]
 
   return {
     props: {
@@ -102,6 +104,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       creator: "",
       details: "",
       jsonUri: "",
+      price: price,
       id: idnew,
       mintAddress: "",
       tokenAddress: "",
