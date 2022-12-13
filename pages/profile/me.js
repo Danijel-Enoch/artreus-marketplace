@@ -139,57 +139,12 @@ function Profile() {
     }
   }
 
-  async function mainv() {
-    if (connected) {
-
-      let l = ''
-      let nftsId = []
-      if (app.connected) {
-        l = await getUserNft()
-        nftsId = l.map(e => e.id);
-      } else {
-        l = await nft_tokens_for_owner(
-          {
-            account_id: walletId,
-            from_index: 0,
-            limit: limit
-          }
-        )
-        console.log(l)
-        nftsId = l.map(e => e.token_id);
-      }
-
-      setnftIds(nftsId)
-
-      if (l == '') {
-        setLoadingData('You Currently Have No Minted Nfts Yet. Go To The Create PAge To Mint Your Nfts')
-        return
-      }
-
-      try {
-        let newerData = l.map(async (e) => {
-          var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-          };
-
-          return fetch("https://ipfs.io/ipfs/" + e.metadata, requestOptions)
-            .then(response => response.json())
-            .catch(error => console.log('error', error));
-        })
-
-        newerData = await Promise.all(newerData)
-        setdata(newerData.filter(data => data != undefined))
-
-      } catch (e) {
-        console.log(e)
-      }
-    }
-  }
-
+  console.log(data)
 
   React.useEffect(() => {
-    main()
+    setTimeout(() => {
+      main()
+    }, 2000);
   }, [connected, limit])
 
   const handleLimit = (e) => {
