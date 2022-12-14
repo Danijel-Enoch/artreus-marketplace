@@ -40,7 +40,7 @@ export default function RecentlyListedNfts({ recentNFTs, id }: { recentNFTs: [],
             <SectionTitle title="Recently Listed NFTs" />
             <div className='mx-auto'>
                 {recentNFTs.map((data, id) => (
-                    <RecentNfts key={data.id} name={data?.data.name} imageURI={data.data.image_url} price={data.price} linkToDetails={`/nft/${data.id}/${utils.format.formatNearAmount(data.price)}`} />
+                    <RecentNfts key={data.id} name={data?.data.name} imageURI={data.data.image_url} price={data.price} linkToDetails={`/nft/${data.owner_id}/${data.id}/${utils.format.formatNearAmount(data.price)}`} />
                 ))}
             </div>
         </div>

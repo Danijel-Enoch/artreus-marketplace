@@ -31,9 +31,6 @@ export default function Home({ recentNFTs }: props) {
       contractId: NEAR_MARKETPLACE_ADDRESS
     })
 
-    console.log(l)
-
-
     try {
       l = l.reverse()
       let newerData = l.map(async (e) => {
@@ -48,7 +45,6 @@ export default function Home({ recentNFTs }: props) {
             from_index: e.token_id,
             limit: 1
           })
-          console.log(m)
 
           let a = fetch("https://ipfs.io/ipfs/" + m[0].metadata, requestOptions)
             .then(response => response.json())
@@ -70,8 +66,6 @@ export default function Home({ recentNFTs }: props) {
       newerData = await Promise.all(newerData)
       setdata(newerData)
       setIsLoaded(true)
-
-
     } catch (e) {
       console.log(e)
     }
@@ -87,7 +81,6 @@ export default function Home({ recentNFTs }: props) {
     nearWallet.startUp()
   }, [])
 
-  console.log(data)
 
   return (
     <>

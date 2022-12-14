@@ -9,40 +9,32 @@ import { utils } from 'near-api-js';
 
 
 export default function PriceTag({ floorPrice, listingPrice, coinName, listed, jsonUri, ownerAddress, mintAddress, tokenId }) {
-    const [nftListed, setNftListed] = useState(false)
-    const [currentPrice, setCurrentPrice] = useState(8)
-    const [buyer, setbuyer] = useState(false)
+
     const [price, setprice] = useState("")
     const [storageAmount, setStorageAmount] = useState("")
-    const app = useAppContext()
 
-
-    //conso
     React.useEffect(() => {
         nearWallet.startUp()
     }, [])
 
 
     async function approve() {
+        if (price != '')
+            try {
+                const tx = await nft_approve({
+                    token_id: String(tokenId),
+                    account_id: NEAR_MARKETPLACE_ADDRESS,
+                    msg: JSON.stringify({
+                        sale_conditions: {
+                            price: utils.format.parseNearAmount(price),
+                        }
+                    }),
+                    deposit: utils.format.parseNearAmount('1')
+                })
 
-        console.log(tokenId)
-
-        try {
-            const tx = await nft_approve({
-                token_id: String(tokenId),
-                account_id: NEAR_MARKETPLACE_ADDRESS,
-                msg: JSON.stringify({
-                    sale_conditions: {
-                        price: utils.format.parseNearAmount(price),
-                    }
-                }),
-                deposit: utils.format.parseNearAmount('2')
-            })
-
-        } catch (e) {
-            console.log(e)
-            alert("error", e)
-        }
+            } catch (e) {
+                console.log(e)
+            }
     }
 
     async function storageDeposit() {

@@ -10,6 +10,8 @@ import { toast } from 'react-toastify';
 import { nft_mint, nft_total_supply, nearWallet } from '../contracts-connector/near/near-interface';
 import { getConnectedWallet } from '../utils/utils'
 
+import { utils } from 'near-api-js';
+
 
 export default function Create() {
 
@@ -134,6 +136,7 @@ export default function Create() {
 
   //snackbar notification for successful mint
   const success = () => toast.success("NFT minted successfully")
+  const uploadingImages = () => toast.success("Uploading Image to Server")
   const minting = () => toast.success("NFT is being minted. Please Wait")
 
   //snackbar notification for unsuccessful mint
@@ -187,6 +190,7 @@ export default function Create() {
       return
     }
 
+    uploadingImages()
     const data: any = await UploadImages(fileObject, name, desc, "image", fileObject.size)
 
     if (!data) {
@@ -205,20 +209,17 @@ export default function Create() {
         metadata: metadata,
         receiver_id: nearWallet.accountId,
         perpetual_royalties: '',
-        deposit: '10040000000000000000000'
+        deposit: utils.format.parseNearAmount('1.02')
       }
 
       const tx = nft_mint(mintData)
 
       console.log("receipt", tx);
       UploadToDb(name, desc, data[2], data[1], nearWallet.accountId, "Nft")
-      // alert("NFT minted successful")
       success()
 
       return tx
     } catch (mint_error: any) {
-      // alert("minting error")
-      error("minting error")
       console.log(mint_error)
     }
   }

@@ -7,9 +7,6 @@ import { utils } from 'near-api-js';
 
 
 export default function PurchaseButtons({ price, coinName, contractId, nftId }: { coinName: string, contractId: string, nftId: string, price: string }) {
-  const [offerId, setOfferId] = useState('0');
-  // const [price, setprice] = useState("0")
-  const app = useAppContext()
 
 
   async function BuyOffer() {
@@ -17,7 +14,7 @@ export default function PurchaseButtons({ price, coinName, contractId, nftId }: 
     try {
       const tx = offer({
         nft_contract_id: 'artreus.danieldave.testnet',
-        token_id: 9,
+        token_id: String(nftId),
         contractId: NEAR_MARKETPLACE_ADDRESS,
         deposit: utils.format.parseNearAmount(price)
       })

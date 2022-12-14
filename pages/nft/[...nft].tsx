@@ -32,11 +32,8 @@ type props = {
 
 export default function nft({ name, id, price, creator, royaltyPercentage, transactionFeePercentage, marketplaceFee }: props) {
   const app = useAppContext()
-  // const [price, setprice] = useState()
   const [listed, setListed] = useState(true)
   const [data, setdata] = useState("");
-  const [creators, setCreator] = useState("")
-
 
   async function main() {
     let l = []
@@ -46,7 +43,6 @@ export default function nft({ name, id, price, creator, royaltyPercentage, trans
         limit: 1
       }
     )
-    console.log(l)
 
     try {
       let requestOptions = {
@@ -64,14 +60,12 @@ export default function nft({ name, id, price, creator, royaltyPercentage, trans
     }
   }
 
-
   React.useEffect(() => {
     setTimeout(() => {
       main()
     }, 2000);
   }, [])
 
-  console.log(price)
   return (
     <>
       <div className='flex flex-col md:flex-row px-4 md:px-0'>
@@ -83,9 +77,8 @@ export default function nft({ name, id, price, creator, royaltyPercentage, trans
           <SimpleInfo name={name} id={id} creator={creator} details={data.description} />
           <PriceTag currentPrice={price} highestBid='8.00' coinName='NEAR' />
           <PurchaseButtons price={price} nftId={id} contractId={NEAR_MARKETPLACE_ADDRESS} coinName='NEAR' />
-
           <div className='mt-4'>
-            <DetailsDropDown ownerAddress={app.account} royaltyPercentage={royaltyPercentage} storageBalance='Nil' transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee} />
+            <DetailsDropDown ownerAddress={creator} royaltyPercentage={royaltyPercentage} storageBalance='Nil' transactionFeePercentage={transactionFeePercentage} marketplaceFee={marketplaceFee} />
           </div>
         </div>
       </div>
@@ -97,13 +90,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const params = context.params;
   const path: any = params?.nft;
   //if(path){
-  const idnew = path[0]
-  const price = path[1]
+  const creator = path[0]
+  const idnew = path[1]
+  const price = path[2]
 
   return {
     props: {
       imageUri: "",
-      creator: "",
+      creator: creator,
       details: "",
       jsonUri: "",
       price: price,
